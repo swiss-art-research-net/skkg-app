@@ -2,7 +2,7 @@
 
 <semantic-table
     query="SELECT DISTINCT ?s ?type WHERE {
-        ?s a ?type ;
-            a/rdfs:subClassOf* crm:E1_CRM_Entity .
+        ?s a ?type .
+        ?type rdfs:subClassOf* skkg:Entity .
     }"
 ></semantic-table>
