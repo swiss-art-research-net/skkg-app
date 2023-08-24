@@ -1,8 +1,9 @@
 <h2>SKKG</h2>
 
 <semantic-table
-    query="SELECT DISTINCT ?s ?type WHERE {
-        ?s a ?type .
+    query="SELECT DISTINCT ?s ?type ?lastUpdate WHERE {
+        ?s a ?type ;
+            crm:P70i_is_documented_in/crm:P94i_was_created_by/crm:P4_has_time-span/crm:P82_at_some_time_within ?lastUpdate .
         ?type rdfs:subClassOf* skkg:Entity .
     }"
 ></semantic-table>
