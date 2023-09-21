@@ -1,0 +1,92 @@
+// out: assets/styles.css
+
+@col-white: #fff;
+
+// Overrides
+
+.facet__relation__content__category-image {
+  display: none;
+}
+
+.form-control {
+  width: 95%;
+}
+
+.notification-action-wrapper {
+  text-align: right;
+}
+
+ol.page-breadcrumb {
+    position: static;
+}
+
+#mp-popover {
+  .arrow {
+    left: 20px !important;
+  }
+}
+
+.semantic-facet-holder {
+  .facet {
+    border: none;
+    &__category-selector-holder {
+      display: none;
+    }
+    &__relation {
+     &__header {
+        border: 0;
+        border-radius: .4rem;
+        padding-right: .4rem;
+      }
+      &__body {
+        background-color: @col-white;
+      }
+      &__values {
+        margin-top: 0;
+        padding-top:10px;
+      }
+    }
+  }
+  .show-facet-button {
+    display: none;
+  }
+  .facet-relations {
+    width: auto;
+  }
+}
+
+.system-spinner {
+
+    font-weight: bold;
+    
+    &__icon {
+        vertical-align: middle;
+        animation: fa-spin 2s infinite linear;
+        @keyframes fa-spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(359deg);
+          }
+        }
+        &:before {
+            content: '\f1ce';
+            font-weight: bold;
+        }
+    }
+}
+
+.pagination, .griddle-footer .pagination {
+  justify-content: center;
+  margin-top:1rem;
+  > li {
+    margin: 1.5rem 0;
+    > a {
+      font-weight: bold;
+    }
+    &.active > a {
+      border-radius: .4rem;
+    }
+  }
+}

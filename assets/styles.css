@@ -1,0 +1,75 @@
+.facet__relation__content__category-image {
+  display: none;
+}
+.form-control {
+  width: 95%;
+}
+.notification-action-wrapper {
+  text-align: right;
+}
+ol.page-breadcrumb {
+  position: static;
+}
+#mp-popover .arrow {
+  left: 20px !important;
+}
+.semantic-facet-holder .facet {
+  border: none;
+}
+.semantic-facet-holder .facet__category-selector-holder {
+  display: none;
+}
+.semantic-facet-holder .facet__relation__header {
+  border: 0;
+  border-radius: 0.4rem;
+  padding-right: 0.4rem;
+}
+.semantic-facet-holder .facet__relation__body {
+  background-color: #fff;
+}
+.semantic-facet-holder .facet__relation__values {
+  margin-top: 0;
+  padding-top: 10px;
+}
+.semantic-facet-holder .show-facet-button {
+  display: none;
+}
+.semantic-facet-holder .facet-relations {
+  width: auto;
+}
+.system-spinner {
+  font-weight: bold;
+}
+.system-spinner__icon {
+  vertical-align: middle;
+  animation: fa-spin 2s infinite linear;
+}
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+.system-spinner__icon:before {
+  content: '\f1ce';
+  font-weight: bold;
+}
+.pagination,
+.griddle-footer .pagination {
+  justify-content: center;
+  margin-top: 1rem;
+}
+.pagination > li,
+.griddle-footer .pagination > li {
+  margin: 1.5rem 0;
+}
+.pagination > li > a,
+.griddle-footer .pagination > li > a {
+  font-weight: bold;
+}
+.pagination > li.active > a,
+.griddle-footer .pagination > li.active > a {
+  border-radius: 0.4rem;
+}
