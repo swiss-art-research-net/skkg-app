@@ -3,15 +3,94 @@
 
 <h2>SKKG</h2>
 
-<semantic-table
-    query="SELECT DISTINCT ?s ?type ?lastUpdate WHERE {
-        ?s a ?type .
-        OPTIONAL {
-            ?s crm:P70i_is_documented_in/crm:P94i_was_created_by/crm:P4_has_time-span/crm:P82_at_some_time_within ?lastUpdate .
-        }
-        ?type rdfs:subClassOf* skkg:Entity .
-    }"
-></semantic-table>
+<semantic-search
+    categories='[[> partial:searchCategories ]]'
+    search-profile='[[> partial:searchProfile ]]'
+    relations='[[> partial:searchRelations ]]'
+    limit='9999'
+>
+    <semantic-search-query-constant 
+        domain='<[[resolvePrefix "skkg:Object"]]>'
+        query='SELECT ?subject WHERE { 
+            ?subject a/rdfs:subClassOf* skkg:Entity ;
+                rdfs:label ?label .
+        } ORDER BY ?label'
+    ></semantic-search-query-constant>
+
+    <bs-row>
+        <bs-col md="2" sm="12">
+            <semantic-search-facet
+                open-by-default="true"
+                facet-values-threshold="1000"
+                default-value-queries='{
+                    "literal": "SELECT ?literal ?order (COUNT(DISTINCT $subject) AS ?count) 
+                        WHERE { FILTER(?__facetRelationPattern__) } 
+                    GROUP BY ?literal ?order ORDER BY ?order ?literal"
+                }'
+            >
+            </semantic-search-facet>
+
+        </bs-col>
+
+        <bs-col md="10" sm="12"> 
+            <semantic-search-query-keyword 
+                min-search-term-length='3' 
+                debounce='600'
+                default-query='SELECT ?subject WHERE {
+                    ?subject a/rdfs:subClassOf* skkg:Entity ;
+                        rdfs:label ?label .
+                } ORDER BY ?label'
+
+                query='SELECT ?subject WHERE {
+                    ?subject a/rdfs:subClassOf* skkg:Entity;
+                    rdfs:label|(crm:P1_is_identified_by/crm:P190_has_symbolic_content) ?searchTerm .   
+                    SERVICE <http://www.bigdata.com/rdf/search#search> {
+                        ?searchTerm
+                                bds:search        ?__token__ ;
+                                bds:relevance     ?score ;
+                                bds:matchAllTerms "true";
+                                bds:rank          ?rank .
+                    }
+                } ORDER BY DESC(?score) ?searchTerm
+            '>
+            </semantic-search-query-keyword>
+            <semantic-search-result-holder>
+                <div data-flex-self="md-full">
+                    <semantic-search-facet-breadcrumbs></semantic-search-facet-breadcrumbs>
+                    <semantic-search-result id='semantic-search-result'>
+                        <mp-sparql-result-counts id='semantic-search-result-count' query="SELECT DISTINCT ?subject {}"
+                                                template='{{> template}}'
+                        >
+                        <template id='template'>
+                            <div>
+                            <span class="num-results">Found <span class="num-results-color">{{#if hasLimit}}{{totalNumberOfResults}}{{else}}{{numberOfResults}}{{/if}}</span> results</span>
+                            </div>
+                        </template>
+                        </mp-sparql-result-counts>
+                    </semantic-search-result>
+            
+                    <semantic-search-result>
+                        <div class="skkg-component card-container">
+                            <semantic-table 
+                                id='grid-result'
+                                query='SELECT DISTINCT ?subject ?displayType WHERE {
+                                    ?subject a ?displayType .
+                                    ?displayType rdfs:subClassOf* skkg:Entity .
+                                } ORDER BY ?label'
+                                number-of-displayed-rows="50"
+                                options='{
+                                    "showFilter": false
+                                }'
+                            >    
+                            </semantic-table>
+                        </div>
+                    </semantic-search-result>
+                </div>
+            </semantic-search-result-holder>
+        </bs-col>
+    </bs-row>
+
+</semantic-search>
 
 [[> partial:contentFooter ]]
 [[> partial:pageFooter]]

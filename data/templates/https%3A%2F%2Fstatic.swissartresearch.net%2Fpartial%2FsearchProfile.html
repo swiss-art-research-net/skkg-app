@@ -1,0 +1,21 @@
+{
+    "categories": [
+        { "iri": "<[[resolvePrefix "skkg:Object"]]>", "label": "Object", "thumbnail": "../images/fcs/things.svg" },
+        { "iri": "<[[resolvePrefix "skkg:Person"]]>", "label": "Person", "thumbnail": "../images/fcs/actors.svg"},
+        { "iri": "<[[resolvePrefix "skkg:Type"]]>", "label": "Type", "thumbnail": "../images/fcs/concepts.svg" }
+    ],
+    "relations": [
+        {
+            "iri": "<https://platform.skkg.ch/search/Object_made_by_Person>",
+            "hasDomain": "<[[resolvePrefix "skkg:Object"]]>",
+            "hasRange": "<[[resolvePrefix "skkg:Person"]]>",
+            "label": "Made by"
+        },
+        {
+            "iri": "<https://platform.skkg.ch/search/Object_is_Type>",
+            "hasDomain": "<[[resolvePrefix "skkg:Object"]]>",
+            "hasRange": "<[[resolvePrefix "skkg:Type"]]>",
+            "label": "Is"
+        }
+    ]
+}

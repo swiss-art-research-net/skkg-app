@@ -1,0 +1,15 @@
+{
+    "<https://platform.skkg.ch/search/Object_made_by_Person>": [{
+        "kind": "resource",
+        "queryPattern": "{
+            ?subject crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?__value__ .
+        }"
+    }],
+    "<https://platform.skkg.ch/search/Object_is_Type>": [{
+        "kind": "resource",
+        "queryPattern": "{
+            ?subject a ?__value__ .
+            ?__value__ rdfs:subClassOf* skkg:Entity .
+        }"
+    }]
+}

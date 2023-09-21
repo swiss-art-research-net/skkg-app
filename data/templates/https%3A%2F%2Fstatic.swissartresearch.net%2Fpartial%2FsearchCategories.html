@@ -1,0 +1,16 @@
+{
+    "<http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span>": [{
+        "kind": "date-range",
+        "queryPattern": "{
+            $subject ?__relation__ ?date .
+            FILTER(?date >= ?__dateBeginValue__ && ?date <= ?__dateEndValue__)
+        }"
+    }],
+    "<http://www.w3.org/2001/XMLSchema#decimal>": [{
+        "kind": "numeric-range",
+        "queryPattern": "{
+          $subject ?__relation__ ?value .
+          FILTER(?value >= ?__numericRangeBeginValue__ && ?value <= ?__numericRangeBeginValue__)
+        }"
+    }]
+}
