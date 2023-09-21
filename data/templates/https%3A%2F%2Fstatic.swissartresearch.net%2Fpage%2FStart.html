@@ -78,6 +78,7 @@
                                     ?displayType rdfs:subClassOf* skkg:Entity .
                                 } ORDER BY ?label'
                                 number-of-displayed-rows="50"
+                                tuple-template='{{> partial:entityCard subject=subject.value }}'
                                 options='{
                                     "showFilter": false
                                 }'

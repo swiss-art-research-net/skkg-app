@@ -1,0 +1,43 @@
+{{#if onlybody}}
+    [[> component-card-body]]
+{{else}}
+<div class="skkg-component card">
+    <semantic-link iri="{{subject}}">
+        [[> component-card-body subject=subject]]
+    </semantic-link>
+</div>
+{{/if}}
+
+[[#*inline "component-card-body"]]
+<div class="skkg-component card-image">
+    <mp-resource-thumbnail iri={{subject}} no-result-template="{{> no-image-template}}">
+        <template id="no-image-template">
+            <semantic-query
+                query="SELECT ?type ?image WHERE {
+                    <{{subject}}> a ?type .
+                    VALUES (?type ?image) {
+                        (skkg:Person '/images/fcs/actors.svg')
+                        (skkg:Group '/assets/icons/group.svg')
+                        (skkg:Object '/images/fcs/things.svg')
+                        (skkg:Place '/images/fcs/places.svg')
+                        (skkg:Type '/images/fcs/concepts.svg')
+                        (skkg:Collection '/assets/icons/folder-open.svg')
+                    }
+                } LIMIT 1"
+                template="{{> template}}"
+            >
+                <template id="template">
+                    <div class="skkg-component icon">
+                        {{#each bindings}}
+                            <img src="{{image.value}}" style="opacity:0.1;">
+                        {{/each}}
+                    </div>
+                </template>
+            </semantic-query>
+        </template>
+    </mp-resource-thumbnail>
+</div>
+<div class="skkg-component card-body">
+    <mp-label iri="{{subject}}"></mp-label> 
+</div>
+[[/inline]]
