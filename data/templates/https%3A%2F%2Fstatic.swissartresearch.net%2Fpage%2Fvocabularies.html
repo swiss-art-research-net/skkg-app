@@ -1,0 +1,21 @@
+[[> partial:pageHeader ]]
+[[> partial:contentHeader ]]
+
+<h2>Vocabularies</h2>
+
+<bs-row>
+    <bs-col  sm="12">
+        <semantic-tree 
+            collapsed="true"
+            query="
+            SELECT ?node ?parent WHERE {
+                ?node skos:inScheme ?parent .
+                ?parent rdfs:label ?parentLabel .
+                ?node rdfs:label ?nodeLabel .
+            } ORDER BY ?parentLabel ?nodeLabel">
+        </semantic-tree>
+    </bs-col>
+</bs-row>
+
+[[> partial:contentFooter ]]
+[[> partial:pageFooter]]
