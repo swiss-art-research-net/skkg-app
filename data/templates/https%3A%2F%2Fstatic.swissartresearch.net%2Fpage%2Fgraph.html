@@ -1,0 +1,25 @@
+[[> partial:pageHeader ]]
+[[> partial:contentHeader ]]
+
+<semantic-sigma-graph
+    width="100%"
+    height="600px"
+    sizes='{
+        "nodes": 2,
+        "edges": 1
+    }'
+    query="
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+  
+    CONSTRUCT {
+         ?s ?p ?o 
+    } WHERE {
+        BIND(<https://data.skkg.ch/person/1834> as ?anonymous)
+        ?object crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?s, ?o .
+        FILTER(?s != ?o && ?s != ?anonymous && ?o != ?anonymous)
+        BIND(foaf:collaboratedWith AS ?p)
+    }"
+></semantic-sigma-graph>
+
+[[> partial:pageFooter ]]
+[[> partial:contentFooter ]]
