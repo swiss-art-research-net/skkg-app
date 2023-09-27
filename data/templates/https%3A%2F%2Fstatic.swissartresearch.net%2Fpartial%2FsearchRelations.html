@@ -5,6 +5,16 @@
             ?subject crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?__value__ .
         }"
     }],
+    "<https://platform.skkg.ch/search/Object_made_at_Date>": [{
+        "kind": "date-range",
+        "queryPattern": "{
+            ?subject crm:P108i_was_produced_by/crm:P4_has_time-span ?timespan .
+            ?timespan crm:P82a_begin_of_the_begin ?beginDate ;
+                crm:P82b_end_of_the_end ?endDate .
+            FILTER(STRDT(STR(?beginDate), xsd:date) >= ?__dateBeginValue__) .
+            FILTER(STRDT(STR(?endDate), xsd:date) <= ?__dateEndValue__) .
+        }"
+    }],
     "<https://platform.skkg.ch/search/Object_is_Type>": [{
         "kind": "resource",
         "queryPattern": "{
