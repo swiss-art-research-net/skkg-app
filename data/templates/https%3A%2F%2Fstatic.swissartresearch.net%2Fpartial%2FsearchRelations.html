@@ -20,10 +20,10 @@
                 BIND(SUBSTR(?dateEndPadded, STRLEN(?dateEndPadded)-3) AS ?dateEndFourDigit)
                 BIND(IF(STRSTARTS(?dateEndRaw, \"-\"), CONCAT(\"-\", ?dateEndFourDigit), ?dateEndFourDigit) as ?dateEndProcessed)
             
-                BIND(xsd:date(CONCAT(STR(?dateBeginProcessed),\"-01-01\")) AS ?dateBeginValue)
-                BIND(xsd:date(CONCAT(STR(?dateEndProcessed), \"-12-31\")) AS ?dateEndValue)
-                FILTER(?dateBeginValue <= ?__dateEndValue__) .
-                FILTER(?dateEndValue >= ?__dateBeginValue__) .
+                BIND(xsd:date(CONCAT(STR(?dateBeginProcessed),\"-01-01\")) AS ?dateBegin)
+                BIND(xsd:date(CONCAT(STR(?dateEndProcessed), \"-12-31\")) AS ?dateEnd)
+                FILTER(?dateBegin >= ?__dateBeginValue__) .
+                FILTER(?dateEnd <= ?__dateEndValue__) .
         }"
     }],
     "<https://platform.skkg.ch/search/Object_is_Type>": [{
