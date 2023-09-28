@@ -12,8 +12,13 @@
     <semantic-search-query-constant 
         domain='<[[resolvePrefix "skkg:Object"]]>'
         query='SELECT ?subject WHERE { 
-            ?subject a/rdfs:subClassOf* skkg:Entity ;
+            ?subject a ?type ;
                 rdfs:label ?label .
+            VALUES (?type) {
+                (skkg:Object)
+                (skkg:Person)
+                (skkg:Group)
+            }
         } ORDER BY ?label'
     ></semantic-search-query-constant>
 
@@ -37,8 +42,14 @@
                 min-search-term-length='3' 
                 debounce='600'
                 default-query='SELECT ?subject WHERE {
-                    ?subject a/rdfs:subClassOf* skkg:Entity ;
+                    ?subject a ?type ;
                         rdfs:label ?label .
+
+                    VALUES (?type) {
+                        (skkg:Object)
+                        (skkg:Person)
+                        (skkg:Group)
+                    }
                 } ORDER BY ?label'
 
                 query='SELECT ?subject WHERE {
