@@ -9,10 +9,21 @@
         "kind": "date-range",
         "queryPattern": "{
             ?subject crm:P108i_was_produced_by/crm:P4_has_time-span ?timespan .
-            ?timespan crm:P82a_begin_of_the_begin ?beginDate ;
-                crm:P82b_end_of_the_end ?endDate .
-            FILTER(STRDT(STR(?beginDate), xsd:date) >= ?__dateBeginValue__) .
-            FILTER(STRDT(STR(?endDate), xsd:date) <= ?__dateEndValue__) .
+            ?timespan crm:P82a_begin_of_the_begin ?dateBeginRaw ;
+                    crm:P82b_end_of_the_end ?dateEndRawOriginal.
+                BIND(IF(xsd:integer(?dateEndRawOriginal) > 2023, IF(STRSTARTS(?dateEndRawOriginal, \"-\"), ?dateEndRawOriginal, \"2023\"^^xsd:string), ?dateEndRawOriginal) as ?dateEndRaw)
+                BIND(IF(STRSTARTS(?dateBeginRaw, \"-\"), CONCAT(\"0000\", SUBSTR(?dateBeginRaw,2)), CONCAT(\"0000\", ?dateBeginRaw)) AS ?dateBeginPadded)
+                BIND(SUBSTR(?dateBeginPadded, STRLEN(?dateBeginPadded)-3) AS ?dateBeginFourDigit)
+                BIND(IF(STRSTARTS(?dateBeginRaw, \"-\"), CONCAT(\"-\", ?dateBeginFourDigit), ?dateBeginFourDigit) as ?dateBeginProcessed)
+            
+                BIND(IF(STRSTARTS(?dateEndRaw, \"-\"), CONCAT(\"0000\", SUBSTR(?dateEndRaw,2)), CONCAT(\"0000\", ?dateEndRaw)) AS ?dateEndPadded)
+                BIND(SUBSTR(?dateEndPadded, STRLEN(?dateEndPadded)-3) AS ?dateEndFourDigit)
+                BIND(IF(STRSTARTS(?dateEndRaw, \"-\"), CONCAT(\"-\", ?dateEndFourDigit), ?dateEndFourDigit) as ?dateEndProcessed)
+            
+                BIND(xsd:date(CONCAT(STR(?dateBeginProcessed),\"-01-01\")) AS ?dateBeginValue)
+                BIND(xsd:date(CONCAT(STR(?dateEndProcessed), \"-12-31\")) AS ?dateEndValue)
+                FILTER(?dateBeginValue <= ?__dateEndValue__) .
+                FILTER(?dateEndValue >= ?__dateBeginValue__) .
         }"
     }],
     "<https://platform.skkg.ch/search/Object_is_Type>": [{

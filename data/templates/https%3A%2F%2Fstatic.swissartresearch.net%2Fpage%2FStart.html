@@ -73,7 +73,7 @@
                         <div class="skkg-component card-container">
                             <semantic-table 
                                 id='grid-result'
-                                query='SELECT DISTINCT ?subject ?displayType WHERE {
+                                query='SELECT DISTINCT ?subject WHERE {
                                     ?subject a ?displayType .
                                     ?displayType rdfs:subClassOf* skkg:Entity .
                                 } ORDER BY ?label'
