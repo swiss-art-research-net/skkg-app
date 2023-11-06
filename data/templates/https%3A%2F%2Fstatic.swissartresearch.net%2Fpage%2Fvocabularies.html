@@ -70,39 +70,6 @@
                                         </td>
                                         <td>
                                             <button type="button" class="btn {{#if sameAs.value}}btn-success{{/if}}">Accept</button>
-
-                                            <semantic-form id='form-alignment-match-{{subject.value}}-{{alignment.value}}' persistence='sparql' post-action='event'
-                                                subject='{{subject.value}}' fields='[
-                                                {
-                                                    "id": "inline_prefLabel",
-                                                    "label": "Preferred Label",
-                                                    "xsdDatatype": "xsd:string",
-                                                    "maxOccurs": "1",
-                                                    "selectPattern": "SELECT ?value WHERE {
-                                                        GRAPH skkg:alignments {
-                                                            $subject crmdig:L54_is_same-as ?value .
-                                                        }
-                                                    }",
-                                                    "insertPattern": "INSERT {
-                                                        GRAPH skkg:alignments {
-                                                            $subject crmdig:L54_is_same-as ?value .
-                                                        }
-                                                    } WHERE {}",
-                                                    "deletePattern": "DELETE { 
-                                                            GRAPH sari:prefLabels {
-                                                                $subject skos:prefLabel $value .
-                                                            }
-                                                        } WHERE { 
-                                                            GRAPH sari:prefLabels {
-                                                                $subject skos:prefLabel $value  .
-                                                        }
-                                                    }"
-                                            }]'>
-                                            <semantic-form-select-input for="inline_prefLabel"></semantic-form-select-input>
-                                            <button name="submit" class="btn btn-primary btn-xs">[[i18n "save" bundle="bso"]]</button>
-                                            <button name="reset" class="btn btn-secondary btn-xs">[[i18n "reset" bundle="bso"]]</button>
-                                        </semantic-form>
-
                                         </td>
                                     </tr>
                                 {{/each}}
