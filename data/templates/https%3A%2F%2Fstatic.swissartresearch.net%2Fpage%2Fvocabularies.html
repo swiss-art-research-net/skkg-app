@@ -101,7 +101,7 @@
     collapsed="true"
     query="
     SELECT ?node ?parent WHERE {
-        ?node skos:inScheme ?parent .
+        ?node crm:P127_has_broader_term ?parent .
         ?parent rdfs:label ?parentLabel .
         ?node rdfs:label ?nodeLabel .
     } ORDER BY ?parentLabel ?nodeLabel"
