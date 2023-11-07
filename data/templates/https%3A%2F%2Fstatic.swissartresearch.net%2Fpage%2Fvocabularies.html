@@ -26,8 +26,15 @@
 </mp-splitpane>
 
 [[#*inline "component-vocabulary-content"]]
+
     <mp-event-target-template-render id="vocabulary-content-renderer" template="{{> template}}">
         <template id="template">
+            <mp-event-proxy
+                id="proxy"
+                on-event-type="SemanticUpdate.Success"
+                proxy-event-type="Component.TemplateUpdate" 
+                proxy-targets='["vocabulary-content-renderer"]' data='{"iri": "{{iri}}"}'>
+            </mp-event-proxy>
             {{#if iri}}
                 <h2><mp-label iri="{{iri}}"></mp-label></h2>
                 <p>
@@ -69,7 +76,15 @@
                                             <a href="{{alignment.value}}" target="_blank">{{alignment.value}}</a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn {{#if sameAs.value}}btn-success{{/if}}">Accept</button>
+                                            <semantic-update
+                                                query="INSERT DATA {
+                                                    GRAPH <https://data.skkg.ch/graph/alignment> {
+                                                        <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
+                                                    }
+                                                    }"
+                                                post-action="event">
+                                                <button type="button" class="btn {{#if sameAs.value}}btn-success{{/if}}">Accept</button>
+                                            </semantic-update>
                                         </td>
                                     </tr>
                                 {{/each}}
