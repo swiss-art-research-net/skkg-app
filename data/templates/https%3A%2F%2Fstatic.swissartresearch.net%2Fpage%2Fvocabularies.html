@@ -65,7 +65,7 @@
                                 <tr>
                                     <th>Term</th>
                                     <th>Source</th>
-                                    <th></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,15 +76,33 @@
                                             <a href="{{alignment.value}}" target="_blank">{{alignment.value}}</a>
                                         </td>
                                         <td>
-                                            <semantic-update
-                                                query="INSERT DATA {
-                                                    GRAPH <https://data.skkg.ch/graph/alignment> {
-                                                        <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
-                                                    }
-                                                    }"
-                                                post-action="event">
-                                                <button type="button" class="btn {{#if sameAs.value}}btn-success{{/if}}">Accept</button>
-                                            </semantic-update>
+                                            {{#if sameAs.value}}
+                                                Accepted
+                                            {{else}}
+                                                <semantic-update
+                                                    query="INSERT DATA {
+                                                        GRAPH <https://data.skkg.ch/graph/alignment> {
+                                                            <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
+                                                        }
+                                                        }"
+                                                    post-action="event">
+                                                    <button type="button" class="btn">Accept</button>
+                                                </semantic-update>
+                                            {{/if}}
+                                        </td>
+                                        <td>
+
+                                            {{#if sameAs.value}}
+                                                <semantic-update
+                                                    query="DELETE {
+                                                            GRAPH <https://data.skkg.ch/graph/alignment> {
+                                                                <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
+                                                            }
+                                                        } WHERE {}"
+                                                    post-action="event">
+                                                    <button type="button" class="btn">Remove</button>
+                                                </semantic-update>
+                                            {{/if}}
                                         </td>
                                     </tr>
                                 {{/each}}
