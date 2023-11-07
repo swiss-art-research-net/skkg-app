@@ -1,21 +1,125 @@
 [[> partial:pageHeader ]]
-[[> partial:contentHeader ]]
 
-<h2>Vocabularies</h2>
 
-<bs-row>
-    <bs-col  sm="12">
-        <semantic-tree 
-            collapsed="true"
-            query="
-            SELECT ?node ?parent WHERE {
-                ?node skos:inScheme ?parent .
-                ?parent rdfs:label ?parentLabel .
-                ?node rdfs:label ?nodeLabel .
-            } ORDER BY ?parentLabel ?nodeLabel">
-        </semantic-tree>
-    </bs-col>
-</bs-row>
+<mp-splitpane min-size=35 dock=true>
+    <div data-flex-layout="column top-stretch" style="border-right: 1px solid #a2a2a2; border-top: 1px solid #eee; background: #f5f5f5; height: auto; overflow-y: auto;">
+        <mp-splitpane-toggle-on>
+            <button style="border: none; background: transparent; padding: 15px 2px; outline: none; width: 100%;">
+                <i class="fa fa-angle-double-right" style="font-size: 20px;" aria-hidden="true"></i>
+            </button>
+        </mp-splitpane-toggle-on>
+        <mp-splitpane-toggle-off>
+            <button data-flex-layout="row center-left" style="border: none; border-bottom: 1px solid #999; background: #fff; padding: 15px; outline: none; width: 100%;">
+                <h4 style="margin: 0px;">Vocabularies</h4>
+                <div class="fa fa-angle-double-left" style="font-size: 20px; margin-left: auto;" aria-hidden="true"></div>
+            </button>
+        </mp-splitpane-toggle-off>
+        <mp-splitpane-sidebar-open style="display: flex; flex-direction: column; flex: auto;">
+            [[> component-vocabularies-tree]]
+        </mp-splitpane-sidebar-open>
+    </div>
+    <div>
+        [[> partial:contentHeader ]]
+        [[> component-vocabulary-content ]]
+        [[> partial:contentFooter ]]
+    </div>
+</mp-splitpane>
 
-[[> partial:contentFooter ]]
+[[#*inline "component-vocabulary-content"]]
+    <mp-event-target-template-render id="vocabulary-content-renderer" template="{{> template}}">
+        <template id="template">
+            {{#if iri}}
+                <h2><mp-label iri="{{iri}}"></mp-label></h2>
+                <p>
+                    <semantic-link iri="{{iri}}">source</semantic-link>
+                </p>
+                <semantic-query
+                    query="SELECT * WHERE {
+                        BIND(<{{iri}}> AS ?subject)
+                        ?aa crm:P140_assigned_attribute_to ?subject ;
+                            crm:P141_assigned ?alignment ;
+                            crm:P177_assigned_property_of_type ?match ;
+                            rdf:value ?score .
+                        VALUES (?match) {
+                            (skos:exactMatch)
+                            (skos:closeMatch)
+                        }
+                        OPTIONAL {
+                            ?subject crmdig:L54_is_same-as ?sameAs .
+                            FILTER(?sameAs = ?alignment)
+                        }
+                    } ORDER BY DESC(?score)"
+                    template="{{> vocabulary-alignment-template}}"
+                >
+                    <template id="vocabulary-alignment-template">
+                        <h3>Suggested Alignments</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Source</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each bindings}}
+                                    <tr>
+                                        <td><mp-label iri="{{alignment.value}}"></mp-label></td>
+                                        <td>
+                                            <a href="{{alignment.value}}" target="_blank">{{alignment.value}}</a>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn {{#if sameAs.value}}btn-success{{/if}}">Accept</button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </template>
+                </semantic-query>
+            {{else}}
+
+                <mp-event-trigger 
+                    id="vocabulary-trigger-https://data.skkg.ch/type/21087/154056"
+                    type="Component.TemplateUpdate"
+                    targets='["vocabulary-content-renderer"]'
+                    data='{
+                        "iri": "https://data.skkg.ch/type/21087/154056"
+                    }'
+                >
+                    <a><mp-label iri="https://data.skkg.ch/type/21087/154056"></mp-label></a>
+                </mp-event-trigger>
+            
+            {{/if}}
+        </template>        
+    </mp-event-target-template-render>
+[[/inline]]
+
+[[#*inline "component-vocabularies-tree"]]
+
+<semantic-tree 
+    collapsed="true"
+    query="
+    SELECT ?node ?parent WHERE {
+        ?node crm:P127_has_broader_term ?parent .
+        ?parent rdfs:label ?parentLabel .
+        ?node rdfs:label ?nodeLabel .
+    } ORDER BY ?parentLabel ?nodeLabel"
+    tuple-template="{{> nodeTemplate }}"
+    >
+    <template id="nodeTemplate">
+        <mp-event-trigger 
+            id="vocabulary-trigger-{{node.value}}"
+            type="Component.TemplateUpdate"
+            targets='["vocabulary-content-renderer"]'
+            data='{
+                "iri": "{{node.value}}"
+            }'
+        >
+            <a><mp-label iri="{{node.value}}"></mp-label></a>
+        </mp-event-trigger>
+    </template>
+</semantic-tree>
+[[/inline]]
+
 [[> partial:pageFooter]]
