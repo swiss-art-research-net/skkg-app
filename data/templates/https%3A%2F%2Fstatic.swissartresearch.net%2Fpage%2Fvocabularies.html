@@ -83,15 +83,17 @@
                                                     else="{{> template-accept}}">
                                                     <template id="template-accept">
                                                         <td>
-                                                            <semantic-update
-                                                                query="INSERT DATA {
-                                                                    GRAPH <https://data.skkg.ch/graph/alignment> {
-                                                                        <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
-                                                                    }
-                                                                    }"
-                                                                post-action="event">
-                                                                <button type="button" class="btn btn-primary">Accept</button>
-                                                            </semantic-update>
+                                                            [[#if (hasPermission "sparql:default:update")]]
+                                                                <semantic-update
+                                                                    query="INSERT DATA {
+                                                                        GRAPH <https://data.skkg.ch/graph/alignment> {
+                                                                            <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
+                                                                        }
+                                                                        }"
+                                                                    post-action="event">
+                                                                    <button type="button" class="btn btn-primary">Accept</button>
+                                                                </semantic-update>
+                                                            [[/if]]
                                                         </td>
                                                         <td></td>
                                                     </template>
@@ -100,15 +102,17 @@
                                                             Accepted
                                                         </td>
                                                         <td>
-                                                            <semantic-update
-                                                                query="DELETE {
-                                                                        GRAPH <https://data.skkg.ch/graph/alignment> {
-                                                                            <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
-                                                                        }
-                                                                    } WHERE {}"
-                                                                post-action="event">
-                                                                <button type="button" class="btn">Remove</button>
-                                                            </semantic-update>
+                                                            [[#if (hasPermission "sparql:default:update")]]
+                                                                <semantic-update
+                                                                    query="DELETE {
+                                                                            GRAPH <https://data.skkg.ch/graph/alignment> {
+                                                                                <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
+                                                                            }
+                                                                        } WHERE {}"
+                                                                    post-action="event">
+                                                                    <button type="button" class="btn">Remove</button>
+                                                                </semantic-update>
+                                                            [[/if]]
                                                         </td>
                                                     </template>
                                                 </semantic-if>
