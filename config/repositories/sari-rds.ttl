@@ -15,7 +15,7 @@
     repo:repositoryType "openrdf:SailRepository" ;
     reposail:sailImpl [
       sail:sailType "researchspace:RESTSail" ;
-      ephedra:serviceURL "https://rds.swissartresearch.net/rest/reconciliation/entityfacts-lookup" ;
+      ephedra:serviceURL "https://rds.swissartresearch.net/rest/reconciliation/aggregated-federated-lookup" ;
       ephedra:httpMethod "POST" ;
       ephedra:httpHeader [
         ephedra:name "Accept" ;
