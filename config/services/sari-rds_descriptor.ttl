@@ -1,0 +1,120 @@
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX spin: <http://spinrdf.org/spin#>
+PREFIX spl: <http://spinrdf.org/spl#>
+PREFIX ephedra: <http://www.researchspace.org/resource/system/ephedra#>
+PREFIX sail: <http://www.openrdf.org/config/sail#>
+PREFIX rds: <http://www.researchspace.com/resource/assets/Ontologies/sari-rds#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX : <http://www.researchspace.org/resource/system/repository#>
+
+:SariRDS a ephedra:Service ;
+  sail:sailType "researchspace:RESTSail" ;
+  rdfs:label "Sari RDS descriptor";
+  #sparql query pattern 
+  #todo: Add LIMIT as SPARQL clause (not as a parameter)
+  ephedra:hasSPARQLPattern (
+    [
+      sp:subject :_results ;
+      sp:predicate rds:hasQueryString ;
+      sp:object :_query
+    ]
+
+    [
+      sp:subject :_results ;
+      sp:predicate rds:hasType ;
+      sp:object :_type
+    ]
+        
+    [
+      sp:subject :_results ;
+      sp:predicate rds:hasLimit ;
+      sp:object :_limit
+    ]
+    [
+      sp:subject :_results ;
+      sp:predicate rds:outputType ;
+      sp:object :_outputType
+    ]
+    [
+      sp:subject :_results ;
+      sp:predicate rds:outputName ;
+      sp:object :_outputName
+    ]
+    [
+      sp:subject :_results ;
+      sp:predicate rds:outputId ;
+      sp:object :_outputId
+    ]
+    [
+      sp:subject :_results ;
+      sp:predicate rds:outputDescription ;
+      sp:object :_outputDescription
+    ]
+  );
+
+
+  #SENDING JSON
+  spin:constraint [
+    a spl:Argument ;
+    rdfs:comment "Search term" ;
+    spl:predicate :_query ;
+    spl:valueType xsd:string ;
+    ephedra:inputJsonPath "q0.query"
+  ] ;
+    spin:constraint [
+    a spl:Argument ;
+    rdfs:comment "Type" ;
+    spl:predicate :_type ;
+    spl:valueType xsd:string;
+    ephedra:inputJsonPath "q0.type"
+  ] ;
+    spin:constraint [
+    a spl:Argument ;
+    rdfs:comment "Limit results " ;
+    spl:predicate :_limit ;
+    spl:valueType xsd:string;
+    ephedra:inputJsonPath "q0.limit"
+  ] ;
+
+
+  #RECEIVING COLUMNS
+  spin:column [
+    a spin:Column ;
+    rdfs:comment "results" ;
+    spl:predicate :_results ;
+    spl:valueType rdfs:Resource;
+    ephedra:jsonPath "$.q0.result[*]"
+  ] ;
+
+spin:column [
+    a spin:Column ;
+    rdfs:comment "results" ;
+    spl:predicate :_outputType ;
+    spl:valueType rdfs:Resource;
+    ephedra:jsonPath "$.type[0].id"
+  ] ;
+
+  spin:column [
+    a spin:Column ;
+    rdfs:comment "The output Name" ;
+    spl:predicate :_outputName ;
+    spl:valueType xsd:string;
+    ephedra:jsonPath "$.name"
+  ] ;
+
+  spin:column [
+    a spin:Column ;
+    rdfs:comment "The output Id" ;
+    spl:predicate :_outputId ;
+    spl:valueType xsd:string;
+    ephedra:jsonPath "$.id"
+  ] ;
+
+  spin:column [
+    a spin:Column ;
+    rdfs:comment "The output Description" ;
+    spl:predicate :_outputDescription ;
+    spl:valueType xsd:string;
+    ephedra:jsonPath "$.description"
+  ] .
