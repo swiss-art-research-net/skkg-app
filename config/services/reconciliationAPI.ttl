@@ -48,8 +48,13 @@ PREFIX : <http://www.researchspace.org/resource/system/repository#>
     ]
     [
       sp:subject :_results ;
-      sp:predicate reconciliation:outputDescription ;
-      sp:object :_outputDescription
+      sp:predicate reconciliation:outputScore ;
+      sp:object :_outputScore
+    ]
+    [
+      sp:subject :_results ;
+      sp:predicate reconciliation:outputMatch ;
+      sp:object :_outputMatch
     ]
   );
 
@@ -91,7 +96,7 @@ spin:column [
     a spin:Column ;
     rdfs:comment "results" ;
     spl:predicate :_outputType ;
-    spl:valueType rdfs:Resource;
+    spl:valueType xsd:string;
     ephedra:jsonPath "$.type[0].id"
   ] ;
 
@@ -113,8 +118,16 @@ spin:column [
 
   spin:column [
     a spin:Column ;
-    rdfs:comment "The output Description" ;
-    spl:predicate :_outputDescription ;
-    spl:valueType xsd:string;
-    ephedra:jsonPath "$.description"
-  ] .
+    rdfs:comment "The output Score" ;
+    spl:predicate :_outputScore ;
+    spl:valueType xsd:float;
+    ephedra:jsonPath "$.score"
+  ] ; 
+
+  spin:column [
+    a spin:Column ;
+    rdfs:comment "The output Match" ;
+    spl:predicate :_outputMatch ;
+    spl:valueType xsd:boolean;
+    ephedra:jsonPath "$.match"
+  ] ; .
