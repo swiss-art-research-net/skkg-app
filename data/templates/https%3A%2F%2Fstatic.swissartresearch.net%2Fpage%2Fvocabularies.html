@@ -86,7 +86,7 @@
                                                             [[#if (hasPermission "sparql:default:update")]]
                                                                 <semantic-update
                                                                     query="INSERT DATA {
-                                                                        GRAPH <https://data.skkg.ch/graph/alignment> {
+                                                                        GRAPH graph:alignments {
                                                                             <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
                                                                         }
                                                                         }"
@@ -105,7 +105,7 @@
                                                             [[#if (hasPermission "sparql:default:update")]]
                                                                 <semantic-update
                                                                     query="DELETE {
-                                                                            GRAPH <https://data.skkg.ch/graph/alignment> {
+                                                                            GRAPH graph:alignments {
                                                                                 <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
                                                                             }
                                                                         } WHERE {}"
