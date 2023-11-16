@@ -139,10 +139,14 @@
 <semantic-tree 
     collapsed="true"
     query="
-    SELECT ?node ?parent WHERE {
+    SELECT ?node ?parent ?hasSameAs WHERE {
         ?node crm:P127_has_broader_term ?parent .
         ?parent rdfs:label ?parentLabel .
         ?node rdfs:label ?nodeLabel .
+        OPTIONAL {
+            ?node crmdig:L54_is_same-as ?sameAs .
+            BIND('true'^^xsd:boolean AS ?hasSameAs)
+        }
     } ORDER BY ?parentLabel ?nodeLabel"
     tuple-template="{{> nodeTemplate }}"
     >
@@ -155,7 +159,7 @@
                 "iri": "{{node.value}}"
             }'
         >
-            <a><mp-label iri="{{node.value}}"></mp-label></a>
+            <a><mp-label iri="{{node.value}}"></mp-label> {{#if hasSameAs.value}}&nbsp;<i class="fa fa-link"></i>{{/if}}</a>
         </mp-event-trigger>
     </template>
 </semantic-tree>
