@@ -53,19 +53,7 @@
             {{else}}
 
                 <p>Select a vocabulary entry in the sidebar on the left.</p>
-                <p>
 
-                <mp-event-trigger 
-                    id="vocabulary-trigger-dev"
-                    type="Component.TemplateUpdate"
-                    targets='["vocabulary-content-renderer"]'
-                    data='{
-                        "iri": "https://data.skkg.ch/type/21087/143587"
-                    }'
-                >
-                    <a><mp-label iri="https://data.skkg.ch/type/21087/143587"></mp-label></a>
-                </mp-event-trigger>
-                </p>
             {{/if}}
         </template>        
     </mp-event-target-template-render>
