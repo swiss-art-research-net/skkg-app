@@ -139,22 +139,14 @@
         <semantic-search-result> 
             <semantic-table 
                 id="table"
-                query="SELECT * WHERE {} ORDER BY DESC(?outputScore)"
+                query="SELECT ?subject ?outputName ?outputId WHERE {} ORDER BY DESC(?outputScore)"
                 column-configuration='[{
                     "variableName": "outputName",
                     "displayName": "Term"
                 },
                 {
-                    "variableName": "outputType",
-                    "displayName": "Type"
-                },
-                {
-                    "variableName": "outputTypelabel",
-                    "displayName": "Type Label"
-                },
-                {
-                    "variableName": "outputScore",
-                    "displayName": "Score"
+                    "variableName": "outputId",
+                    "displayName": "Source"
                 }]'
             ></semantic-table> 
         </semantic-search-result>
