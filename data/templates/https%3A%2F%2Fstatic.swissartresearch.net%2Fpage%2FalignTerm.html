@@ -55,7 +55,47 @@
                             }]'
                         >
                             <template id="template-align">
-                                Accept
+                                <semantic-context repository="default">
+                                    <semantic-if
+                                        query='ASK { <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> . }'
+                                        then="{{> template-remove}}"
+                                        else="{{> template-accept}}">
+                                        <template id="template-accept">
+                                            <td>
+                                                [[#if (hasPermission "sparql:default:update")]]
+                                                    <semantic-update
+                                                        query='INSERT DATA {
+                                                            GRAPH graph:alignments {
+                                                                    <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .
+                                                                    <http://d-nb.info/gnd/{{outputId.value}}> rdfs:label "{{outputName.value}}" .
+                                                                }
+                                                            }'
+                                                        post-action="event">
+                                                        <button type="button" class="btn btn-primary">Accept</button>
+                                                    </semantic-update>
+                                                [[/if]]
+                                            </td>
+                                            <td></td>
+                                        </template>
+                                        <template id="template-remove">
+                                            <td>
+                                                Accepted
+                                            </td>
+                                            <td>
+                                                [[#if (hasPermission "sparql:default:update")]]
+                                                    <semantic-update
+                                                        query='DELETE {
+                                                                GRAPH graph:alignments {
+                                                                    <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .                                                    }
+                                                            } WHERE {}'
+                                                        post-action="event">
+                                                        <button type="button" class="btn">Remove</button>
+                                                    </semantic-update>
+                                                [[/if]]
+                                            </td>
+                                        </template>
+                                    </semantic-if>
+                                </semantic-context>
                             </template>
                         </semantic-table> 
                     </semantic-search-result>
