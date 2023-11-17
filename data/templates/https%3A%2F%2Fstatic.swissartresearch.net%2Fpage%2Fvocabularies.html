@@ -104,68 +104,45 @@
 [[#*inline "module-add-alignment"]]
     <h3>Add Alignment</h3>
 
-    <semantic-context repository="gnd">
-        <semantic-search>
-          
-          <semantic-search-form-query
-             query-template='{
-               "queryString": "
-                  PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
-                  PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
-                  SELECT ?subject ?outputId ?outputType ?outputTypelabel ?outputName ?outputDescription WHERE {
-                    ?subject reconciliation:hasQueryString ?token;
-                      reconciliation:hasLimit \"3\" ;
-                      reconciliation:outputName ?outputName;
-                      reconciliation:outputType ?outputType;
-                      reconciliation:outputTypeLabel ?outputTypelabel;
-                      reconciliation:outputId ?outputId
-                  }
-                ",
-                "arguments": {
-                  "token": {"type": "xsd:string"}
-                }
-              }'
-    
-              fields='[
-                {
-                  "id": "token",
-                  "label": "Type",
-                  "xsdDatatype": "xsd:string"
-                }
-              ]'>
-                <semantic-form-text-input render-header="false" for="token" placeholder='Insert research parameter e.g. "Leonardo da Vinci"'></semantic-form-text-input>
-                <button type='button' name='submit' className='btn btn-default'>Search</button>
-          </semantic-search-form-query>
-          
-          <semantic-search-result-holder>
-            <semantic-search-result> 
-              <semantic-table 
-                id='table' 
-                query="select * where{}"
-                scolumn-configuration='[
-                  {
-                    "displayName": "ID", 
-                    "cellTemplate": "{{outputId.value}}" 
-                  },              
-                  {
-                    "displayName": "Type", 
-                    "cellTemplate": "{{outputType.value}}" 
-                  },
-                  {
-                    "displayName": "Name", 
-                    "cellTemplate": "{{outputName.value}}" 
-                  },
-                  {
-                    "displayName": "Description", 
-                    "cellTemplate": "{{outputDescription.value}}" 
-                  }
-                ]'
-              ></semantic-table> 
-            </semantic-search-result>
-          </semantic-search-result-holder>
-        </semantic-search>
-        
-      </semantic-context>
+<semantic-context repository="gnd">
+<semantic-search>
+
+<semantic-search-form-query
+    query-template='{
+        "queryString": "
+            PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
+            PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
+            SELECT ?subject ?outputId ?outputType ?outputTypelabel ?outputName ?outputDescription WHERE {
+                ?subject reconciliation:hasQueryString ?token;
+                    reconciliation:hasLimit \"3\" ;
+                    reconciliation:outputName ?outputName;
+                    reconciliation:outputType ?outputType;
+                    reconciliation:outputTypeLabel ?outputTypelabel;
+                    reconciliation:outputId ?outputId
+        }",
+        "arguments": {
+            "token": {"type": "xsd:string"}
+        }
+    }'
+    fields='[{
+        "id": "token",
+        "label": "Type",
+        "xsdDatatype": "xsd:string"
+    }]'>
+        <semantic-form-text-input render-header="false" for="token" placeholder='Insert research parameter e.g. "Leonardo da Vinci"'></semantic-form-text-input>
+        <button type='button' name='submit' className='btn btn-default'>Search</button>
+    </semantic-search-form-query>
+    <semantic-search-result-holder>
+        <semantic-search-result> 
+            <semantic-table 
+                id="table"
+                query="SELECT * WHERE {}"
+            ></semantic-table> 
+        </semantic-search-result>
+    </semantic-search-result-holder>
+</semantic-search>
+
+</semantic-context>
 
 [[/inline]]
 
