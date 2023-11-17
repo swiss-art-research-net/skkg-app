@@ -38,6 +38,11 @@ PREFIX : <http://www.researchspace.org/resource/system/repository#>
     ]
     [
       sp:subject :_results ;
+      sp:predicate reconciliation:outputTypeLabel ;
+      sp:object :_outputTypeLabel
+    ]
+    [
+      sp:subject :_results ;
       sp:predicate reconciliation:outputName ;
       sp:object :_outputName
     ]
