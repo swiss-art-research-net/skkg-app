@@ -64,6 +64,7 @@
                                             <td>
                                                 [[#if (hasPermission "sparql:default:update")]]
                                                     <semantic-update
+                                                        id="external-alignment-update-add"
                                                         query='INSERT DATA {
                                                             GRAPH graph:alignments {
                                                                     <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .
@@ -84,6 +85,7 @@
                                             <td>
                                                 [[#if (hasPermission "sparql:default:update")]]
                                                     <semantic-update
+                                                        id="external-alignment-update-remove"
                                                         query='DELETE {
                                                                 GRAPH graph:alignments {
                                                                     <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .                                                    }
