@@ -2,7 +2,7 @@
     [[#if (urlParam "termiri")]]
         
         <div>
-            Align term <mp-label iri="[[urlParam "termiri"]]"></mp-label>
+            <h3>Align term: <mp-label iri="[[urlParam "termiri"]]"></mp-label></h3>
         </div>
         <semantic-context repository="gnd">
             <semantic-search>
@@ -40,6 +40,9 @@
                         <semantic-table 
                             id='table' 
                             query="select ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore where{} ORDER BY DESC(?outputScore)"
+                            options='{
+                                "showFilter": false
+                            }'
                             column-configuration='[{
                                 "displayName": "Term", 
                                 "cellTemplate": "{{outputName.value}}" 
