@@ -112,13 +112,15 @@
         "queryString": "
             PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
             PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
-            SELECT ?subject ?outputId ?outputType ?outputTypelabel ?outputName ?outputDescription WHERE {
+            SELECT ?subject ?outputId ?outputType ?outputTypelabel ?outputName ?outputDescription ?outputScore ?outputMatch WHERE {
                 ?subject reconciliation:hasQueryString ?token;
                     reconciliation:hasLimit \"3\" ;
                     reconciliation:outputName ?outputName;
                     reconciliation:outputType ?outputType;
                     reconciliation:outputTypeLabel ?outputTypelabel;
-                    reconciliation:outputId ?outputId
+                    reconciliation:outputId ?outputId ;
+                    reconciliation:outputScore ?outputScore ;
+                    reconciliation:outputMatch ?outputMatch .
         }",
         "arguments": {
             "token": {"type": "xsd:string"}
