@@ -19,8 +19,7 @@ fields:
       label: Same as
       description: The entity that is the same as the subject
       datatype: xsd:anyURI
-      domain: crm:E1_CRM_Entity
-      range: crm:E1_CRM_Entity
+      
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crmdig:L54_is_same-as ?value .
