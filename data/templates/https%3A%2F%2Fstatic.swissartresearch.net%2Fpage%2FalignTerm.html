@@ -1,0 +1,116 @@
+
+[[#if (urlParam "termiri")]]
+    
+    <div>
+        <h3>Align term: <mp-label iri="[[urlParam "termiri"]]"></mp-label></h3>
+    </div>
+    <semantic-context repository="gnd">
+        <semantic-search>
+
+            <semantic-search-form-query
+                query-template='{
+                    "queryString": "
+                        PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
+                        SELECT ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore WHERE {
+                            ?subject reconciliation:hasQueryString ?token;
+                                reconciliation:hasLimit \"3\" ;
+                                [[#if (urlParam "type")]]
+                                    reconciliation:hasType \"[[urlParam "type"]]\";
+                                [[/if]]
+                                reconciliation:outputName ?outputName;
+                                reconciliation:outputType ?outputType;
+                                reconciliation:outputId ?outputId;
+                                reconciliation:outputScore ?outputScore;
+                                reconciliation:outputDescription ?outputDescription;
+                        }
+                    ",
+                    "arguments": {
+                        "token": {"type": "xsd:string"}
+                    }
+                }'
+                fields='[{
+                    "id": "token",
+                    "label": "Term",
+                    "xsdDatatype": "xsd:string"
+                }]'>
+                <p>
+                    <semantic-form-text-input for="token" placeholder='Insert term'></semantic-form-text-input>
+                </p>  
+                <button type='button' name='submit' className='btn btn-default'>Search</button>
+            </semantic-search-form-query>
+
+            <semantic-search-result-holder>
+                <semantic-search-result> 
+                    <semantic-table 
+                        id='table' 
+                        query="select ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore where{} ORDER BY DESC(?outputScore)"
+                        options='{
+                            "showFilter": false
+                        }'
+                        column-configuration='[{
+                            "displayName": "Term", 
+                            "cellTemplate": "{{outputName.value}}" 
+                        },{
+                            "displayName": "Score", 
+                            "cellTemplate": "{{outputScore.value}}" 
+                        },{
+                            "displayName": "Source", 
+                            "cellTemplate": "<a target=\"_blank\" href=\"http://d-nb.info/gnd/{{outputId.value}}\">http://d-nb.info/gnd/{{outputId.value}}</a>"
+                        },{     
+                            "displayName": "&nbsp;", 
+                            "cellTemplate": "{{> template-align}}" 
+                        }]'
+                    >
+                        <template id="template-align">
+                            <semantic-context repository="default">
+                                <semantic-if
+                                    query='ASK { <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> . }'
+                                    then="{{> template-remove}}"
+                                    else="{{> template-accept}}">
+                                    <template id="template-accept">
+                                        <td>
+                                            [[#if (hasPermission "sparql:default:update")]]
+                                                <semantic-update
+                                                    id="external-alignment-update-add"
+                                                    query='INSERT DATA {
+                                                        GRAPH graph:alignments {
+                                                                <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .
+                                                                <http://d-nb.info/gnd/{{outputId.value}}> rdfs:label "{{outputName.value}}" .
+                                                            }
+                                                        }'
+                                                    post-action="event">
+                                                    <button type="button" class="btn btn-primary">Accept</button>
+                                                </semantic-update>
+                                            [[/if]]
+                                        </td>
+                                        <td></td>
+                                    </template>
+                                    <template id="template-remove">
+                                        <td>
+                                            Accepted
+                                        </td>
+                                        <td>
+                                            [[#if (hasPermission "sparql:default:update")]]
+                                                <semantic-update
+                                                    id="external-alignment-update-remove"
+                                                    query='DELETE {
+                                                            GRAPH graph:alignments {
+                                                                <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .                                                    }
+                                                        } WHERE {}'
+                                                    post-action="event">
+                                                    <button type="button" class="btn">Remove</button>
+                                                </semantic-update>
+                                            [[/if]]
+                                        </td>
+                                    </template>
+                                </semantic-if>
+                            </semantic-context>
+                        </template>
+                    </semantic-table> 
+                </semantic-search-result>
+            </semantic-search-result-holder>
+        </semantic-search>
+    </semantic-context>
+[[else]]
+    <p>Please pass a term to align via the URL parameter "termiri"</p>
+[[/if]]

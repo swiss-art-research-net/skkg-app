@@ -1,0 +1,26 @@
+output: ../ldp/assets/fieldDefinitions.trig
+
+prefix: https://platform.swissartresearch.net/instances/fields/
+container: http://www.metaphacts.com/ontologies/platform#fieldDefinitionContainer
+namespaces:
+  aat: http://vocab.getty.edu/aat/
+  crm: http://www.cidoc-crm.org/cidoc-crm/
+  crmdig: http://www.ics.forth.gr/isl/CRMdig/
+  crminf: http://www.ics.forth.gr/isl/CRMinf/
+  frbroo: http://iflastandards.info/ns/fr/frbr/frbroo/
+  la: http://www.linkedart.org/schema/
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  prov: http://www.w3.org/ns/prov#
+  search: https://platform.swissartresearch.net/search/
+
+fields:
+
+    - id: same_as
+      label: Same as
+      description: The entity that is the same as the subject
+      datatype: xsd:anyURI
+      
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crmdig:L54_is_same-as ?value .
+          }'

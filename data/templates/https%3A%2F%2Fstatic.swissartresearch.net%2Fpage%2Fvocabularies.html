@@ -25,6 +25,8 @@
     </div>
 </mp-splitpane>
 
+[[> partial:pageFooter]]
+
 [[#*inline "component-vocabulary-content"]]
 
     <mp-event-target-template-render id="vocabulary-content-renderer" template="{{> template}}">
@@ -44,91 +46,26 @@
                     insert: parent terms
                     next/previous term
                 -->
-                <semantic-context repository="secondary">
-                    <semantic-query
-                        query="SELECT * WHERE {
-                            BIND(<{{iri}}> AS ?subject)
-                            ?aa crm:P140_assigned_attribute_to ?subject ;
-                                crm:P141_assigned ?alignment ;
-                                crm:P177_assigned_property_of_type ?match ;
-                                rdf:value ?score .
-                            VALUES (?match) {
-                                (skos:exactMatch)
-                                (skos:closeMatch)
-                            }
-                        } ORDER BY DESC(?score)"
-                        template="{{> vocabulary-alignment-template}}"
-                    >
-                        <template id="vocabulary-alignment-template">
-                            <h3>Suggested Alignments</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Term</th>
-                                        <th>Source</th>
-                                        <th colspan="2"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each bindings}}
-                                        <tr>
-                                            <td><mp-label iri="{{alignment.value}}"></mp-label></td>
-                                            <td>
-                                                <a href="{{alignment.value}}" target="_blank">{{alignment.value}}</a>
-                                            </td>
-                                            <semantic-context repository="default">
-                                                <semantic-if
-                                                    query="ASK { <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> . }"
-                                                    then="{{> template-remove}}"
-                                                    else="{{> template-accept}}">
-                                                    <template id="template-accept">
-                                                        <td>
-                                                            [[#if (hasPermission "sparql:default:update")]]
-                                                                <semantic-update
-                                                                    query="INSERT DATA {
-                                                                        GRAPH <https://data.skkg.ch/graph/alignment> {
-                                                                            <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
-                                                                        }
-                                                                        }"
-                                                                    post-action="event">
-                                                                    <button type="button" class="btn btn-primary">Accept</button>
-                                                                </semantic-update>
-                                                            [[/if]]
-                                                        </td>
-                                                        <td></td>
-                                                    </template>
-                                                    <template id="template-remove">
-                                                        <td>
-                                                            Accepted
-                                                        </td>
-                                                        <td>
-                                                            [[#if (hasPermission "sparql:default:update")]]
-                                                                <semantic-update
-                                                                    query="DELETE {
-                                                                            GRAPH <https://data.skkg.ch/graph/alignment> {
-                                                                                <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
-                                                                            }
-                                                                        } WHERE {}"
-                                                                    post-action="event">
-                                                                    <button type="button" class="btn">Remove</button>
-                                                                </semantic-update>
-                                                            [[/if]]
-                                                        </td>
-                                                    </template>
-                                                </semantic-if>
-                                            </semantic-context>
-                                        </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </template>
-                    </semantic-query>
-                </semantic-context>
+                [[> module-term-details]]
+                [[> module-suggested-alignment ]]
+                [[> module-add-alignment ]]
                 
             {{else}}
 
                 <p>Select a vocabulary entry in the sidebar on the left.</p>
-            
+                <p>
+
+                <mp-event-trigger 
+                    id="vocabulary-trigger-dev"
+                    type="Component.TemplateUpdate"
+                    targets='["vocabulary-content-renderer"]'
+                    data='{
+                        "iri": "https://data.skkg.ch/type/21087/143587"
+                    }'
+                >
+                    <a><mp-label iri="https://data.skkg.ch/type/21087/143587"></mp-label></a>
+                </mp-event-trigger>
+                </p>
             {{/if}}
         </template>        
     </mp-event-target-template-render>
@@ -137,28 +74,174 @@
 [[#*inline "component-vocabularies-tree"]]
 
 <semantic-tree 
-    collapsed="true"
-    query="
-    SELECT ?node ?parent WHERE {
-        ?node crm:P127_has_broader_term ?parent .
-        ?parent rdfs:label ?parentLabel .
-        ?node rdfs:label ?nodeLabel .
-    } ORDER BY ?parentLabel ?nodeLabel"
-    tuple-template="{{> nodeTemplate }}"
-    >
-    <template id="nodeTemplate">
-        <mp-event-trigger 
-            id="vocabulary-trigger-{{node.value}}"
-            type="Component.TemplateUpdate"
-            targets='["vocabulary-content-renderer"]'
-            data='{
-                "iri": "{{node.value}}"
-            }'
+        collapsed="true"
+        query="
+        SELECT ?node ?parent ?hasSameAs WHERE {
+            ?node crm:P127_has_broader_term ?parent .
+            ?parent rdfs:label ?parentLabel .
+            ?node rdfs:label ?nodeLabel .
+            OPTIONAL {
+                ?node crmdig:L54_is_same-as ?sameAs .
+                BIND('true'^^xsd:boolean AS ?hasSameAs)
+            }
+        } ORDER BY ?parentLabel ?nodeLabel"
+        tuple-template="{{> nodeTemplate }}"
         >
-            <a><mp-label iri="{{node.value}}"></mp-label></a>
-        </mp-event-trigger>
-    </template>
-</semantic-tree>
+        <template id="nodeTemplate">
+            <mp-event-trigger 
+                id="vocabulary-trigger-{{node.value}}"
+                type="Component.TemplateUpdate"
+                targets='["vocabulary-content-renderer"]'
+                data='{
+                    "iri": "{{node.value}}"
+                }'
+            >
+                <a><mp-label iri="{{node.value}}"></mp-label> {{#if hasSameAs.value}}&nbsp;<i class="fa fa-link"></i>{{/if}}</a>
+            </mp-event-trigger>
+        </template>
+    </semantic-tree>
 [[/inline]]
 
-[[> partial:pageFooter]]
+[[#*inline "module-add-alignment"]]
+    <h3>Manual Alignments</h3>
+
+    <semantic-query
+        query="SELECT ?subject ?alignment (MIN(?labels) as ?label) WHERE {
+            BIND(<{{iri}}> AS ?subject)
+            GRAPH graph:alignments {
+                ?subject crmdig:L54_is_same-as ?alignment .
+            }
+            ?alignment rdfs:label ?labels .
+        } GROUP BY ?subject ?alignment
+        ORDER BY DESC(?label)"
+        template="{{> vocabulary-alignment-template}}"
+    >
+        <template id="vocabulary-alignment-template">
+            [[> template-vocabulary-alignment]]
+        </template>
+    </semantic-query>
+
+    <mp-overlay-dialog type="modal" bs-size="large">
+        <mp-overlay-dialog-trigger>
+            <button class="btn btn-default">Add New Alignment</button>
+        </mp-overlay-dialog-trigger>
+        <mp-overlay-dialog-content>
+            <div width="800px">
+                <mp-page-loader iri="page:alignTerm" 
+                    urlqueryparam-termiri="{{iri}}"
+                    urlqueryparam-type="SubjectHeading"
+                ></mp-page-loader>
+            </div>
+        </mp-overlay-dialog-content>
+    </mp-overlay-dialog>
+[[/inline]]
+
+[[#*inline "module-suggested-alignment"]]
+
+    <semantic-context repository="secondary">
+        <semantic-query
+            query="SELECT ?subject ?alignment (MIN(?labels) as ?label) WHERE {
+                BIND(<{{iri}}> AS ?subject)
+                ?aa crm:P140_assigned_attribute_to ?subject ;
+                    crm:P141_assigned ?alignment ;
+                    crm:P177_assigned_property_of_type ?match ;
+                    rdf:value ?score .
+                ?alignment rdfs:label ?labels .
+                VALUES (?match) {
+                    (skos:exactMatch)
+                    (skos:closeMatch)
+                }
+            } GROUP BY ?subject ?alignment
+            ORDER BY DESC(?score)"
+            template="{{> vocabulary-alignment-template}}"
+        >
+            <template id="vocabulary-alignment-template">
+                <h3>Suggested Alignments</h3>
+                [[> template-vocabulary-alignment hideAccepted=true]]
+            </template>
+        </semantic-query>
+    </semantic-context>
+[[/inline]]
+
+[[#*inline "module-term-details"]]
+
+    [[> partial:fieldDefinitionsInline ]]
+    [[> partial:fieldVisualisationTemplates ]]
+    
+    [[!-- Do not display yet
+    <mp-field-visualization
+        subject="{{iri}}"
+        fields='[
+            [[> same_as]]
+        ]'
+        template='{{> field-table-template }}'
+    >
+        [[> field-table-template]]
+        
+    </mp-field-visualization>
+    --]]
+
+[[/inline]]
+
+[[#*inline "template-vocabulary-alignment"]]
+    <table>
+        <thead>
+            <tr>
+                <th>Term</th>
+                <th>Source</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each bindings}}
+                <tr>
+                    <td><mp-label iri="{{alignment.value}}"></mp-label></td>
+                    <td>
+                        <a href="{{alignment.value}}" target="_blank">{{alignment.value}}</a>
+                    </td>
+                    <semantic-context repository="default">
+                        <semantic-if
+                            query="ASK { <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> . }"
+                            then="{{> template-remove}}"
+                            else="{{> template-accept}}">
+                            <template id="template-accept">
+                                <td>
+                                    [[#if (hasPermission "sparql:default:update")]]
+                                        <semantic-update
+                                            query='INSERT DATA {
+                                                GRAPH graph:alignments {
+                                                        <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .
+                                                        <{{alignment.value}}> rdfs:label "{{label.value}}" .
+                                                    }
+                                                }'
+                                            post-action="event">
+                                            <button type="button" class="btn btn-primary">Accept</button>
+                                        </semantic-update>
+                                    [[/if]]
+                                </td>
+                                <td></td>
+                            </template>
+                            <template id="template-remove">
+                                <td>
+                                    Accepted
+                                </td>
+                                <td>
+                                    [[#if (hasPermission "sparql:default:update")]]
+                                        <semantic-update
+                                            query="DELETE {
+                                                    GRAPH graph:alignments {
+                                                        <{{subject.value}}> crmdig:L54_is_same-as <{{alignment.value}}> .                                                    }
+                                                } WHERE {}"
+                                            post-action="event">
+                                            <button type="button" class="btn">Remove</button>
+                                        </semantic-update>
+                                    [[/if]]
+                                </td>
+                            </template>
+                        </semantic-if>
+                    </semantic-context>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+[[/inline]]

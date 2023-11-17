@@ -1,0 +1,61 @@
+[[#*inline "field-table-template"]]
+    <template id="field-table-template">
+        {{#if noData}}
+            
+        {{else}}
+            <div class="table rs-table">
+            <table class="table table-hover">
+                <tbody>
+                {{#each fields as |field|}}
+                    {{#if field.values}}
+                    {{#ifCond field.display "===" "hidden"}}
+                    {{else}}
+                        <tr>
+                            <th>{{field.label.0.value}}</th>
+                            <td>
+                                {{#ifCond (objectLength field.values) '>' 1}}
+                                    <ul>
+                                        {{#each field.values as |value|}}
+                                            <li>
+                                                {{> field-value-template field=field value=value}}
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                {{/ifCond}}
+
+                                {{#ifCond (objectLength field.values) '===' 1}}
+                                    {{#each field.values as |value|}}
+                                        {{> field-value-template field=field value=value}}
+                                    {{/each}}
+                                {{/ifCond}}
+                            </td>
+                        </tr>
+                        {{/ifCond}}
+                    {{/if}}                  
+                {{/each}}
+                </tbody>
+            </table>
+            </div>
+        {{/if}}
+    </template>
+    <template id="field-value-template">
+        <div>
+            {{#ifCond field.xsdDatatype.value "=="  "http://www.w3.org/2001/XMLSchema#string"}}
+                {{{value.value.value}}}
+            {{/ifCond}}
+            {{#ifCond field.xsdDatatype.value "=="  "http://www.w3.org/2001/XMLSchema#langString"}}
+                {{value.value.value}}{{#if value.value.language}} - {{value.value.language}}{{/if}}
+            {{/ifCond}}
+            {{#ifCond field.xsdDatatype.value "==" "http://www.w3.org/2001/XMLSchema#dateTime"}}
+                {{value.value.value}}
+            {{/ifCond}}
+            {{#ifCond field.xsdDatatype.value "=="  "http://www.w3.org/2001/XMLSchema#anyURI"}}
+                {{#if value.value.datatype}}
+                    {{{value.value.value}}}
+                {{else}}
+                <mp-label iri="{{value.value.value}}"></mp-label>
+                {{/if}}
+            {{/ifCond}}
+        </div>
+    </template>
+[[/inline]]
