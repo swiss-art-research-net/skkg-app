@@ -113,7 +113,7 @@
             PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
             PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
             SELECT ?subject ?outputId ?outputType ?outputTypelabel ?outputName ?outputDescription ?outputScore ?outputMatch WHERE {
-                ?subject reconciliation:hasQueryString ?token;
+                ?subject reconciliation:hasQueryString ?__token__;
                     reconciliation:hasLimit \"3\" ;
                     reconciliation:outputName ?outputName;
                     reconciliation:outputType ?outputType;
@@ -123,15 +123,15 @@
                     reconciliation:outputMatch ?outputMatch .
         }",
         "arguments": {
-            "token": {"type": "xsd:string"}
+            "__token__": {"type": "xsd:string"}
         }
     }'
     fields='[{
-        "id": "token",
+        "id": "__token__",
         "label": "Type",
         "xsdDatatype": "xsd:string"
     }]'>
-        <semantic-form-text-input render-header="false" for="token" placeholder='Insert research parameter e.g. "Leonardo da Vinci"'></semantic-form-text-input>
+        <semantic-form-text-input render-header="false" for="__token__" placeholder='Insert research parameter e.g. "Leonardo da Vinci"'></semantic-form-text-input>
         <button type='button' name='submit' className='btn btn-default'>Search</button>
     </semantic-search-form-query>
     <semantic-search-result-holder>
