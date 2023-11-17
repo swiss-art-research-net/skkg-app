@@ -8,7 +8,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX : <http://www.researchspace.org/resource/system/repository#>
 
-:reconciliationAPI a ephedra:Service ;
+:ReconciliationAPI a ephedra:Service ;
   sail:sailType "researchspace:RESTSail" ;
   rdfs:label "W3C Reconciliation API descriptor";
   #sparql query pattern 
@@ -97,7 +97,15 @@ spin:column [
     rdfs:comment "results" ;
     spl:predicate :_outputType ;
     spl:valueType xsd:string;
-    ephedra:jsonPath "$.type[0].id"
+    ephedra:jsonPath "$.type[1].id"
+  ] ;
+
+spin:column [
+    a spin:Column ;
+    rdfs:comment "results" ;
+    spl:predicate :_outputTypeLabel ;
+    spl:valueType xsd:string;
+    ephedra:jsonPath "$.type[1].name"
   ] ;
 
   spin:column [

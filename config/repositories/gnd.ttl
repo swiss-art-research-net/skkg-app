@@ -15,13 +15,14 @@
     repo:repositoryType "openrdf:SailRepository" ;
     reposail:sailImpl [
       sail:sailType "researchspace:RESTSail" ;
-      ephedra:serviceURL "https://lobid.org/gnd/reconcile" ;
+      ephedra:serviceURL "https://lobid.org/gnd/reconcile/" ;
       ephedra:httpMethod "POST" ;
       ephedra:httpHeader [
         ephedra:name "Accept" ;
         ephedra:value "application/json"
       ] ;
       ephedra:inputFormat "application/json";
-      ephedra:implementsService :reconciliationAPI 
+      ephedra:inputFormfield "queries";
+      ephedra:implementsService :ReconciliationAPI 
     ]  
   ] .
