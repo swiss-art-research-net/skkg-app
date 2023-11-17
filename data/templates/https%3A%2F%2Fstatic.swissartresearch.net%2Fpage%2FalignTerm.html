@@ -1,56 +1,68 @@
 [[> partial:pageHeader ]]
-    <semantic-context repository="gnd">
-        <semantic-search>
+    [[#if (urlParam "termiri")]]
+        
+        <div>
+            Align term <mp-label iri="[[urlParam "termiri"]]"></mp-label>
+        </div>
+        <semantic-context repository="gnd">
+            <semantic-search>
 
-            <semantic-search-form-query
-                query-template='{
-                    "queryString": "
-                        PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
-                        SELECT ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore WHERE {
-                            ?subject reconciliation:hasQueryString ?token;
-                                reconciliation:hasLimit \"3\" ;
-                                reconciliation:hasType \"SubjectHeading\";
-                                reconciliation:outputName ?outputName;
-                                reconciliation:outputType ?outputType;
-                                reconciliation:outputId ?outputId;
-                                reconciliation:outputScore ?outputScore;
-                                reconciliation:outputDescription ?outputDescription;
+                <semantic-search-form-query
+                    query-template='{
+                        "queryString": "
+                            PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
+                            SELECT ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore WHERE {
+                                ?subject reconciliation:hasQueryString ?token;
+                                    reconciliation:hasLimit \"3\" ;
+                                    reconciliation:hasType \"SubjectHeading\";
+                                    reconciliation:outputName ?outputName;
+                                    reconciliation:outputType ?outputType;
+                                    reconciliation:outputId ?outputId;
+                                    reconciliation:outputScore ?outputScore;
+                                    reconciliation:outputDescription ?outputDescription;
+                            }
+                        ",
+                        "arguments": {
+                            "token": {"type": "xsd:string"}
                         }
-                    ",
-                    "arguments": {
-                        "token": {"type": "xsd:string"}
-                    }
-                }'
-                fields='[{
-                    "id": "token",
-                    "label": "Type",
-                    "xsdDatatype": "xsd:string"
-                }]'>
-                <semantic-form-text-input render-header="false" for="token" placeholder='Insert research parameter e.g. "Leonardo da Vinci"'></semantic-form-text-input>
-                <button type='button' name='submit' className='btn btn-default'>Search</button>
-            </semantic-search-form-query>
+                    }'
+                    fields='[{
+                        "id": "token",
+                        "label": "Term",
+                        "xsdDatatype": "xsd:string"
+                    }]'>
+                    <semantic-form-text-input for="token" placeholder='Insert term'></semantic-form-text-input>
+                    <button type='button' name='submit' className='btn btn-default'>Search</button>
+                </semantic-search-form-query>
 
-            <semantic-search-result-holder>
-                <semantic-search-result> 
-                    <semantic-table 
-                        id='table' 
-                        query="select ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore where{} ORDER BY DESC(?outputScore)"
-                        column-configuration='[{
-                            "displayName": "Term", 
-                            "cellTemplate": "{{outputName.value}}" 
-                        },{
-                            "displayName": "Score", 
-                            "cellTemplate": "{{outputScore.value}}" 
-                        },{
-                            "displayName": "Source", 
-                            "cellTemplate": "<a target=\"_blank\" href=\"http://d-nb.info/gnd/{{outputId.value}}\">http://d-nb.info/gnd/{{outputId.value}}</a>"
-                        },{     
-                            "displayName": "&nbsp;", 
-                            "cellTemplate": "Accept" 
-                        }]'
-                    ></semantic-table> 
-                </semantic-search-result>
-            </semantic-search-result-holder>
-        </semantic-search>
-    </semantic-context>
+                <semantic-search-result-holder>
+                    <semantic-search-result> 
+                        <semantic-table 
+                            id='table' 
+                            query="select ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore where{} ORDER BY DESC(?outputScore)"
+                            column-configuration='[{
+                                "displayName": "Term", 
+                                "cellTemplate": "{{outputName.value}}" 
+                            },{
+                                "displayName": "Score", 
+                                "cellTemplate": "{{outputScore.value}}" 
+                            },{
+                                "displayName": "Source", 
+                                "cellTemplate": "<a target=\"_blank\" href=\"http://d-nb.info/gnd/{{outputId.value}}\">http://d-nb.info/gnd/{{outputId.value}}</a>"
+                            },{     
+                                "displayName": "&nbsp;", 
+                                "cellTemplate": "{{> template-align}}" 
+                            }]'
+                        >
+                            <template id="template-align">
+                                Accept
+                            </template>
+                        </semantic-table> 
+                    </semantic-search-result>
+                </semantic-search-result-holder>
+            </semantic-search>
+        </semantic-context>
+    [[else]]
+        <p>Please pass a term to align via the URL parameter "termiri"</p>
+    [[/if]]
 [[> partial:pageFooter]]
