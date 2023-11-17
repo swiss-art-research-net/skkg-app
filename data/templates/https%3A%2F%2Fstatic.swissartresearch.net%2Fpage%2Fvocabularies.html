@@ -46,7 +46,8 @@
                     insert: parent terms
                     next/previous term
                 -->
-                [[> module-suggested-alignment ]]        
+                [[> module-suggested-alignment ]]
+                [[> module-add-alignment ]]
                 
             {{else}}
 
@@ -98,6 +99,22 @@
             </mp-event-trigger>
         </template>
     </semantic-tree>
+[[/inline]]
+
+[[#*inline "module-add-alignment"]]
+    <mp-overlay-dialog title="My Dialog" type="modal" bs-size="large">
+        <mp-overlay-dialog-trigger>
+            <button class="btn btn-default">Add New Alignmet</button>
+        </mp-overlay-dialog-trigger>
+        <mp-overlay-dialog-content>
+            <div width="800px">
+                <mp-page-loader iri="page:alignTerm" 
+                    urlqueryparam-termiri="{{iri}}"
+                    urlqueryparam-type="SubjectHeading"
+                ></mp-page-loader>
+            </div>
+        </mp-overlay-dialog-content>
+    </mp-overlay-dialog>
 [[/inline]]
 
 [[#*inline "module-suggested-alignment"]]
