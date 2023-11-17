@@ -8,13 +8,14 @@
            query-template='{
              "queryString": "
                 PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
-                SELECT ?subject ?outputId ?outputType ?outputName ?outputDescription WHERE {
+                SELECT ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore WHERE {
                   ?subject reconciliation:hasQueryString ?token;
                     reconciliation:hasLimit \"3\" ;
                     reconciliation:hasType \"SubjectHeading\";
                     reconciliation:outputName ?outputName;
                     reconciliation:outputType ?outputType;
                     reconciliation:outputId ?outputId;
+                    reconciliation:outputScore ?outputScore;
                     reconciliation:outputDescription ?outputDescription;
                 }
               ",
@@ -38,23 +39,23 @@
           <semantic-search-result> 
             <semantic-table 
               id='table' 
-              query="select ?subject ?outputId ?outputType ?outputName ?outputDescription where{}"
+              query="select ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore where{} ORDER BY DESC(?outputScore)"
               column-configuration='[
                 {
-                  "displayName": "ID", 
+                    "displayName": "Term", 
+                    "cellTemplate": "{{outputName.value}}" 
+                },
+                {
+                    "displayName": "Score", 
+                    "cellTemplate": "{{outputScore.value}}" 
+                },
+                {
+                  "displayName": "Source", 
                   "cellTemplate": "<a target=\"_blank\" href=\"http://d-nb.info/gnd/{{outputId.value}}\">http://d-nb.info/gnd/{{outputId.value}}</a>"
                 },              
                 {
-                  "displayName": "Type", 
-                  "cellTemplate": "{{outputType.value}}" 
-                },
-                {
-                  "displayName": "Term", 
-                  "cellTemplate": "{{outputName.value}}" 
-                },
-                {
-                  "displayName": "Description", 
-                  "cellTemplate": "{{outputDescription.value}}" 
+                  "displayName": "&nbsp;", 
+                  "cellTemplate": "Accept" 
                 }
               ]'
             ></semantic-table> 
