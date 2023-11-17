@@ -46,8 +46,7 @@
                     insert: parent terms
                     next/previous term
                 -->
-                [[> module-suggested-alignment ]]
-                [[> module-add-alignment ]]                
+                [[> module-suggested-alignment ]]        
                 
             {{else}}
 
@@ -99,62 +98,6 @@
             </mp-event-trigger>
         </template>
     </semantic-tree>
-[[/inline]]
-
-[[#*inline "module-add-alignment"]]
-    <h3>Add Alignment</h3>
-
-<semantic-context repository="gnd">
-<semantic-search>
-
-<semantic-search-form-query
-    query-template='{
-        "queryString": "
-            PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
-            PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
-            SELECT ?subject ?outputId ?outputType ?outputTypelabel ?outputName ?outputDescription ?outputScore ?outputMatch WHERE {
-                ?subject reconciliation:hasQueryString ?__token__ ;
-                    reconciliation:hasLimit \"5\" ;
-                    reconciliation:hasType \"SubjectHeading\" ;
-                    reconciliation:outputName ?outputName ;
-                    reconciliation:outputType ?outputType ;
-                    reconciliation:outputTypeLabel ?outputTypelabel ;
-                    reconciliation:outputId ?outputId ;
-                    reconciliation:outputScore ?outputScore ;
-                    reconciliation:outputMatch ?outputMatch .
-        }",
-        "arguments": {
-            "__token__": {"type": "xsd:string"}
-        }
-    }'
-    fields='[{
-        "id": "__token__",
-        "label": "Type",
-        "xsdDatatype": "xsd:string"
-    }]'>
-        <semantic-form-text-input render-header="false" for="__token__" placeholder='Insert research parameter e.g. "Leonardo da Vinci"'></semantic-form-text-input>
-        <button type='button' name='submit' className='btn btn-default'>Search</button>
-    </semantic-search-form-query>
-    <semantic-search-result-holder>
-        <semantic-search-result> 
-            <semantic-table 
-                id="table"
-                query="SELECT ?subject ?outputName ?outputId WHERE {} ORDER BY DESC(?outputScore)"
-                column-configuration='[{
-                    "variableName": "outputName",
-                    "displayName": "Term"
-                },
-                {
-                    "variableName": "outputId",
-                    "displayName": "Source"
-                }]'
-            ></semantic-table> 
-        </semantic-search-result>
-    </semantic-search-result-holder>
-</semantic-search>
-
-</semantic-context>
-
 [[/inline]]
 
 [[#*inline "module-suggested-alignment"]]
