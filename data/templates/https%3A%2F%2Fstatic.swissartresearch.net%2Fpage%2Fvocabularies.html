@@ -103,7 +103,26 @@
 [[/inline]]
 
 [[#*inline "module-add-alignment"]]
-    <mp-overlay-dialog title="My Dialog" type="modal" bs-size="large">
+    <h3>Manual Alignments</h3>
+
+    <semantic-query
+        query="SELECT ?subject ?alignment (MIN(?labels) as ?label) WHERE {
+            BIND(<{{iri}}> AS ?subject)
+            GRAPH graph:alignments {
+                ?subject crmdig:L54_is_same-as ?alignment .
+                
+            }
+            ?alignment rdfs:label ?labels .
+        } GROUP BY ?subject ?alignment
+        ORDER BY DESC(?label)"
+        template="{{> vocabulary-alignment-template}}"
+    >
+        <template id="vocabulary-alignment-template">
+            [[> template-vocabulary-alignment]]
+        </template>
+    </semantic-query>
+
+    <mp-overlay-dialog type="modal" bs-size="large">
         <mp-overlay-dialog-trigger>
             <button class="btn btn-default">Add New Alignmet</button>
         </mp-overlay-dialog-trigger>
@@ -119,6 +138,7 @@
 [[/inline]]
 
 [[#*inline "module-suggested-alignment"]]
+    <h3>Suggested Alignments</h3>
     <semantic-context repository="secondary">
         <semantic-query
             query="SELECT ?subject ?alignment (MIN(?labels) as ?label) WHERE {
@@ -162,7 +182,6 @@
 [[/inline]]
 
 [[#*inline "template-vocabulary-alignment"]]
-    <h3>Suggested Alignments</h3>
     <table>
         <thead>
             <tr>
