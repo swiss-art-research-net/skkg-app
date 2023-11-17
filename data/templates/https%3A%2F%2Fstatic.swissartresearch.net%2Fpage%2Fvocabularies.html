@@ -113,11 +113,12 @@
             PREFIX gndo: <https://d-nb.info/standards/elementset/gnd#>
             PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
             SELECT ?subject ?outputId ?outputType ?outputTypelabel ?outputName ?outputDescription ?outputScore ?outputMatch WHERE {
-                ?subject reconciliation:hasQueryString ?__token__;
-                    reconciliation:hasLimit \"3\" ;
-                    reconciliation:outputName ?outputName;
-                    reconciliation:outputType ?outputType;
-                    reconciliation:outputTypeLabel ?outputTypelabel;
+                ?subject reconciliation:hasQueryString ?__token__ ;
+                    reconciliation:hasLimit \"5\" ;
+                    reconciliation:hasType \"SubjectHeading\" ;
+                    reconciliation:outputName ?outputName ;
+                    reconciliation:outputType ?outputType ;
+                    reconciliation:outputTypeLabel ?outputTypelabel ;
                     reconciliation:outputId ?outputId ;
                     reconciliation:outputScore ?outputScore ;
                     reconciliation:outputMatch ?outputMatch .
@@ -138,7 +139,23 @@
         <semantic-search-result> 
             <semantic-table 
                 id="table"
-                query="SELECT * WHERE {}"
+                query="SELECT * WHERE {} ORDER BY DESC(?outputScore)"
+                column-configuration='[{
+                    "variableName": "outputName",
+                    "displayName": "Term"
+                },
+                {
+                    "variableName": "outputType",
+                    "displayName": "Type"
+                },
+                {
+                    "variableName": "outputTypelabel",
+                    "displayName": "Type Label"
+                },
+                {
+                    "variableName": "outputScore",
+                    "displayName": "Score"
+                }]'
             ></semantic-table> 
         </semantic-search-result>
     </semantic-search-result-holder>
