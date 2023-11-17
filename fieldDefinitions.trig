@@ -1,0 +1,38 @@
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+@prefix rsfield: <http://www.researchspace.org/resource/system/fields/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rsuser: <http://www.researchspace.org/resource/user/> .
+
+<http://www.researchspace.org/resource/system/fieldDefinitionContainer/context> {
+  <http://www.researchspace.org/resource/system/fieldDefinitionContainer> rdfs:comment "Container to store field definitions.";
+    a ldp:Container, ldp:Resource, prov:Entity ;
+    rdfs:label "Form Container";
+    prov:wasAttributedTo rsuser:admin ;
+    prov:generatedAtTime "2020-04-06T13:49:19.238+03:00"^^xsd:dateTime .
+}
+
+
+    <https://platform.swissartresearch.net/instances/fields/same_as/context> {
+
+        <http://www.researchspace.org/resource/system/fieldDefinitionContainer> ldp:contains <https://platform.swissartresearch.net/instances/fields/same_as> .
+ 
+        <https://platform.swissartresearch.net/instances/fields/same_as> 
+            rdfs:label "Same as" ;
+            rdfs:comment "The entity that is the same as the subject" ;
+            rsfield:xsdDatatype xsd:anyURI ; 
+            rsfield:domain crm:E1_CRM_Entity ; 
+            rsfield:range crm:E1_CRM_Entity ; 
+                rsfield:selectPattern <https://platform.swissartresearch.net/instances/fields/same_as/query/select> ;
+    
+        a rsfield:Field, ldp:Resource, prov:Entity ;
+        prov:wasAttributedTo rsuser:admin ;
+        prov:generatedAtTime "2021-01-08T11:43:46.111Z"^^xsd:dateTime .
+
+                <https://platform.swissartresearch.net/instances/fields/same_as/query/select> a sp:Query;
+                    sp:text """SELECT ?value WHERE { $subject crmdig:L54_is_same-as ?value . }""" .
+    
+    }
