@@ -13,7 +13,7 @@
                         PREFIX reconciliation: <http://www.researchspace.com/resource/assets/Ontologies/reconciliationAPI#>
                         SELECT ?subject ?outputId ?outputType ?outputName ?outputDescription ?outputScore WHERE {
                             ?subject reconciliation:hasQueryString ?token;
-                                reconciliation:hasLimit \"3\" ;
+                                reconciliation:hasLimit \"5\" ;
                                 [[#if (urlParam "type")]]
                                     reconciliation:hasType \"[[urlParam "type"]]\";
                                 [[/if]]
