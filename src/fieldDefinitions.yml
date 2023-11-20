@@ -14,12 +14,20 @@ namespaces:
   search: https://platform.swissartresearch.net/search/
 
 fields:
+  
+    - id: has_broader_term
+      label: Broader term
+      description: The broader term of the subject
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P127_has_broader_term ?value .
+          }'
 
     - id: same_as
       label: Same as
       description: The entity that is the same as the subject
       datatype: xsd:anyURI
-      
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crmdig:L54_is_same-as ?value .

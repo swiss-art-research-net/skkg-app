@@ -1,4 +1,15 @@
 
+ [[#*inline "has_broader_term"]]
+    {
+        "id" : "has_broader_term",
+
+            "label": "Broader term",
+            "description" : "The broader term of the subject",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P127_has_broader_term ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/has_broader_term"
+    }
+[[/inline]]
  [[#*inline "same_as"]]
     {
         "id" : "same_as",
@@ -6,7 +17,6 @@
             "label": "Same as",
             "description" : "The entity that is the same as the subject",
             "xsdDatatype" : "xsd:anyURI",
-            "domain" : "crm:E1_CRM_Entity",
                 "selectPattern" : "SELECT ?value WHERE { $subject crmdig:L54_is_same-as ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/same_as"
     }
