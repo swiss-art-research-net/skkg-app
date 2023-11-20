@@ -39,9 +39,6 @@
             </mp-event-proxy>
             {{#if iri}}
                 <h2><mp-label iri="{{iri}}"></mp-label></h2>
-                <p>
-                    <semantic-link iri="{{iri}}">source</semantic-link>
-                </p>
                 <!--
                     insert: parent terms
                     next/previous term
@@ -88,6 +85,7 @@
         tuple-template="{{> nodeTemplate }}"
         >
         <template id="nodeTemplate">
+            {{log this}}
             <mp-event-trigger 
                 id="vocabulary-trigger-{{node.value}}"
                 type="Component.TemplateUpdate"
@@ -165,6 +163,35 @@
 
 [[#*inline "module-term-details"]]
 
+    <h3>Details</h3>
+
+    <p>
+        <semantic-link iri="{{iri}}">Go to source</semantic-link>
+    </p>
+    <dl>
+        <semantic-query
+            query="SELECT ?value WHERE { <{{iri}}> crm:P127_has_broader_term ?value . }"
+            template="{{> template-broader-term}}">
+            <template id="template-broader-term">
+                <dt>Broader term</dt>
+                {{#each bindings}}
+                    <dd>
+                        <mp-event-trigger 
+                            id="vocabulary-trigger-broader"
+                            type="Component.TemplateUpdate"
+                            targets='["vocabulary-content-renderer"]'
+                            data='{
+                                "iri": "{{value.value}}"
+                            }'
+                        >
+                            <a><mp-label iri="{{value.value}}"></mp-label></a>
+                        </mp-event-trigger>
+                    </dd>
+                {{/each}}
+        </semantic-query>
+        
+    </dl>
+
     [[> partial:fieldDefinitionsInline ]]
     [[> partial:fieldVisualisationTemplates ]]
     
@@ -172,6 +199,7 @@
     <mp-field-visualization
         subject="{{iri}}"
         fields='[
+            [[> has_broader_term]],
             [[> same_as]]
         ]'
         template='{{> field-table-template }}'
