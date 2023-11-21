@@ -15,6 +15,14 @@ namespaces:
 
 fields:
 
+    - id: gattung
+      label: Gattung
+      queries:
+        - SELECT ?value WHERE {
+          ?subject crm:P2_has_type ?value .
+          ?value crm:P127_has_broader_term* type:21087 .
+        }
+
     - id: has_broader_term
       label: Broader term
       description: The broader term of the subject
