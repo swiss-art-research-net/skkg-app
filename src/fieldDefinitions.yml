@@ -50,6 +50,15 @@ fields:
           ?identifier crm:P2_has_type type:invnr ;
             crm:P190_has_symbolic_content ?value .
         }'
+
+    - id: mat_technik
+      label: Mat./Technik
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P45_consists_of ?value .
+        }'
+
     - id: masse
       label: Masse
       datatype: xsd:string

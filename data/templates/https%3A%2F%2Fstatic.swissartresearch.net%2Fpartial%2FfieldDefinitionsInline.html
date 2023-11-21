@@ -40,6 +40,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/inv_nr"
     }
 [[/inline]]
+ [[#*inline "mat_technik"]]
+    {
+        "id" : "mat_technik",
+
+            "label": "Mat./Technik",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P45_consists_of ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mat_technik"
+    }
+[[/inline]]
  [[#*inline "masse"]]
     {
         "id" : "masse",
