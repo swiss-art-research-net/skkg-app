@@ -14,7 +14,7 @@ namespaces:
   search: https://platform.swissartresearch.net/search/
 
 fields:
-  
+
     - id: has_broader_term
       label: Broader term
       description: The broader term of the subject
@@ -23,6 +23,15 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crm:P127_has_broader_term ?value .
           }'
+
+    - id: inv_nr
+      label: Inv.-Nr.
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P1_is_identified_by ?identifier .
+          ?identifier crm:P2_has_type type:invnr ;
+            crm:P190_has_symbolic_content ?value .
+        }'
 
     - id: same_as
       label: Same as
