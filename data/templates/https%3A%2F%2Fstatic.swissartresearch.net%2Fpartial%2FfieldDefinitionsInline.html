@@ -1,4 +1,14 @@
 
+ [[#*inline "gattung"]]
+    {
+        "id" : "gattung",
+
+            "label": "Gattung",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term* type:21087 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/gattung"
+    }
+[[/inline]]
  [[#*inline "has_broader_term"]]
     {
         "id" : "has_broader_term",
@@ -8,6 +18,16 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P127_has_broader_term ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/has_broader_term"
+    }
+[[/inline]]
+ [[#*inline "inv_nr"]]
+    {
+        "id" : "inv_nr",
+
+            "label": "Inv.-Nr.",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?identifier . ?identifier crm:P2_has_type type:invnr ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/inv_nr"
     }
 [[/inline]]
  [[#*inline "same_as"]]

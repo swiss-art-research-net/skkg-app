@@ -17,11 +17,12 @@ fields:
 
     - id: gattung
       label: Gattung
+      datatype: xsd:anyURI
       queries:
-        - SELECT ?value WHERE {
+        - select: 'SELECT ?value WHERE {
           ?subject crm:P2_has_type ?value .
           ?value crm:P127_has_broader_term* type:21087 .
-        }
+        }'
 
     - id: has_broader_term
       label: Broader term
@@ -34,6 +35,7 @@ fields:
 
     - id: inv_nr
       label: Inv.-Nr.
+      datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
           ?subject crm:P1_is_identified_by ?identifier .
