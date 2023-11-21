@@ -28,6 +28,15 @@
     },
 
     {
+        "id" : "pers_korp",
+
+            "label": "Pers./Körp",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by ?actor ; crm:P32_used_general_technique ?technique . ?actor rdfs:label ?actor_label . ?technique rdfs:label ?technique_label . BIND(CONCAT(?actor_label, \" (\", ?technique_label, \")\") AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/pers_korp"
+    },
+
+    {
         "id" : "same_as",
 
             "label": "Same as",

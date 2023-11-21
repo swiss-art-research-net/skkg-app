@@ -43,6 +43,16 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: pers_korp
+      label: Pers./Körp
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P108i_was_produced_by ?production .
+          ?production crm:P9_consists_of ?subProduction .
+          ?subProduction crm:P14_carried_out_by ?value .
+        }'
+
     - id: same_as
       label: Same as
       description: The entity that is the same as the subject
