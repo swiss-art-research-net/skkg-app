@@ -36,7 +36,7 @@
 
             "label": "Pers./Körp",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by ?actor ; crm:P32_used_general_technique ?technique . ?actor rdfs:label ?actor_label . ?technique rdfs:label ?technique_label . BIND(CONCAT(?actor_label, \" (\", ?technique_label, \")\") AS ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/pers_korp"
     }
 [[/inline]]
@@ -49,5 +49,15 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crmdig:L54_is_same-as ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/same_as"
+    }
+[[/inline]]
+ [[#*inline "titel"]]
+    {
+        "id" : "titel",
+
+            "label": "Titel",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/crm:P127_has_broader_term* type:32089 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/titel"
     }
 [[/inline]]

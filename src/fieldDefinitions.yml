@@ -61,3 +61,13 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crmdig:L54_is_same-as ?value .
           }'
+
+    - id: titel
+      label: Titel
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P1_is_identified_by ?title .
+          ?title crm:P2_has_type/crm:P127_has_broader_term* type:32089 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
