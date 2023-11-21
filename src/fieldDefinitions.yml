@@ -72,7 +72,7 @@ fields:
 
     - id: pers_korp
       label: Pers./Körp
-      datatype: xsd:string
+      datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
           ?subject crm:P108i_was_produced_by ?production .
