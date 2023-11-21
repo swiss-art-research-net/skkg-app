@@ -1,5 +1,14 @@
 [
     {
+        "id" : "datierung",
+
+            "label": "Datierung",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/datierung"
+    },
+
+    {
         "id" : "gattung",
 
             "label": "Gattung",

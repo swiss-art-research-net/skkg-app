@@ -15,6 +15,14 @@ namespaces:
 
 fields:
 
+    - id: datierung
+      label: Datierung
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
+        }'
+
     - id: gattung
       label: Gattung
       datatype: xsd:anyURI
