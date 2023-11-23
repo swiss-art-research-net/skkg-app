@@ -1,2 +1,3 @@
 preferredThumbnails = <http://schema.org/thumbnail>
 preferredLabels = <http://www.w3.org/2004/02/skos/core#prefLabel>,<http://www.w3.org/2000/01/rdf-schema#label>,<http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content>,<http://www.cidoc-crm.org/cidoc-crm/P90_has_value>,<http://www.researchspace.org/ontology/displayLabel>
+deploymentTitle = SKKG
