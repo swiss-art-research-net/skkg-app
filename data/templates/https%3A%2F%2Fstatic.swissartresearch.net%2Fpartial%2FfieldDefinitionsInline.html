@@ -25,7 +25,7 @@
 
             "label": "Gattung",
             "xsdDatatype" : "xsd:anyURI",
-                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term* type:21087 . }",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P2_has_type ?value . ?value skos:inScheme type:21087 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/gattung"
     }
 [[/inline]]
@@ -117,7 +117,7 @@
 
             "label": "Titel",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/crm:P127_has_broader_term* type:32089 ; crm:P190_has_symbolic_content ?value . }",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/titel"
     }
 [[/inline]]
