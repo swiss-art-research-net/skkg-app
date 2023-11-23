@@ -1,5 +1,14 @@
 [
     {
+        "id" : "daten",
+
+            "label": "Daten",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { { $subject a skkg:Person . OPTIONAL { $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate . } OPTIONAL { $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate . } } UNION { $subject a skkg:Group . OPTIONAL { $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate . } OPTIONAL { $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate . } } BIND(CONCAT(IF(BOUND(?birthdate), CONCAT(\"Geboren: \", ?birthdate, \" \"), \"\"), IF(BOUND(?deathdate), CONCAT(\"Gestorben: \", ?deathdate, \" \"), \"\"), IF(BOUND(?foundationdate), CONCAT(\"Gegründet: \", ?foundationdate, \" \"), \"\"), IF(BOUND(?dissolutiondate), CONCAT(\"Aufgelöst: \", ?dissolutiondate, \" \"), \"\")) as ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/daten"
+    },
+
+    {
         "id" : "datierung",
 
             "label": "Datierung",
@@ -79,6 +88,15 @@
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=\", \") as ?dimensions) WHERE { ?subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension, \" \", ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = \"de\") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, \": \", ?dimensions) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/masse"
+    },
+
+    {
+        "id" : "name",
+
+            "label": "Name",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?name . OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, \"\"), IF(BOUND(?lastname_value), CONCAT(\" \", ?lastname_value), \"\")) as ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/name"
     },
 
     {
