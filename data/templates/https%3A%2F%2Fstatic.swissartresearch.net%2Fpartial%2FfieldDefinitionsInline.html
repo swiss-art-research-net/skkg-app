@@ -30,6 +30,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/has_broader_term"
     }
 [[/inline]]
+ [[#*inline "inschr_sign"]]
+    {
+        "id" : "inschr_sign",
+
+            "label": "Inschr./Sign.",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P128_carries ?inscription . ?inscription crm:P2_has_type aat:300028702 ; crm:P190_has_symbolic_content ?inscription_value . OPTIONAL { ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation . } OPTIONAL { ?inscription crm:P1_is_identified_by/rdfs:label ?incription_position . } OPTIONAL { ?inscription crm:P3_has_notes ?inscription_notes . } BIND(CONCAT(?inscription_value, IF(BOUND(?inscription_translation), CONCAT(\" (\", ?inscription_translation, \") \"), \"\"), IF(BOUND(?inscription_position), CONCAT(\", \", ?inscription_position), \"\"), IF(BOUND(?inscription_notes), CONCAT(\" (\", ?inscription_notes, \") \"), \"\")) as ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/inschr_sign"
+    }
+[[/inline]]
  [[#*inline "inv_nr"]]
     {
         "id" : "inv_nr",
@@ -55,6 +65,7 @@
         "id" : "mat_technik_ausgabe",
 
             "label": "Mat./Tech. Ausgabe",
+            "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435429 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mat_technik_ausgabe"
     }
