@@ -59,6 +59,16 @@ fields:
             $subject crm:P45_consists_of ?value .
         }'
 
+    - id: mat_technik_ausgabe
+      label: Mat./Tech. Ausgabe
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P67i_is_referred_to_by ?statement .
+          ?statement crm:P2_has_type aat:300435429 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: masse
       label: Masse
       datatype: xsd:string
