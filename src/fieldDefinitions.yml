@@ -14,7 +14,71 @@ namespaces:
   search: https://platform.swissartresearch.net/search/
 
 fields:
-  
+
+    - id: actor_type
+      label: Typ
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject a ?value .
+          VALUES(?value) {
+            (skkg:Person)
+            (skkg:Group)
+          }
+        }'
+
+    - id: daten
+      label: Daten
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          {
+            $subject a skkg:Person .
+            OPTIONAL {
+              $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate .
+            }
+            OPTIONAL {
+              $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate .
+            }
+          } UNION {
+            $subject a skkg:Group .
+            OPTIONAL {
+              $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate .
+            }
+            OPTIONAL {
+              $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate .
+            }
+          }
+          BIND(CONCAT(IF(BOUND(?birthdate), CONCAT("Geboren: ", ?birthdate, " "), ""), IF(BOUND(?deathdate), CONCAT("Gestorben: ", ?deathdate, " "), ""), IF(BOUND(?foundationdate), CONCAT("Gegründet: ", ?foundationdate, " "), ""), IF(BOUND(?dissolutiondate), CONCAT("Aufgelöst: ", ?dissolutiondate, " "), "")) as ?value)
+        }'
+
+    - id: datierung
+      label: Datierung
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
+        }'
+
+    - id: edition_auflage
+      label: Edition/Auflage
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P67i_is_referred_to_by ?statement .
+          ?statement crm:P2_has_type aat:300435435 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
+    - id: gattung
+      label: Gattung
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P2_has_type ?value .
+          ?value skos:inScheme type:21087 .
+        }'
+
     - id: has_broader_term
       label: Broader term
       description: The broader term of the subject
@@ -24,6 +88,108 @@ fields:
             $subject crm:P127_has_broader_term ?value .
           }'
 
+    - id: inschr_sign
+      label: Inschr./Sign.
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P128_carries ?inscription .
+          ?inscription crm:P2_has_type aat:300028702 ;
+            crm:P190_has_symbolic_content ?inscription_value .
+          OPTIONAL {
+            ?inscription crm:P2_has_type ?inscription_type .
+            ?inscription_type skos:inScheme type:32096 ;
+              rdfs:label ?inscription_type_label .
+          }
+          OPTIONAL {
+            ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation .
+          }
+          OPTIONAL {
+            ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position .
+          }
+          OPTIONAL {
+            ?inscription crm:P3_has_notes ?inscription_notes .
+          }
+          BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value)
+        }'
+
+    - id: inv_nr
+      label: Inv.-Nr.
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P1_is_identified_by ?identifier .
+          ?identifier crm:P2_has_type type:invnr ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
+    - id: mat_technik
+      label: Mat./Technik
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P45_consists_of ?value .
+        }'
+
+    - id: mat_technik_ausgabe
+      label: Mat./Tech. Ausgabe
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P67i_is_referred_to_by ?statement .
+          ?statement crm:P2_has_type aat:300435429 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
+    - id: masse
+      label: Masse
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+            {
+              SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE {
+                ?subject crm:P46_is_composed_of ?part .
+                ?part crm:P2_has_type/rdfs:label ?dimension_type ;
+                  crm:P43_has_dimension ?dimension .
+                ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ;
+                  crm:P90_has_value ?dimension_value ;
+                  crm:P91_has_unit/rdfs:label ?dimension_unit .
+                BIND(CONCAT(?dimension_dimension, " ", ?dimension_value, ?dimension_unit) AS ?dimension_string)
+                FILTER(LANG(?dimension_dimension) = "de")
+              } GROUP BY ?dimension_type
+            }
+          BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value)
+        }'
+
+    - id: name
+      label: Name
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P1_is_identified_by ?name .
+          OPTIONAL {
+            ?name crm:P106_is_composed_of ?lastname .
+            ?lastname crm:P2_has_type aat:300404652 ;
+              crm:P190_has_symbolic_content ?lastname_value .
+          }
+          OPTIONAL {
+            ?name crm:P106_is_composed_of ?firstname .
+            ?firstname crm:P2_has_type aat:300404651 ;
+              crm:P190_has_symbolic_content ?firstname_value .
+          }
+          BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
+        }'
+
+    - id: pers_korp
+      label: Pers./Körp
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P108i_was_produced_by ?production .
+          ?production crm:P9_consists_of ?subProduction .
+          ?subProduction crm:P14_carried_out_by ?value .
+        }'
+
     - id: same_as
       label: Same as
       description: The entity that is the same as the subject
@@ -32,3 +198,13 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crmdig:L54_is_same-as ?value .
           }'
+
+    - id: titel
+      label: Titel
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P1_is_identified_by ?title .
+          ?title crm:P2_has_type/skos:inScheme type:32089 ;
+            crm:P190_has_symbolic_content ?value .
+        }'

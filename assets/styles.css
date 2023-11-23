@@ -72,6 +72,10 @@
 .skkg-component.card-container .semantic-table-holder {
   width: 100%;
 }
+ul {
+  margin-left: 0;
+  padding-left: 10px;
+}
 .form-control {
   width: 95%;
 }

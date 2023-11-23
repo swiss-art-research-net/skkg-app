@@ -1,3 +1,4 @@
 aat = http://vocab.getty.edu/aat/
 skkg = https://ontology.skkg.ch/
 graph = https://data.skkg.ch/graph/
+type = https://data.skkg.ch/type/

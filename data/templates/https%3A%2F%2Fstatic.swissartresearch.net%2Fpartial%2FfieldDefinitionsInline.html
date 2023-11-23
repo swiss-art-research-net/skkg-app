@@ -1,4 +1,54 @@
 
+ [[#*inline "actor_type"]]
+    {
+        "id" : "actor_type",
+
+            "label": "Typ",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject a ?value . VALUES(?value) { (skkg:Person) (skkg:Group) } }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/actor_type"
+    }
+[[/inline]]
+ [[#*inline "daten"]]
+    {
+        "id" : "daten",
+
+            "label": "Daten",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { { $subject a skkg:Person . OPTIONAL { $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate . } OPTIONAL { $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate . } } UNION { $subject a skkg:Group . OPTIONAL { $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate . } OPTIONAL { $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate . } } BIND(CONCAT(IF(BOUND(?birthdate), CONCAT(\"Geboren: \", ?birthdate, \" \"), \"\"), IF(BOUND(?deathdate), CONCAT(\"Gestorben: \", ?deathdate, \" \"), \"\"), IF(BOUND(?foundationdate), CONCAT(\"Gegründet: \", ?foundationdate, \" \"), \"\"), IF(BOUND(?dissolutiondate), CONCAT(\"Aufgelöst: \", ?dissolutiondate, \" \"), \"\")) as ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/daten"
+    }
+[[/inline]]
+ [[#*inline "datierung"]]
+    {
+        "id" : "datierung",
+
+            "label": "Datierung",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/datierung"
+    }
+[[/inline]]
+ [[#*inline "edition_auflage"]]
+    {
+        "id" : "edition_auflage",
+
+            "label": "Edition/Auflage",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435435 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/edition_auflage"
+    }
+[[/inline]]
+ [[#*inline "gattung"]]
+    {
+        "id" : "gattung",
+
+            "label": "Gattung",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P2_has_type ?value . ?value skos:inScheme type:21087 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/gattung"
+    }
+[[/inline]]
  [[#*inline "has_broader_term"]]
     {
         "id" : "has_broader_term",
@@ -10,6 +60,76 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/has_broader_term"
     }
 [[/inline]]
+ [[#*inline "inschr_sign"]]
+    {
+        "id" : "inschr_sign",
+
+            "label": "Inschr./Sign.",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P128_carries ?inscription . ?inscription crm:P2_has_type aat:300028702 ; crm:P190_has_symbolic_content ?inscription_value . OPTIONAL { ?inscription crm:P2_has_type ?inscription_type . ?inscription_type skos:inScheme type:32096 ; rdfs:label ?inscription_type_label . } OPTIONAL { ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation . } OPTIONAL { ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position . } OPTIONAL { ?inscription crm:P3_has_notes ?inscription_notes . } BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, \": \"), \"\"), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(\" (\", ?inscription_translation, \") \"), \"\"), IF(BOUND(?inscription_position), CONCAT(\", \", ?inscription_position), \"\"), IF(BOUND(?inscription_notes), CONCAT(\" (\", ?inscription_notes, \") \"), \"\")) as ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/inschr_sign"
+    }
+[[/inline]]
+ [[#*inline "inv_nr"]]
+    {
+        "id" : "inv_nr",
+
+            "label": "Inv.-Nr.",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?identifier . ?identifier crm:P2_has_type type:invnr ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/inv_nr"
+    }
+[[/inline]]
+ [[#*inline "mat_technik"]]
+    {
+        "id" : "mat_technik",
+
+            "label": "Mat./Technik",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P45_consists_of ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mat_technik"
+    }
+[[/inline]]
+ [[#*inline "mat_technik_ausgabe"]]
+    {
+        "id" : "mat_technik_ausgabe",
+
+            "label": "Mat./Tech. Ausgabe",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435429 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mat_technik_ausgabe"
+    }
+[[/inline]]
+ [[#*inline "masse"]]
+    {
+        "id" : "masse",
+
+            "label": "Masse",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=\", \") as ?dimensions) WHERE { ?subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension, \" \", ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = \"de\") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, \": \", ?dimensions) AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/masse"
+    }
+[[/inline]]
+ [[#*inline "name"]]
+    {
+        "id" : "name",
+
+            "label": "Name",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?name . OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, \"\"), IF(BOUND(?lastname_value), CONCAT(\" \", ?lastname_value), \"\")) as ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/name"
+    }
+[[/inline]]
+ [[#*inline "pers_korp"]]
+    {
+        "id" : "pers_korp",
+
+            "label": "Pers./Körp",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/pers_korp"
+    }
+[[/inline]]
  [[#*inline "same_as"]]
     {
         "id" : "same_as",
@@ -19,5 +139,15 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crmdig:L54_is_same-as ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/same_as"
+    }
+[[/inline]]
+ [[#*inline "titel"]]
+    {
+        "id" : "titel",
+
+            "label": "Titel",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/titel"
     }
 [[/inline]]
