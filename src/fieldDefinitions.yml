@@ -23,6 +23,16 @@ fields:
           ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
         }'
 
+    - id: edition_auflage
+      label: Edition/Auflage
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P67i_is_referred_to_by ?statement .
+          ?statement crm:P2_has_type aat:300435435 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: gattung
       label: Gattung
       datatype: xsd:anyURI

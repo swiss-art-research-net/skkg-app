@@ -9,6 +9,15 @@
     },
 
     {
+        "id" : "edition_auflage",
+
+            "label": "Edition/Auflage",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435435 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/edition_auflage"
+    },
+
+    {
         "id" : "gattung",
 
             "label": "Gattung",
@@ -32,7 +41,7 @@
 
             "label": "Inschr./Sign.",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P128_carries ?inscription . ?inscription crm:P2_has_type aat:300028702 ; crm:P190_has_symbolic_content ?inscription_value . OPTIONAL { ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation . } OPTIONAL { ?inscription crm:P1_is_identified_by/rdfs:label ?incription_position . } OPTIONAL { ?inscription crm:P3_has_notes ?inscription_notes . } BIND(CONCAT(?inscription_value, IF(BOUND(?inscription_translation), CONCAT(\" (\", ?inscription_translation, \") \"), \"\"), IF(BOUND(?inscription_position), CONCAT(\", \", ?inscription_position), \"\"), IF(BOUND(?inscription_notes), CONCAT(\" (\", ?inscription_notes, \") \"), \"\")) as ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P128_carries ?inscription . ?inscription crm:P2_has_type aat:300028702 ; crm:P190_has_symbolic_content ?inscription_value . OPTIONAL { ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation . } OPTIONAL { ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position . } OPTIONAL { ?inscription crm:P3_has_notes ?inscription_notes . } BIND(CONCAT(?inscription_value, IF(BOUND(?inscription_translation), CONCAT(\" (\", ?inscription_translation, \") \"), \"\"), IF(BOUND(?inscription_position), CONCAT(\", \", ?inscription_position), \"\"), IF(BOUND(?inscription_notes), CONCAT(\" (\", ?inscription_notes, \") \"), \"\")) as ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/inschr_sign"
     },
 
