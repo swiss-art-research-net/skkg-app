@@ -1,4 +1,14 @@
 
+ [[#*inline "actor_type"]]
+    {
+        "id" : "actor_type",
+
+            "label": "Typ",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject a ?value . VALUES(?value) { (skkg:Person) (skkg:Group) } }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/actor_type"
+    }
+[[/inline]]
  [[#*inline "daten"]]
     {
         "id" : "daten",

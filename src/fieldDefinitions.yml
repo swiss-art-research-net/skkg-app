@@ -15,6 +15,18 @@ namespaces:
 
 fields:
 
+    - id: actor_type
+      label: Typ
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject a ?value .
+          VALUES(?value) {
+            (skkg:Person)
+            (skkg:Group)
+          }
+        }'
+
     - id: daten
       label: Daten
       datatype: xsd:string
