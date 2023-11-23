@@ -70,26 +70,13 @@
             <semantic-search-result-holder>
                 <div data-flex-self="md-full">
                     <semantic-search-facet-breadcrumbs></semantic-search-facet-breadcrumbs>
-                    <semantic-search-result id='semantic-search-result'>
-                        <mp-sparql-result-counts id='semantic-search-result-count' query="SELECT DISTINCT ?subject {}"
-                                                template='{{> template}}'
-                        >
-                        <template id='template'>
-                            <div>
-                            <span class="num-results">Found <span class="num-results-color">{{#if hasLimit}}{{totalNumberOfResults}}{{else}}{{numberOfResults}}{{/if}}</span> results</span>
-                            </div>
-                        </template>
-                        </mp-sparql-result-counts>
-                    </semantic-search-result>
             
                     <semantic-search-result>
                         <div class="skkg-component card-container">
                             <semantic-table 
                                 id='grid-result'
                                 query='SELECT DISTINCT ?subject WHERE {
-                                    ?subject a ?displayType .
-                                    ?displayType rdfs:subClassOf* skkg:Entity .
-                                } ORDER BY ?label'
+                                }'
                                 number-of-displayed-rows="50"
                                 tuple-template='{{> partial:entityCard subject=subject.value }}'
                                 options='{
