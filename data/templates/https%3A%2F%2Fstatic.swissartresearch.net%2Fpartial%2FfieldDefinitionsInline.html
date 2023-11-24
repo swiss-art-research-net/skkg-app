@@ -39,6 +39,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/edition_auflage"
     }
 [[/inline]]
+ [[#*inline "erw_art"]]
+    {
+        "id" : "erw_art",
+
+            "label": "Erw. Art.",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P2_has_type ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/erw_art"
+    }
+[[/inline]]
  [[#*inline "gattung"]]
     {
         "id" : "gattung",

@@ -70,6 +70,15 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: erw_art
+      label: Erw. Art.
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            ?subject crm:P24i_changed_ownership_through ?acquisition .
+            ?acquisition crm:P2_has_type ?value .
+        }'
+
     - id: gattung
       label: Gattung
       datatype: xsd:anyURI
