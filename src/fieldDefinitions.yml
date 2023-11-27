@@ -27,6 +27,17 @@ fields:
           }
         }'
 
+    - id: ankaufswert
+      label: Ankaufswert
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+            ?subject crm:P24i_changed_ownership_through ?acquisition .
+            ?acquisition crm:P9_consists_of ?payment .
+            ?payment a la:Payment ;
+              la:paid_amount/crm:P90_has_value ?value .
+        }'
+
     - id: daten
       label: Daten
       datatype: xsd:string

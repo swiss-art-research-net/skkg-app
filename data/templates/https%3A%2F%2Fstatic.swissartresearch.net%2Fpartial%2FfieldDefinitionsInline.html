@@ -9,6 +9,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/actor_type"
     }
 [[/inline]]
+ [[#*inline "ankaufswert"]]
+    {
+        "id" : "ankaufswert",
+
+            "label": "Ankaufswert",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P9_consists_of ?payment . ?payment a la:Payment ; la:paid_amount/crm:P90_has_value ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/ankaufswert"
+    }
+[[/inline]]
  [[#*inline "daten"]]
     {
         "id" : "daten",
