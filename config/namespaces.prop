@@ -1,4 +1,6 @@
 aat = http://vocab.getty.edu/aat/
-skkg = https://ontology.skkg.ch/
+crmsci = http://www.cidoc-crm.org/extensions/crmsci/
 graph = https://data.skkg.ch/graph/
 type = https://data.skkg.ch/type/
+la = https://linked.art/ns/terms/
+skkg = https://ontology.skkg.ch/
