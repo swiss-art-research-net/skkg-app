@@ -35,7 +35,10 @@ fields:
             ?subject crm:P24i_changed_ownership_through ?acquisition .
             ?acquisition crm:P9_consists_of ?payment .
             ?payment a la:Payment ;
-              la:paid_amount/crm:P90_has_value ?value .
+              la:paid_amount ?monetary_amount .
+            ?monetary_amount crm:P90_has_value ?monetary_value ;
+              crm:P180_has_currency/rdfs:label ?monetary_currency .
+            BIND(CONCAT(STR(?monetary_currency), " ", STR(?monetary_value)) AS ?value)
         }'
 
     - id: daten
