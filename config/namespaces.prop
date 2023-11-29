@@ -1,4 +1,5 @@
 aat = http://vocab.getty.edu/aat/
+crmsci = http://www.cidoc-crm.org/extensions/crmsci/
 graph = https://data.skkg.ch/graph/
 type = https://data.skkg.ch/type/
 la = https://linked.art/ns/terms/
