@@ -55,7 +55,7 @@
                             "cellTemplate": "{{outputScore.value}}" 
                         },{
                             "displayName": "Source", 
-                            "cellTemplate": "<a target=\"_blank\" href=\"http://d-nb.info/gnd/{{outputId.value}}\">http://d-nb.info/gnd/{{outputId.value}}</a>"
+                            "cellTemplate": "<a target=\"_blank\" href=\"https://d-nb.info/gnd/{{outputId.value}}\">https://d-nb.info/gnd/{{outputId.value}}</a>"
                         },{     
                             "displayName": "&nbsp;", 
                             "cellTemplate": "{{> template-align}}" 
@@ -65,7 +65,7 @@
                         <template id="template-align">
                             <semantic-context repository="default">
                                 <semantic-if
-                                    query='ASK { <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> . }'
+                                    query='ASK { <[[urlParam "termiri"]]> crmdig:L54_is_same-as <https://d-nb.info/gnd/{{outputId.value}}> . }'
                                     then="{{> template-remove}}"
                                     else="{{> template-accept}}">
                                     <template id="template-accept">
@@ -75,8 +75,8 @@
                                                     id="external-alignment-update-add"
                                                     query='INSERT DATA {
                                                         GRAPH graph:alignments {
-                                                                <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .
-                                                                <http://d-nb.info/gnd/{{outputId.value}}> rdfs:label "{{outputName.value}}" .
+                                                                <[[urlParam "termiri"]]> crmdig:L54_is_same-as <https://d-nb.info/gnd/{{outputId.value}}> .
+                                                                <https://d-nb.info/gnd/{{outputId.value}}> rdfs:label "{{outputName.value}}" .
                                                             }
                                                         }'
                                                     post-action="event">
@@ -96,7 +96,7 @@
                                                     id="external-alignment-update-remove"
                                                     query='DELETE {
                                                             GRAPH graph:alignments {
-                                                                <[[urlParam "termiri"]]> crmdig:L54_is_same-as <http://d-nb.info/gnd/{{outputId.value}}> .                                                    }
+                                                                <[[urlParam "termiri"]]> crmdig:L54_is_same-as <https://d-nb.info/gnd/{{outputId.value}}> .                                                    }
                                                         } WHERE {}'
                                                     post-action="event">
                                                     <button type="button" class="btn">Remove</button>
