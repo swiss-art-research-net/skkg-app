@@ -109,6 +109,15 @@
     },
 
     {
+        "id" : "inv_remark",
+
+            "label": "Inv. Bemerkung",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300027045 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/inv_remark"
+    },
+
+    {
         "id" : "mat_technik",
 
             "label": "Mat./Technik",

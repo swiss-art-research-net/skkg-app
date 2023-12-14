@@ -175,6 +175,16 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: inv_remark
+      label: Inv. Bemerkung
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P67i_is_referred_to_by ?statement .
+          ?statement crm:P2_has_type aat:300027045 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: mat_technik
       label: Mat./Technik
       datatype: xsd:anyURI
