@@ -140,7 +140,7 @@
 
             "label": "Masse",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=\", \") as ?dimensions) WHERE { ?subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension, \" \", ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = \"de\") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, \": \", ?dimensions) AS ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=\", \") as ?dimensions) WHERE { ?subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?part_note . } ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(\" \", ?part_note, \" \"), \" \"), ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = \"de\") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, \": \", ?dimensions) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/masse"
     },
 
