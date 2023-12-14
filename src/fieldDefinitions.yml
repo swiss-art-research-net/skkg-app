@@ -49,6 +49,16 @@ fields:
             BIND(CONCAT(STR(?monetary_currency), " ", STR(?monetary_value),IF(BOUND(?converted_value),CONCAT(" (", ?converted_value, ")"),"")) AS ?value)
         }'
 
+    - id: creditline
+      label: Creditline
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P67i_is_referred_to_by ?statement .
+          ?statement crm:P2_has_type aat:300026687 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: daten
       label: Daten
       datatype: xsd:string

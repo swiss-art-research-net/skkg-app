@@ -19,6 +19,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/ankaufswert"
     }
 [[/inline]]
+ [[#*inline "creditline"]]
+    {
+        "id" : "creditline",
+
+            "label": "Creditline",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300026687 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/creditline"
+    }
+[[/inline]]
  [[#*inline "daten"]]
     {
         "id" : "daten",
