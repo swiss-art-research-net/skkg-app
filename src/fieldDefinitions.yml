@@ -266,7 +266,7 @@ fields:
         - select: 'SELECT ?value WHERE {
           ?subject crm:P108i_was_produced_by ?production .
           ?production crm:P9_consists_of ?subProduction .
-          ?subProduction crm:P14_carried_out_by ?value .
+          ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value .
         }'
 
     - id: same_as
