@@ -197,6 +197,15 @@
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/titel"
+    },
+
+    {
+        "id" : "zustand",
+
+            "label": "Zustand",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P34i_was_assessed_by ?assessment . ?assessment crm:P35_has_identified/rdfs:label ?state . OPTIONAL { ?assessment crm:P3_has_note ?note . } OPTIONAL { ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date . } BIND(CONCAT(?state, IF(BOUND(?note),CONCAT(\": \",?note,\" \"),\"\"), IF(BOUND(?date),CONCAT(\" (\", str(?date), \")\"),\"\")) AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/zustand"
     }
 
 ]

@@ -295,3 +295,19 @@ fields:
           ?title crm:P2_has_type/skos:inScheme type:32089 ;
             crm:P190_has_symbolic_content ?value .
         }'
+
+    - id: zustand
+      label: Zustand
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+            ?subject crm:P34i_was_assessed_by ?assessment .
+            ?assessment crm:P35_has_identified/rdfs:label ?state .
+            OPTIONAL {
+              ?assessment crm:P3_has_note ?note .
+            }
+            OPTIONAL {
+              ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date .
+            }
+                  BIND(CONCAT(?state, IF(BOUND(?note),CONCAT(": ",?note," "),""), IF(BOUND(?date),CONCAT(" (", str(?date), ")"),"")) AS ?value)
+          }'
