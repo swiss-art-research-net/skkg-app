@@ -5,6 +5,12 @@
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
 ></semantic-query>
 
+<h3>Anz. Teile</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { ?subject crm:P57_has_number_of_parts ?value } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+></semantic-query>
+
 <h3>Bem. Erwerb</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { ?subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P3_has_note ?value . } LIMIT 10'
@@ -79,7 +85,7 @@
 
 <h3>Masse</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { { SELECT DISTINCT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE { ?subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?part_note . } ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(" ", ?part_note, " "), " "), ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = "de") } GROUP BY ?dimension_type LIMIT 100 } BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value) } LIMIT 10'
+    query='SELECT DISTINCT ?value WHERE { { SELECT DISTINCT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE { ?subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?part_note . } ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(" ", ?part_note, " "), " "), ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = "de") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value) } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
 ></semantic-query>
 
@@ -103,7 +109,7 @@
 
 <h3>Pers./Körp</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by ?value . } LIMIT 10'
+    query='SELECT DISTINCT ?value WHERE { ?subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
 ></semantic-query>
 

@@ -49,6 +49,14 @@ fields:
             BIND(CONCAT(STR(?monetary_currency), " ", STR(?monetary_value),IF(BOUND(?converted_value),CONCAT(" (", ?converted_value, ")"),"")) AS ?value)
         }'
 
+    - id: anz_teile
+      label: Anz. Teile
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P57_has_number_of_parts ?value
+        }' 
+
     - id: bem_erwerb
       label: Bem. Erwerb
       datatype: xsd:string
