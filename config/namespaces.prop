@@ -5,3 +5,4 @@ gndo = https://d-nb.info/standards/elementset/gnd#
 type = https://data.skkg.ch/type/
 la = https://linked.art/ns/terms/
 skkg = https://ontology.skkg.ch/
+wd = http://www.wikidata.org/entity/
