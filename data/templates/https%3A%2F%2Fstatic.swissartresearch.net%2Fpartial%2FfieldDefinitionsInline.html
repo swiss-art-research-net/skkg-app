@@ -150,6 +150,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/inv_remark"
     }
 [[/inline]]
+ [[#*inline "jahr"]]
+    {
+        "id" : "jahr",
+
+            "label": "Jahr",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { ?subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/jahr"
+    }
+[[/inline]]
  [[#*inline "mat_technik"]]
     {
         "id" : "mat_technik",
@@ -219,6 +229,16 @@
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { ?subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/titel"
+    }
+[[/inline]]
+ [[#*inline "typ"]]
+    {
+        "id" : "typ",
+
+            "label": "Typ",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P2_has_type ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/typ"
     }
 [[/inline]]
  [[#*inline "zustand"]]

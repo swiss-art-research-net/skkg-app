@@ -202,6 +202,14 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: jahr
+      label: Jahr
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
+        }'
+
     - id: mat_technik
       label: Mat./Technik
       datatype: xsd:anyURI
@@ -294,6 +302,14 @@ fields:
           ?subject crm:P1_is_identified_by ?title .
           ?title crm:P2_has_type/skos:inScheme type:32089 ;
             crm:P190_has_symbolic_content ?value .
+        }'
+
+    - id: typ
+      label: Typ
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P2_has_type ?value .
         }'
 
     - id: zustand
