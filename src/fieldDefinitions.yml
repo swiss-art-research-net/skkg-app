@@ -304,6 +304,17 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: titel_lit
+      label: Titel
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P1_is_identified_by ?title .
+          ?title crm:P2_has_type aat:300404670 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
+
     - id: typ
       label: Typ
       datatype: xsd:anyURI
