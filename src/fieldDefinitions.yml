@@ -55,7 +55,21 @@ fields:
       queries:
         - select: 'SELECT ?value WHERE {
           ?subject crm:P57_has_number_of_parts ?value
-        }' 
+        }'
+
+    - id: autor
+      label: Autor
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring .
+          ?authoring crm:P2_has_type ?type ;
+            crm:P14_carried_out_by ?author .
+          ?type skos:inScheme type:43087 ;
+            rdfs:label ?type_label .
+          ?author rdfs:label ?author_label .
+          BIND(CONCAT(?author_label, ' (', ?type_label, ')') AS ?value)
+        }'
 
     - id: bem_erwerb
       label: Bem. Erwerb
