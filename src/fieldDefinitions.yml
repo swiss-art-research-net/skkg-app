@@ -15,7 +15,7 @@ namespaces:
 
 fields:
 
-    - id: actor_type
+    - id: mp_actor_type
       label: Typ
       datatype: xsd:anyURI
       queries:
@@ -27,7 +27,7 @@ fields:
           }
         }'
 
-    - id: ankaufswert
+    - id: mp_ankaufswert
       label: Ankaufswert
       datatype: xsd:string
       queries:
@@ -49,7 +49,7 @@ fields:
             BIND(CONCAT(STR(?monetary_currency), " ", STR(?monetary_value),IF(BOUND(?converted_value),CONCAT(" (", ?converted_value, ")"),"")) AS ?value)
         }'
 
-    - id: anz_teile
+    - id: mp_anz_teile
       label: Anz. Teile
       datatype: xsd:string
       queries:
@@ -57,7 +57,7 @@ fields:
           ?subject crm:P57_has_number_of_parts ?value
         }'
 
-    - id: autor
+    - id: mp_autor
       label: Autor
       datatype: xsd:anyURI
       queries:
@@ -68,10 +68,10 @@ fields:
           ?type skos:inScheme type:43087 ;
             rdfs:label ?type_label .
           ?author rdfs:label ?author_label .
-          BIND(CONCAT(?author_label, ' (', ?type_label, ')') AS ?value)
+          BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value)
         }'
 
-    - id: bem_erwerb
+    - id: mp_bem_erwerb
       label: Bem. Erwerb
       datatype: xsd:string
       queries:
@@ -80,7 +80,7 @@ fields:
           ?acquisition crm:P3_has_note ?value .
         }'
 
-    - id: creditline
+    - id: mp_creditline
       label: Creditline
       datatype: xsd:string
       queries:
@@ -90,7 +90,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: daten
+    - id: mp_daten
       label: Daten
       datatype: xsd:string
       queries:
@@ -115,7 +115,7 @@ fields:
           BIND(CONCAT(IF(BOUND(?birthdate), CONCAT("Geboren: ", ?birthdate, " "), ""), IF(BOUND(?deathdate), CONCAT("Gestorben: ", ?deathdate, " "), ""), IF(BOUND(?foundationdate), CONCAT("Gegründet: ", ?foundationdate, " "), ""), IF(BOUND(?dissolutiondate), CONCAT("Aufgelöst: ", ?dissolutiondate, " "), "")) as ?value)
         }'
 
-    - id: datierung
+    - id: mp_datierung
       label: Datierung
       datatype: xsd:string
       queries:
@@ -123,7 +123,7 @@ fields:
           ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
         }'
 
-    - id: edition_auflage
+    - id: mp_edition_auflage
       label: Edition/Auflage
       datatype: xsd:anyURI
       queries:
@@ -133,7 +133,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: erw_art
+    - id: mp_erw_art
       label: Erw. Art.
       datatype: xsd:anyURI
       queries:
@@ -142,7 +142,7 @@ fields:
             ?acquisition crm:P2_has_type ?value .
         }'
 
-    - id: erw_ref_nr
+    - id: mp_erw_ref_nr
       label: Erw. Ref. Nr.
       datatype: xsd:string
       queries:
@@ -153,7 +153,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: gattung
+    - id: mp_gattung
       label: Gattung
       datatype: xsd:anyURI
       queries:
@@ -171,7 +171,7 @@ fields:
             $subject crm:P127_has_broader_term ?value .
           }'
 
-    - id: inschr_sign
+    - id: mp_inschr_sign
       label: Inschr./Sign.
       datatype: xsd:string
       queries:
@@ -196,7 +196,7 @@ fields:
           BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value)
         }'
 
-    - id: inv_nr
+    - id: mp_inv_nr
       label: Inv.-Nr.
       datatype: xsd:string
       queries:
@@ -206,7 +206,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: inv_remark
+    - id: mp_inv_remark
       label: Inv. Bemerkung
       datatype: xsd:string
       queries:
@@ -216,7 +216,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: jahr
+    - id: mp_jahr
       label: Jahr
       datatype: xsd:string
       queries:
@@ -224,7 +224,7 @@ fields:
           ?subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
         }'
 
-    - id: mat_technik
+    - id: mp_mat_technik
       label: Mat./Technik
       datatype: xsd:anyURI
       queries:
@@ -232,7 +232,7 @@ fields:
             $subject crm:P45_consists_of ?value .
         }'
 
-    - id: mat_technik_ausgabe
+    - id: mp_mat_technik_ausgabe
       label: Mat./Tech. Ausgabe
       datatype: xsd:string
       queries:
@@ -242,7 +242,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: masse
+    - id: mp_masse
       label: Masse
       datatype: xsd:string
       queries:
@@ -265,7 +265,7 @@ fields:
           BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value)
         }'
 
-    - id: name
+    - id: mp_name
       label: Name
       datatype: xsd:string
       queries:
@@ -289,7 +289,7 @@ fields:
           BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
         }'
 
-    - id: pers_korp
+    - id: mp_pers_korp
       label: Pers./Körp
       datatype: xsd:anyURI
       queries:
@@ -308,7 +308,7 @@ fields:
             $subject crmdig:L54_is_same-as ?value .
           }'
 
-    - id: titel
+    - id: mp_titel
       label: Titel
       datatype: xsd:string
       queries:
@@ -318,7 +318,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: titel_lit
+    - id: mp_titel_lit
       label: Titel
       datatype: xsd:string
       queries:
@@ -329,7 +329,7 @@ fields:
         }'
 
 
-    - id: typ
+    - id: mp_typ
       label: Typ
       datatype: xsd:anyURI
       queries:
@@ -337,7 +337,7 @@ fields:
           ?subject crm:P2_has_type ?value .
         }'
 
-    - id: zustand
+    - id: mp_zustand
       label: Zustand
       datatype: xsd:string
       queries:
