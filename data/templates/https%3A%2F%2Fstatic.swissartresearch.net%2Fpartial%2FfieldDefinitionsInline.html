@@ -130,6 +130,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_gattung"
     }
 [[/inline]]
+ [[#*inline "mp_herausgeber"]]
+    {
+        "id" : "mp_herausgeber",
+
+            "label": "Herausgeber",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing . ?editing crm:P2_has_type aat:300189515 ; crm:P14_carried_out_by ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_herausgeber"
+    }
+[[/inline]]
  [[#*inline "mp_inschr_sign"]]
     {
         "id" : "mp_inschr_sign",
