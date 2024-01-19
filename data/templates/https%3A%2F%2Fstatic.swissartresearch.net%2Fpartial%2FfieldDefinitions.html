@@ -1,5 +1,15 @@
 [
     {
+        "id" : "has_broader_term",
+
+            "label": "Broader term",
+            "description" : "The broader term of the subject",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P127_has_broader_term ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/has_broader_term"
+    },
+
+    {
         "id" : "mp_actor_type",
 
             "label": "Typ",
@@ -108,16 +118,6 @@
     },
 
     {
-        "id" : "has_broader_term",
-
-            "label": "Broader term",
-            "description" : "The broader term of the subject",
-            "xsdDatatype" : "xsd:anyURI",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P127_has_broader_term ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/has_broader_term"
-    },
-
-    {
         "id" : "mp_inschr_sign",
 
             "label": "Inschr./Sign.",
@@ -199,16 +199,6 @@
     },
 
     {
-        "id" : "same_as",
-
-            "label": "Same as",
-            "description" : "The entity that is the same as the subject",
-            "xsdDatatype" : "xsd:anyURI",
-                "selectPattern" : "SELECT ?value WHERE { $subject crmdig:L54_is_same-as ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/same_as"
-    },
-
-    {
         "id" : "mp_titel",
 
             "label": "Titel",
@@ -242,6 +232,16 @@
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { ?subject crm:P34i_was_assessed_by ?assessment . ?assessment crm:P35_has_identified/rdfs:label ?state . OPTIONAL { ?assessment crm:P3_has_note ?note . } OPTIONAL { ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date . } BIND(CONCAT(?state, IF(BOUND(?note),CONCAT(\": \",?note,\" \"),\"\"), IF(BOUND(?date),CONCAT(\" (\", str(?date), \")\"),\"\")) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_zustand"
+    },
+
+    {
+        "id" : "same_as",
+
+            "label": "Same as",
+            "description" : "The entity that is the same as the subject",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crmdig:L54_is_same-as ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/same_as"
     }
 
 ]

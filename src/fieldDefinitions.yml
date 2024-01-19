@@ -15,6 +15,15 @@ namespaces:
 
 fields:
 
+    - id: has_broader_term
+      label: Broader term
+      description: The broader term of the subject
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P127_has_broader_term ?value .
+          }'
+
     - id: mp_actor_type
       label: Typ
       datatype: xsd:anyURI
@@ -162,15 +171,6 @@ fields:
           ?value skos:inScheme type:21087 .
         }'
 
-    - id: has_broader_term
-      label: Broader term
-      description: The broader term of the subject
-      datatype: xsd:anyURI
-      queries:
-        - select: 'SELECT ?value WHERE {
-            $subject crm:P127_has_broader_term ?value .
-          }'
-
     - id: mp_inschr_sign
       label: Inschr./Sign.
       datatype: xsd:string
@@ -299,15 +299,6 @@ fields:
           ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value .
         }'
 
-    - id: same_as
-      label: Same as
-      description: The entity that is the same as the subject
-      datatype: xsd:anyURI
-      queries:
-        - select: 'SELECT ?value WHERE {
-            $subject crmdig:L54_is_same-as ?value .
-          }'
-
     - id: mp_titel
       label: Titel
       datatype: xsd:string
@@ -351,4 +342,13 @@ fields:
               ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date .
             }
                   BIND(CONCAT(?state, IF(BOUND(?note),CONCAT(": ",?note," "),""), IF(BOUND(?date),CONCAT(" (", str(?date), ")"),"")) AS ?value)
+          }'
+
+    - id: same_as
+      label: Same as
+      description: The entity that is the same as the subject
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crmdig:L54_is_same-as ?value .
           }'
