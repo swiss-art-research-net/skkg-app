@@ -244,6 +244,15 @@
     },
 
     {
+        "id" : "mp_werkbezuege",
+
+            "label": "Werkbezüge",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P165_incorporates ?value . ?value crm:P67_refers_to ?referenced_work . ?referenced_work a skkg:Object . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege"
+    },
+
+    {
         "id" : "mp_zustand",
 
             "label": "Zustand",

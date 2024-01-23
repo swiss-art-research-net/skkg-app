@@ -347,6 +347,16 @@ fields:
             crm:P14_carried_out_by ?value .
         }'
 
+    - id: mp_werkbezuege
+      label: Werkbezüge
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          ?subject crm:P165_incorporates ?value .
+          ?value crm:P67_refers_to ?referenced_work .
+          ?referenced_work a skkg:Object .
+        }'
+
     - id: mp_zustand
       label: Zustand
       datatype: xsd:string
