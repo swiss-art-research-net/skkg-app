@@ -220,6 +220,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_name"
     }
 [[/inline]]
+ [[#*inline "mp_ort"]]
+    {
+        "id" : "mp_ort",
+
+            "label": "Ort",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { ?subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ort"
+    }
+[[/inline]]
  [[#*inline "mp_pers_korp"]]
     {
         "id" : "mp_pers_korp",
@@ -276,7 +286,7 @@
 
             "label": "Werkbezüge",
             "xsdDatatype" : "xsd:anyURI",
-                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P165_incorporates ?expression . ?expression  rdfs:label ?label ; crm:P67_refers_to ?referenced_work . ?referenced_work rdfs:label ?title ; crm:P1_is_identified_by ?invnr_identifier . ?invnr_identifier crm:P2_has_type type:invnr ; crm:P190_has_symbolic_content ?invnr . { SELECT ?expression (GROUP_CONCAT(?locator_string; SEPARATOR=\", \") as ?locators) WHERE { ?expression crm:P1_is_identified_by ?locator . ?locator crm:P190_has_symbolic_content ?locator_value ; crm:P2_has_type ?locator_type . ?locator_type a skkg:Type ; skos:prefLabel ?locator_type_label . BIND(CONCAT(?locator_type_label, \": \", ?locator_value) as ?locator_string) } GROUP BY ?expression } BIND(CONCAT(?invnr, \", \", ?title, (IF(BOUND(?locators), CONCAT(\", \", ?locators), \"\"))) as ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P165_incorporates ?expression . ?expression rdfs:label ?value ; crm:P67_refers_to ?referenced_work . ?referenced_work a skkg:Object . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege"
     }
 [[/inline]]
