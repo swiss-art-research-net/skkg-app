@@ -25,7 +25,7 @@
       <bs-tab event-key="fields" title="Fields">
           [[> module-field-visualisation]]
       </bs-tab>
-      <bs-tab id="image-tab" event-key="image" title="Images">
+      <bs-tab event-key="image" title="Images">
         [[> module-images ]]
       </bs-tab>
       <bs-tab event-key="graph" class="tab-ontodia" title="Knowledge Graph">
@@ -48,7 +48,21 @@
 </div>
 
 [[#*inline "module-images"]]
-  
+  <semantic-query
+    query="SELECT ?iiif WHERE {
+      BIND(<[[this]]> AS ?subject)
+      ?subject la:digitally_shown_by/la:digitally_available_via/la:access_point ?iiif
+    }"
+    template='{{> template-images }}'
+  >
+    <template id="template-images">
+      <ul>
+        {{#each bindings}}
+          <li><img src="{{iiif.value}}/full/300,/0/default.jpg"></li>
+        {{/each}}
+      </ul>
+    </template>
+  </semantic-query>
 [[/inline]]
 
 [[#*inline "module-field-visualisation"]]
