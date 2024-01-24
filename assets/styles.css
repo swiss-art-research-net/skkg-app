@@ -1,3 +1,6 @@
+a {
+  font-weight: bold;
+}
 .skkg-component.card-container {
   display: flex;
   flex-wrap: wrap;
@@ -71,6 +74,18 @@
 }
 .skkg-component.card-container .semantic-table-holder {
   width: 100%;
+}
+.skkg-component.home-title {
+  font-size: 1.8rem;
+  padding-bottom: 2rem;
+}
+.skkg-component.home-title h1 {
+  font-size: 3.2rem;
+  padding-top: 1rem;
+}
+.skkg-component.home-title .tagline {
+  font-size: 2.3rem;
+  margin-bottom: 3rem;
 }
 .skkg-component.separator {
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100px, rgba(0, 0, 0, 0) 100%);
