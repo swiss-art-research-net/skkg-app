@@ -63,7 +63,7 @@
     <div class="skkg-component separator panel">
         <bs-row>
             <bs-col md="2">
-                <h3>[[item]]s</h3>
+                <h3>[[item]]</h3>
                 [[> resourceSummary type=item]]
             </bs-col>
             <bs-col md="10" class="skkg-component card-container horizontal-scroll">
@@ -83,7 +83,7 @@
                 ?subject [[condition]] .
             [[/if]]
         }"
-        template="{{#each bindings}}Currently there are {{num.value}} [[type]]s. Here are some examples:{{/each}}"
+        template="{{#each bindings}}Currently there are {{num.value}} [[type]] items. Here are some examples:{{/each}}"
     ></semantic-query>
     [[#if browse]]
         <div class="bottom">
