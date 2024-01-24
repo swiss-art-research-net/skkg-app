@@ -1,12 +1,79 @@
 [[> partial:pageHeader ]]
-[[> partial:contentHeader ]]
+<div class="skkg-component home-title">
+    <bs-row>
+        <bs-col md="10" md-offset="1">
+            <h1>SKKG ResearchSpace</h1>
+            <p class="skkg-component tagline">
+                The ResearchSpace instance for the SKKG Museum Digital project
+            </p>
+        </bs-col>
+    </bs-row>
+</div>
 
-<h2>SKKG</h2>
+<div class="skkg-component separator panel">
+    <bs-row>
+        <bs-col md="2">
+            <h3>Objects</h3>
+            [[> resourceSummary type='skkg:Object' label='Objects']]
+        </bs-col>
+        <bs-col md="10" class="skkg-component card-container horizontal-scroll">
+            [[#> cards type='skkg:Object' ]]
+            [[/ cards]]
+        </bs-col>
+    </bs-row>
+</div>
 
 <ul>
     <li><semantic-link iri="page:browse">Browse data</semantic-link></li>
     <li><semantic-link iri="page:vocabularies">Vocabularies</semantic-link></li>
 </ul>
 
-[[> partial:contentFooter ]]
 [[> partial:pageFooter]]
+
+
+[[#*inline "cards"]]
+    <semantic-query
+        query="SELECT DISTINCT ?subject WHERE {
+            ?subject a [[type]] .
+            BIND(DAY(NOW()) as ?day)
+            BIND(SHA512(CONCAT(STR(?day), STR(?subject))) AS ?random)
+            [[> @partial-block ]]
+        } ORDER BY ?random LIMIT 10"
+        template="{{> template-image-summary}}"
+        >
+        <template id="template-image-summary">
+            {{#each bindings}}
+                {{> partial:entityCard subject=subject.value }}
+            {{/each}}
+        </template>
+    </semantic-query>
+[[/inline]]
+
+[[#*inline "resourceSummary"]]
+    <semantic-query
+        query="SELECT (COUNT(?subject) as ?num) WHERE {
+            ?subject a [[type]] .
+            [[#if condition]]
+                ?subject [[condition]] .
+            [[/if]]
+        }"
+        template="{{#each bindings}}Currently there are {{num.value}} [[label]]. Here are some examples:{{/each}}"
+    ></semantic-query>
+    [[#if browse]]
+        <div class="bottom">
+            <semantic-link 
+                iri="page:search"
+                urlqueryparam-browse="[[browse]]"
+            >
+                See all </semantic-link>
+        </div>
+    [[/if]]
+    [[#if link]]
+        <div class="bottom">
+            <semantic-link 
+                iri="[[link]]"
+            >
+                See all</semantic-link>
+        </div>
+    [[/if]]
+[[/inline]]
