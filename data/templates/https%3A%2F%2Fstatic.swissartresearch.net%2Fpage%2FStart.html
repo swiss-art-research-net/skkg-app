@@ -32,18 +32,10 @@
     </bs-row>
 </div>
 
-<div class="skkg-component separator panel">
-    <bs-row>
-        <bs-col md="2">
-            <h3>Objects</h3>
-            [[> resourceSummary type='skkg:Object' label='Objects']]
-        </bs-col>
-        <bs-col md="10" class="skkg-component card-container horizontal-scroll">
-            [[#> cards type='skkg:Object' ]]
-            [[/ cards]]
-        </bs-col>
-    </bs-row>
-</div>
+[[> itemPanel item="Object"]]
+[[> itemPanel item="Person"]]
+[[> itemPanel item="Literature"]]
+[[> itemPanel item="Multimedia"]]
 
 [[> partial:pageFooter]]
 
@@ -51,7 +43,7 @@
 [[#*inline "cards"]]
     <semantic-query
         query="SELECT DISTINCT ?subject WHERE {
-            ?subject a [[type]] .
+            ?subject a skkg:[[type]] .
             BIND(DAY(NOW()) as ?day)
             BIND(SHA512(CONCAT(STR(?day), STR(?subject))) AS ?random)
             [[> @partial-block ]]
@@ -66,15 +58,32 @@
     </semantic-query>
 [[/inline]]
 
+[[#*inline "itemPanel"]]
+
+    <div class="skkg-component separator panel">
+        <bs-row>
+            <bs-col md="2">
+                <h3>[[item]]s</h3>
+                [[> resourceSummary type=item]]
+            </bs-col>
+            <bs-col md="10" class="skkg-component card-container horizontal-scroll">
+                [[#> cards type=item ]]
+                [[/ cards]]
+            </bs-col>
+        </bs-row>
+    </div>
+
+[[/inline]]
+
 [[#*inline "resourceSummary"]]
     <semantic-query
         query="SELECT (COUNT(?subject) as ?num) WHERE {
-            ?subject a [[type]] .
+            ?subject a skkg:[[type]] .
             [[#if condition]]
                 ?subject [[condition]] .
             [[/if]]
         }"
-        template="{{#each bindings}}Currently there are {{num.value}} [[label]]. Here are some examples:{{/each}}"
+        template="{{#each bindings}}Currently there are {{num.value}} [[type]]s. Here are some examples:{{/each}}"
     ></semantic-query>
     [[#if browse]]
         <div class="bottom">
