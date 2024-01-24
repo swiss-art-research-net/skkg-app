@@ -48,21 +48,34 @@
 </div>
 
 [[#*inline "module-images"]]
-  <semantic-query
-    query="SELECT ?iiif WHERE {
-      BIND(<[[this]]> AS ?subject)
-      ?subject la:digitally_shown_by/la:digitally_available_via/la:access_point ?iiif
-    }"
-    template='{{> template-images }}'
-  >
-    <template id="template-images">
-      <ul>
+
+  <div class="skkg-component card-container entity-details-images">
+    <semantic-query
+      query="SELECT ?iiif WHERE {
+        BIND(<[[this]]> AS ?subject)
+        ?subject la:digitally_shown_by/la:digitally_available_via/la:access_point ?iiif
+      }"
+      template='{{> template-images }}'
+    >
+      <template id="template-images">
         {{#each bindings}}
-          <li><img src="{{iiif.value}}/full/300,/0/default.jpg"></li>
+          <mp-overlay-dialog title="Image Viewer" type="modal" bs-size="large">
+              <mp-overlay-dialog-trigger>
+                <a href="{{iiif.value}}/full/max/0/default.jpg" class="skkg-component card"><img src="{{iiif.value}}/full/300,/0/default.jpg"/></a>
+              </mp-overlay-dialog-trigger>
+              <mp-overlay-dialog-content
+                  id="image-modal">
+                      <mp-page-loader 
+                          iri="[[ resolvePrefix 'page:viewImage']]"
+                          urlqueryparam-imageiri="{{iiif.value}}"
+                          urlqueryparam-overlay="true"
+                      ></mp-page-loader>
+              </mp-overlay-dialog-content>
+          </mp-overlay-dialog>
         {{/each}}
-      </ul>
-    </template>
-  </semantic-query>
+      </template>
+    </semantic-query>
+  </div>
 [[/inline]]
 
 [[#*inline "module-field-visualisation"]]

@@ -1,0 +1,42 @@
+[[#if (urlParam "overlay")]]
+[[else]]
+    [[> partial:pageHeader]]
+    [[> partial:contentHeader]]
+[[/if]]
+
+[[#if (hasPermission "api:ldp:*")]]
+[[else]]
+    <style>
+    .mirador-osd-context-controls.hud-container, .qtip-content  .button-container {
+            display: none;
+        }
+    </style>
+[[/if]]
+
+<div style="height: 700px">
+
+    <semantic-query
+        query="SELECT ?image ?server WHERE {
+            BIND( <[[ urlParam 'imageiri']]> as ?image )
+            BIND (REPLACE(STR(?image), '([^/]+$)', '') AS ?server)
+        } LIMIT 1"
+        template="{{> template}}"
+    >
+        <template id="template"> 
+
+            <rs-iiif-mirador 
+                image-or-region="{{ bindings.0.image.value }}"
+                image-id-pattern="BIND (REPLACE(STR(?imageIRI), '^(.*[/])', '') AS ?imageID)" 
+                iiif-server-url="{{ bindings.0.server.value }}">
+            </rs-iiif-mirador>
+
+        </template>
+
+    </semantic-query>
+</div>
+
+[[#if (urlParam "overlay")]]
+[[else]]
+    [[> partial:contentFooter]]
+    [[> partial:pageFooter]]
+[[/if]]
