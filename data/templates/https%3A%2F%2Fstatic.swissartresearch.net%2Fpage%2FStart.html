@@ -6,6 +6,10 @@
             <p class="skkg-component tagline">
                 The ResearchSpace instance for the SKKG Museum Digital project
             </p>
+            <p class="skkg-component summary">The instance provides access to the semantic data that has been generated
+                based on the collection data found in MuseumPlus.
+                You can use this instance to <semantic-link iri="page:browse">browse the data</semantic-link>
+                and to explore the <semantic-link iri="page:vocabularies">vocabularies</semantic-link>.</p>
             <p class="skkg-component summary">
                 <semantic-query
                     query="SELECT DISTINCT ?type (COUNT(?s) as ?num) WHERE {
@@ -16,10 +20,7 @@
                     template="{{> template-summary}}"
                 >
                     <template id="template-summary">
-                        <p>The instance provides access to the semantic data that has been generated
-                        based on the collection data found in MuseumPlus.
-                        You can use this instance to <semantic-link iri="page:browse">browse the data</semantic-link>
-                        and to explore the <semantic-link iri="page:vocabularies">vocabularies</semantic-link>.</p>
+                        
                         <p>Currently, the instance contains
                         {{#each bindings}}
                             {{#if @last}} and {{/if}}{{num.value}} <mp-label iri="{{type.value}}"></mp-label> items{{#if @last}}.{{/if}}{{#unless @last}}, {{/unless}}
