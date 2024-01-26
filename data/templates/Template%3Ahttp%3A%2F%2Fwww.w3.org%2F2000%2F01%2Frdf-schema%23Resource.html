@@ -18,7 +18,7 @@
 
 
 
-<!-- Hide immage tab if no data present -->
+<!-- Hide image tab if no data present -->
 <semantic-if
   query="ASK {
     BIND(<[[this]]> AS ?subject)
@@ -28,31 +28,34 @@
   else="{{> template-css-hide-images}}">
   <template id="template-css-hide-images">
     <style>
-      #record-tabs > ul > li:nth-child(3) {
+      #record-tabs > div > ul > li:nth-child(2) {
         display: none;
       }
     </style>
+  </template>
 </semantic-if>
 
 <div class="page">
   [[#if (ask "ASK { {SELECT * WHERE {?? ?p ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?? ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?p ??}LIMIT 1}UNION{ {SELECT * WHERE {?a ?p ?o. FILTER(??=<Template:http://www.w3.org/2000/01/rdf-schema#Resource> )} LIMIT 1} } }")]]
-    <div id='record-tabs' class='page__header-navtabs'>
+    <div class='page__header-navtabs'>
       [[> Platform:DefaultResourceHeader]]
     </div>
-    <bs-tabs id="tabs" class='page__body-navtabs' unmount-on-exit=true>
-      <bs-tab event-key="fields" title="Fields">
-        [[> module-field-visualisation]]
-      </bs-tab>
-      <bs-tab event-key="image" title="Images">
-        [[> module-images ]]
-      </bs-tab>
-      <bs-tab event-key="graph" class="tab-ontodia" title="Knowledge Graph">
-        <ontodia id='ontodia' hide-toolbar=true hide-panels=true hide-scroll-bars=true hide-navigation-confirmation=true auto-zoom=true settings=nostats iri='[[this]]'></ontodia>
-      </bs-tab>
-      <bs-tab event-key="statements" title="Source">
-        [[> Platform:SourceStatements]]
-      </bs-tab>
-    </bs-tabs>
+    <div id="record-tabs">
+      <bs-tabs id="tabs" class='page__body-navtabs' unmount-on-exit=true>
+        <bs-tab event-key="fields" title="Fields">
+          [[> module-field-visualisation]]
+        </bs-tab>
+        <bs-tab event-key="image" title="Images">
+          [[> module-images ]]
+        </bs-tab>
+        <bs-tab event-key="graph" class="tab-ontodia" title="Knowledge Graph">
+          <ontodia id='ontodia' hide-toolbar=true hide-panels=true hide-scroll-bars=true hide-navigation-confirmation=true auto-zoom=true settings=nostats iri='[[this]]'></ontodia>
+        </bs-tab>
+        <bs-tab event-key="statements" title="Source">
+          [[> Platform:SourceStatements]]
+        </bs-tab>
+      </bs-tabs>
+    </div>
   [[else]]
   <div class='page__body'>
     <p>
