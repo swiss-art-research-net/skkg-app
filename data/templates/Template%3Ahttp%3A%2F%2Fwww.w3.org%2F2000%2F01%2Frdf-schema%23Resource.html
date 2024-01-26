@@ -16,9 +16,27 @@
   }
 </style>
 
+
+
+<!-- Hide immage tab if no data present -->
+<semantic-if
+  query="ASK {
+    BIND(<[[this]]> AS ?subject)
+    ?subject la:digitally_shown_by/la:digitally_available_via/la:access_point ?iiif
+   }"
+  then=""
+  else="{{> template-css-hide-images}}">
+  <template id="template-css-hide-images">
+    <style>
+      #record-tabs > ul > li:nth-child(3) {
+        display: none;
+      }
+    </style>
+</semantic-if>
+
 <div class="page">
   [[#if (ask "ASK { {SELECT * WHERE {?? ?p ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?? ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?p ??}LIMIT 1}UNION{ {SELECT * WHERE {?a ?p ?o. FILTER(??=<Template:http://www.w3.org/2000/01/rdf-schema#Resource> )} LIMIT 1} } }")]]
-    <div class='page__header-navtabs'>
+    <div id='record-tabs' class='page__header-navtabs'>
       [[> Platform:DefaultResourceHeader]]
     </div>
     <bs-tabs id="tabs" class='page__body-navtabs' unmount-on-exit=true>
