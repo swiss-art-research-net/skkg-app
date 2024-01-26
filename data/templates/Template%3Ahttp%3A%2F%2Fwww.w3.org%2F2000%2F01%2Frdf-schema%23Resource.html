@@ -72,17 +72,24 @@
 
   <div class="skkg-component card-container entity-details-images">
     <semantic-query
-      query="SELECT ?iiif WHERE {
+      query="SELECT ?iiif ?pageNr WHERE {
         BIND(<[[this]]> AS ?subject)
-        ?subject la:digitally_shown_by/la:digitally_available_via/la:access_point ?iiif
-      }"
+        ?subject la:digitally_shown_by ?digitalObject .
+        ?digitalObject la:digitally_available_via/la:access_point ?iiif ;
+          crm:P1_is_identified_by ?pageNrId .
+        ?pageNrId crm:P2_has_type aat:300445022 ;
+          crm:P190_has_symbolic_content ?pageNr .
+      } ORDER BY xsd:integer(?pageNr)"
       template='{{> template-images }}'
     >
       <template id="template-images">
         {{#each bindings}}
           <mp-overlay-dialog title="Image Viewer" type="modal" bs-size="large">
               <mp-overlay-dialog-trigger>
-                <a href="{{iiif.value}}/full/max/0/default.jpg" class="skkg-component card"><img src="{{iiif.value}}/full/300,/0/default.jpg"/></a>
+                <a href="{{iiif.value}}/full/max/0/default.jpg" class="skkg-component card">
+                  <img src="{{iiif.value}}/full/300,/0/default.jpg"/>
+                  <p class="text-align-center">{{pageNr.value}}</p>
+                </a>
               </mp-overlay-dialog-trigger>
               <mp-overlay-dialog-content
                   id="image-modal">

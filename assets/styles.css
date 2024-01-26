@@ -121,6 +121,15 @@
 .skkg-component.panel .semantic-form {
   margin-right: 2rem;
 }
+.text-align-center {
+  text-align: center;
+}
+.text-align-left {
+  text-align: left;
+}
+.text-align-right {
+  text-align: right;
+}
 ul {
   margin-left: 0;
   padding-left: 10px;
