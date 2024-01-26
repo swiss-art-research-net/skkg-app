@@ -17,7 +17,7 @@
 </style>
 
 <div class="page">
-    [[#if (ask "ASK { {SELECT * WHERE {?? ?p ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?? ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?p ??}LIMIT 1}UNION{ {SELECT * WHERE {?a ?p ?o. FILTER(??=<Template:http://www.w3.org/2000/01/rdf-schema#Resource> )} LIMIT 1} } }")]]
+  [[#if (ask "ASK { {SELECT * WHERE {?? ?p ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?? ?o}LIMIT 1}UNION {SELECT * WHERE {?s ?p ??}LIMIT 1}UNION{ {SELECT * WHERE {?a ?p ?o. FILTER(??=<Template:http://www.w3.org/2000/01/rdf-schema#Resource> )} LIMIT 1} } }")]]
     <div class='page__header-navtabs'>
       [[> Platform:DefaultResourceHeader]]
     </div>
@@ -41,7 +41,7 @@
       It seems that no entity with IRI <code>"[[this]]"</code> in any subject, predicate or object position is known in the knowledge graph. Also no static application page with this identifier can be found.
     </p>
     <p>
-      Click on the edit button (<i class="fa fa-pencil"></i>) in the top right of this page (<i>only visibile if the respective ACL permissions are being granted to you</i>) to create a new, static application page with this identifier.
+      Click on the edit button (<i class="fa fa-pencil"></i>) in the top right of this page (<i>only visible if the respective ACL permissions are being granted to you</i>) to create a new, static application page with this identifier.
     </p>
   </div>
   [[/if]]
