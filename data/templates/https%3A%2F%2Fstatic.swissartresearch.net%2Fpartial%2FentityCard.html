@@ -16,12 +16,14 @@
                 query="SELECT ?type ?image WHERE {
                     <{{subject}}> a ?type .
                     VALUES (?type ?image) {
-                        (skkg:Person '/images/fcs/actors.svg')
+                        (skkg:Collection '/assets/icons/folder-open.svg')
                         (skkg:Group '/assets/icons/group.svg')
+                        (skkg:Literature '/images/fcs/book.svg')
+                        (skkg:Multimedia '/images/fcs/file.svg')
                         (skkg:Object '/images/fcs/things.svg')
+                        (skkg:Person '/images/fcs/actors.svg')
                         (skkg:Place '/images/fcs/places.svg')
                         (skkg:Type '/images/fcs/concepts.svg')
-                        (skkg:Collection '/assets/icons/folder-open.svg')
                     }
                 } LIMIT 1"
                 template="{{> template}}"
