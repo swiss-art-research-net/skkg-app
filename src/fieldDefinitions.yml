@@ -7,11 +7,14 @@ namespaces:
   crm: http://www.cidoc-crm.org/cidoc-crm/
   crmdig: http://www.ics.forth.gr/isl/CRMdig/
   crminf: http://www.ics.forth.gr/isl/CRMinf/
+  crmsci: http://www.cidoc-crm.org/extensions/crmsci/
   frbroo: http://iflastandards.info/ns/fr/frbr/frbroo/
   la: http://www.linkedart.org/schema/
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   prov: http://www.w3.org/ns/prov#
   search: https://platform.swissartresearch.net/search/
+  skkg: https://ontology.skkg.ch/
+  type: https://data.skkg.ch/type/
 
 fields:
 
@@ -29,7 +32,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject a ?value .
+          $subject a ?value .
           VALUES(?value) {
             (skkg:Person)
             (skkg:Group)
@@ -41,7 +44,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-            ?subject crm:P24i_changed_ownership_through ?acquisition .
+            $subject crm:P24i_changed_ownership_through ?acquisition .
             ?acquisition crm:P9_consists_of ?payment .
             ?payment a la:Payment ;
               la:paid_amount ?monetary_amount .
@@ -63,7 +66,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P57_has_number_of_parts ?value
+          $subject crm:P57_has_number_of_parts ?value
         }'
 
     - id: mp_autor
@@ -71,7 +74,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring .
+          $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring .
           ?authoring crm:P2_has_type ?type ;
             crm:P14_carried_out_by ?author .
           ?type skos:inScheme type:43087 ;
@@ -85,7 +88,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P24i_changed_ownership_through ?acquisition .
+          $subject crm:P24i_changed_ownership_through ?acquisition .
           ?acquisition crm:P3_has_note ?value .
         }'
 
@@ -94,7 +97,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P67i_is_referred_to_by ?statement .
+          $subject crm:P67i_is_referred_to_by ?statement .
           ?statement crm:P2_has_type aat:300026687 ;
             crm:P190_has_symbolic_content ?value .
         }'
@@ -129,7 +132,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
+          $subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
         }'
 
     - id: mp_edition_auflage
@@ -137,7 +140,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P67i_is_referred_to_by ?statement .
+          $subject crm:P67i_is_referred_to_by ?statement .
           ?statement crm:P2_has_type aat:300435435 ;
             crm:P190_has_symbolic_content ?value .
         }'
@@ -147,7 +150,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-            ?subject crm:P24i_changed_ownership_through ?acquisition .
+            $subject crm:P24i_changed_ownership_through ?acquisition .
             ?acquisition crm:P2_has_type ?value .
         }'
 
@@ -156,7 +159,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P24i_changed_ownership_through ?acquisition .
+          $subject crm:P24i_changed_ownership_through ?acquisition .
           ?acquisition crm:P67i_is_referred_to_by ?statement .
           ?statement crm:P2_has_type aat:300417447 ;
             crm:P190_has_symbolic_content ?value .
@@ -167,7 +170,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P2_has_type ?value .
+          $subject crm:P2_has_type ?value .
           ?value skos:inScheme type:21087 .
         }'
 
@@ -176,7 +179,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
+          $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
           ?editing crm:P2_has_type aat:300189515 ;
             crm:P14_carried_out_by ?value .
         }'
@@ -211,7 +214,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P1_is_identified_by ?identifier .
+          $subject crm:P1_is_identified_by ?identifier .
           ?identifier crm:P2_has_type type:invnr ;
             crm:P190_has_symbolic_content ?value .
         }'
@@ -221,7 +224,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P67i_is_referred_to_by ?statement .
+          $subject crm:P67i_is_referred_to_by ?statement .
           ?statement crm:P2_has_type aat:300027045 ;
             crm:P190_has_symbolic_content ?value .
         }'
@@ -231,7 +234,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
+          $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
         }'
 
     - id: mp_mat_technik
@@ -259,7 +262,7 @@ fields:
         - select: 'SELECT ?value WHERE {
             {
               SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE {
-                ?subject crm:P46_is_composed_of ?part .
+                $subject crm:P46_is_composed_of ?part .
                 ?part crm:P2_has_type/rdfs:label ?dimension_type ;
                   crm:P43_has_dimension ?dimension .
                 OPTIONAL {
@@ -280,7 +283,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P1_is_identified_by ?name .
+          $subject crm:P1_is_identified_by ?name .
           ?name crm:P106_is_composed_of/crm:P2_has_type ?name_type .
           VALUES (?name_type) {
             (aat:300404651)
@@ -303,7 +306,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
+          $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
         }'
 
     - id: mp_pers_korp
@@ -311,7 +314,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P108i_was_produced_by ?production .
+          $subject crm:P108i_was_produced_by ?production .
           ?production crm:P9_consists_of ?subProduction .
           ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value .
         }'
@@ -321,7 +324,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P1_is_identified_by ?title .
+          $subject crm:P1_is_identified_by ?title .
           ?title crm:P2_has_type/skos:inScheme type:32089 ;
             crm:P190_has_symbolic_content ?value .
         }'
@@ -331,7 +334,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P1_is_identified_by ?title .
+          $subject crm:P1_is_identified_by ?title .
           ?title crm:P2_has_type aat:300404670 ;
             crm:P190_has_symbolic_content ?value .
         }'
@@ -341,7 +344,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject crm:P2_has_type ?value .
+          $subject crm:P2_has_type ?value .
         }'
 
     - id: mp_verlag
@@ -349,7 +352,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          ?subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
+          $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
           ?editing crm:P2_has_type aat:300443925 ;
             crm:P14_carried_out_by ?value .
         }'
@@ -359,13 +362,13 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-            ?subject crm:P165_incorporates ?expression .
+            $subject crm:P165_incorporates ?expression .
             ?expression rdfs:label ?value ;
               crm:P67_refers_to ?referenced_work .
             ?referenced_work a skkg:Object .
           }'
         - select_alt: 'SELECT ?value WHERE {
-            ?subject crm:P165_incorporates ?expression .
+            $subject crm:P165_incorporates ?expression .
             ?expression rdfs:label ?label ;
               crm:P67_refers_to ?referenced_work .
             ?referenced_work rdfs:label ?title ;
@@ -390,7 +393,7 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-            ?subject crm:P34i_was_assessed_by ?assessment .
+            $subject crm:P34i_was_assessed_by ?assessment .
             ?assessment crm:P35_has_identified/rdfs:label ?state .
             OPTIONAL {
               ?assessment crm:P3_has_note ?note .
