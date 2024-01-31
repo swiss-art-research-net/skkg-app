@@ -12,6 +12,9 @@ namespaces:
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   prov: http://www.w3.org/ns/prov#
   search: https://platform.swissartresearch.net/search/
+  skkg: https://ontology.skkg.ch/
+  skos: http://www.w3.org/2004/02/skos/core#
+  type: https://data.skkg.ch/type/
 
 fields:
 
