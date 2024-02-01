@@ -72,7 +72,7 @@ fields:
 
     - id: mp_autor
       label: Autor
-      datatype: xsd:anyURI
+      datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
           $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring .
