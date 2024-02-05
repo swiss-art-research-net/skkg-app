@@ -283,7 +283,7 @@ fields:
       label: Name
       datatype: xsd:string
       queries:
-        - select: 'SELECT ?value WHERE {
+        - select: 'SELECT DISTINCT ?value WHERE {
           $subject crm:P1_is_identified_by ?name .
           ?name crm:P106_is_composed_of/crm:P2_has_type ?name_type .
           VALUES (?name_type) {
