@@ -70,7 +70,8 @@
                         ?child crm:P127_has_broader_term ?item .
                     }
                     BIND(BOUND(?child) AS ?hasChildren)
-                } LIMIT 1000",
+                } ORDER BY ?label
+                LIMIT 1000",
             "childrenQuery": "SELECT ?item ?label ?hasChildren ?hasSameAs WHERE {
                 ?item crm:P127_has_broader_term ?parent ;
                     rdfs:label ?label .
