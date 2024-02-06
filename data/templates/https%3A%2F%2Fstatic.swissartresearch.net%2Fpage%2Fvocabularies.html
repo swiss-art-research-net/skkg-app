@@ -58,34 +58,49 @@
 
 [[#*inline "component-vocabularies-tree"]]
 
-<semantic-tree 
+<semantic-lazy-tree 
         collapsed="true"
-        query="
-        SELECT ?node ?parent ?hasSameAs WHERE {
-            ?node crm:P127_has_broader_term ?parent .
-            ?parent rdfs:label ?parentLabel .
-            ?node rdfs:label ?nodeLabel .
-            OPTIONAL {
-                ?node crmdig:L54_is_same-as ?sameAs .
-                BIND('true'^^xsd:boolean AS ?hasSameAs)
-            }
-        } ORDER BY ?parentLabel ?nodeLabel"
-        tuple-template="{{> nodeTemplate }}"
+        type="query"
+        page-size="1000"
+        config='{
+            "rootsQuery": "SELECT ?item ?label ?hasChildren WHERE {
+                    ?item a skos:ConceptScheme ;
+                        rdfs:label ?label .
+                    OPTIONAL {
+                        ?child crm:P127_has_broader_term ?item .
+                    }
+                    BIND(BOUND(?child) AS ?hasChildren)
+                } LIMIT 1000",
+            "childrenQuery": "SELECT ?item ?label ?hasChildren ?hasSameAs WHERE {
+                ?item crm:P127_has_broader_term ?parent ;
+                    rdfs:label ?label .
+                OPTIONAL {
+                    ?child crm:P127_has_broader_term ?item .
+                }
+                BIND(BOUND(?child) AS ?hasChildren)
+                OPTIONAL {
+                    ?item crmdig:L54_is_same-as ?sameAs .
+                    BIND(\"true\"^^xsd:boolean AS ?hasSameAs)
+                }
+            } ORDER BY ?label",
+            "parentsQuery": "SELECT ?parent WHERE {
+                ?item crm:P127_has_broader_term ?parent .
+            }",
+            "searchQuery": "SELECT ?item WHERE {
+                ?item rdfs:label ?label .
+                ?label bds:search ?__token__ .
+            }"
+        }'
         >
-        <template id="nodeTemplate">
-            {{log this}}
-            <mp-event-trigger 
-                id="vocabulary-trigger-{{node.value}}"
-                type="Component.TemplateUpdate"
-                targets='["vocabulary-content-renderer"]'
-                data='{
-                    "iri": "{{node.value}}"
-                }'
-            >
-                <a><mp-label iri="{{node.value}}"></mp-label> {{#if hasSameAs.value}}&nbsp;<i class="fa fa-link"></i>{{/if}}</a>
-            </mp-event-trigger>
-        </template>
-    </semantic-tree>
+    </semantic-lazy-tree>
+
+    <mp-event-proxy
+        id="proxy"
+        on-event-type="LazyTree.ItemSelected"
+        proxy-event-type="Component.TemplateUpdate" 
+        proxy-targets='["vocabulary-content-renderer"]'>
+    </mp-event-proxy>
+  
 [[/inline]]
 
 [[#*inline "module-add-alignment"]]
