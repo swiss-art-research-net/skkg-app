@@ -87,9 +87,14 @@
             "parentsQuery": "SELECT ?parent WHERE {
                 ?item crm:P127_has_broader_term ?parent .
             }",
-            "searchQuery": "SELECT ?item WHERE {
+            "searchQuery": "SELECT ?item ?score ?label ?hasChildren WHERE {
                 ?item rdfs:label ?label .
-                ?label bds:search ?__token__ .
+                ?label bds:search ?__token__ ;
+                    bds:relevance ?score .
+                OPTIONAL {
+                    ?child crm:P127_has_broader_term ?item .
+                }
+                BIND(BOUND(?child) AS ?hasChildren)
             }"
         }'
         info-template="{{> template-info}}"
