@@ -91,7 +91,16 @@
                 ?label bds:search ?__token__ .
             }"
         }'
-        >
+        info-template="{{> template-info}}"
+    >
+        <template id="template-info">
+            <semantic-if
+                query="ASK {
+                    <{{iri}}> crmdig:L54_is_same-as ?sameAs .
+                }"
+                then="<span style='margin-left:5px;'><i class='fa fa-link'></i></span>"
+            ></semantic-if>
+        </template>
     </semantic-lazy-tree>
 
     <mp-event-proxy
