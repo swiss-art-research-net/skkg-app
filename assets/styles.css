@@ -150,6 +150,9 @@ ol.page-breadcrumb {
 #mp-popover .arrow {
   left: 20px !important;
 }
+.SemanticTreeInput--holder {
+  display: none;
+}
 .semantic-facet-holder .facet {
   border: none;
 }
