@@ -93,6 +93,14 @@ fields:
           ?acquisition crm:P3_has_note ?value .
         }'
 
+    - id: mp_bildrechte
+      label: Bildrechte
+      datatype: xsd:anyUri
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P104_is_subject_to/crm:P2_has_type ?value .
+        }'
+
     - id: mp_creditline
       label: Creditline
       datatype: xsd:string
