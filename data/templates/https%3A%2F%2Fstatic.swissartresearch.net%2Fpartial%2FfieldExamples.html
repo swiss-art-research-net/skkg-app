@@ -109,7 +109,7 @@
 
 <h3>Masse</h3>
 <semantic-query
-    query='SELECT DISTINCT ?subject ?value WHERE { { SELECT DISTINCT ?subject ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE { $subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?part_note . } ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(" ", ?part_note, " "), " "), ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = "de") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value) } LIMIT 10'
+    query='SELECT DISTINCT ?subject ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE { $subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?part_note . } ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(" ", ?part_note, " "), " "), ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = "de") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value) } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
@@ -127,7 +127,7 @@
 
 <h3>Name</h3>
 <semantic-query
-    query='SELECT DISTINCT ?subject DISTINCT ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value) } LIMIT 10'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value) } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
