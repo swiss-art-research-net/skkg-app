@@ -1,138 +1,192 @@
 
 <h3>Ankaufswert</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P9_consists_of ?payment . ?payment a la:Payment ; la:paid_amount ?monetary_amount . ?monetary_amount crm:P90_has_value ?monetary_value ; crm:P180_has_currency/rdfs:label ?monetary_currency . OPTIONAL { ?conversion crmsci:O11_described ?monetary_amount ; crmsci:O10_assigned_dimension ?converted_monetary_amount . ?converted_monetary_amount crm:P90_has_value ?converted_monetary_value ; crm:P180_has_currency/rdfs:label ?converted_monetary_currency . FILTER(DATATYPE(?converted_monetary_currency) = xsd:string) BIND(CONCAT(STR(?converted_monetary_currency), " ", STR(?converted_monetary_value)) AS ?converted_value) } BIND(CONCAT(STR(?monetary_currency), " ", STR(?monetary_value),IF(BOUND(?converted_value),CONCAT(" (", ?converted_value, ")"),"")) AS ?value) } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P9_consists_of ?payment . ?payment a la:Payment ; la:paid_amount ?monetary_amount . ?monetary_amount crm:P90_has_value ?monetary_value ; crm:P180_has_currency/rdfs:label ?monetary_currency . OPTIONAL { ?conversion crmsci:O11_described ?monetary_amount ; crmsci:O10_assigned_dimension ?converted_monetary_amount . ?converted_monetary_amount crm:P90_has_value ?converted_monetary_value ; crm:P180_has_currency/rdfs:label ?converted_monetary_currency . FILTER(DATATYPE(?converted_monetary_currency) = xsd:string) BIND(CONCAT(STR(?converted_monetary_currency), " ", STR(?converted_monetary_value)) AS ?converted_value) } BIND(CONCAT(STR(?monetary_currency), " ", STR(?monetary_value),IF(BOUND(?converted_value),CONCAT(" (", ?converted_value, ")"),"")) AS ?value) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Anz. Teile</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P57_has_number_of_parts ?value } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P57_has_number_of_parts ?value } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Autor</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; rdfs:label ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Bem. Erwerb</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P3_has_note ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P3_has_note ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Bildrechte</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P104_is_subject_to/crm:P2_has_type ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Broader term</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject crm:P127_has_broader_term ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P127_has_broader_term ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Creditline</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300026687 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300026687 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Daten</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { { $subject a skkg:Person . OPTIONAL { $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate . } OPTIONAL { $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate . } } UNION { $subject a skkg:Group . OPTIONAL { $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate . } OPTIONAL { $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate . } } BIND(CONCAT(IF(BOUND(?birthdate), CONCAT("Geboren: ", ?birthdate, " "), ""), IF(BOUND(?deathdate), CONCAT("Gestorben: ", ?deathdate, " "), ""), IF(BOUND(?foundationdate), CONCAT("Gegründet: ", ?foundationdate, " "), ""), IF(BOUND(?dissolutiondate), CONCAT("Aufgelöst: ", ?dissolutiondate, " "), "")) as ?value) } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { { $subject a skkg:Person . OPTIONAL { $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate . } OPTIONAL { $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate . } } UNION { $subject a skkg:Group . OPTIONAL { $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate . } OPTIONAL { $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate . } } BIND(CONCAT(IF(BOUND(?birthdate), CONCAT("Geboren: ", ?birthdate, " "), ""), IF(BOUND(?deathdate), CONCAT("Gestorben: ", ?deathdate, " "), ""), IF(BOUND(?foundationdate), CONCAT("Gegründet: ", ?foundationdate, " "), ""), IF(BOUND(?dissolutiondate), CONCAT("Aufgelöst: ", ?dissolutiondate, " "), "")) as ?value) FILTER(?value != "") } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Datierung</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Edition/Auflage</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435435 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435435 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Erw. Art.</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P2_has_type ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P2_has_type ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Erw. Ref. Nr.</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300417447 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300417447 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Gattung</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P2_has_type ?value . ?value skos:inScheme type:21087 . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P2_has_type ?value . ?value skos:inScheme type:21087 . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Herausgeber</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing . ?editing crm:P2_has_type aat:300189515 ; crm:P14_carried_out_by ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Inschr./Sign.</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject crm:P128_carries ?inscription . ?inscription crm:P2_has_type aat:300028702 ; crm:P190_has_symbolic_content ?inscription_value . OPTIONAL { ?inscription crm:P2_has_type ?inscription_type . ?inscription_type skos:inScheme type:32096 ; rdfs:label ?inscription_type_label . } OPTIONAL { ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation . } OPTIONAL { ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position . } OPTIONAL { ?inscription crm:P3_has_notes ?inscription_notes . } BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value) } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P128_carries ?inscription . ?inscription crm:P2_has_type aat:300028702 ; crm:P190_has_symbolic_content ?inscription_value . OPTIONAL { ?inscription crm:P2_has_type ?inscription_type . ?inscription_type skos:inScheme type:32096 ; rdfs:label ?inscription_type_label . } OPTIONAL { ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation . } OPTIONAL { ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position . } OPTIONAL { ?inscription crm:P3_has_notes ?inscription_notes . } BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Inv. Bemerkung</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300027045 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300027045 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Inv.-Nr.</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P1_is_identified_by ?identifier . ?identifier crm:P2_has_type type:invnr ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P1_is_identified_by ?identifier . ?identifier crm:P2_has_type type:invnr ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Jahr</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Masse</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { { SELECT DISTINCT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE { ?subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?part_note . } ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(" ", ?part_note, " "), " "), ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = "de") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value) } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { { SELECT DISTINCT ?subject ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=", ") as ?dimensions) WHERE { $subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?part_note . } ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ; crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(" ", ?part_note, " "), " "), ?dimension_value, ?dimension_unit) AS ?dimension_string) FILTER(LANG(?dimension_dimension) = "de") } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Mat./Tech. Ausgabe</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435429 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435429 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Mat./Technik</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject crm:P45_consists_of ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P45_consists_of ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Name</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P1_is_identified_by ?name . ?name crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value) } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject DISTINCT ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Ort</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Pers./Körp</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Same as</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject crmdig:L54_is_same-as ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crmdig:L54_is_same-as ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Titel</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Titel</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type aat:300404670 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Typ</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject a ?value . VALUES(?value) { (skkg:Person) (skkg:Group) } } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject a ?value . VALUES(?value) { (skkg:Person) (skkg:Group) } } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Typ</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P2_has_type ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Verlag</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing . ?editing crm:P2_has_type aat:300443925 ; crm:P14_carried_out_by ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+></semantic-query>
+
+<h3>Werkbezüge</h3>
+<semantic-query
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P165_incorporates ?expression . ?expression rdfs:label ?value ; crm:P67_refers_to ?referenced_work . ?referenced_work a skkg:Object . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
 
 <h3>Zustand</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { ?subject crm:P34i_was_assessed_by ?assessment . ?assessment crm:P35_has_identified/rdfs:label ?state . OPTIONAL { ?assessment crm:P3_has_note ?note . } OPTIONAL { ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date . } BIND(CONCAT(?state, IF(BOUND(?note),CONCAT(": ",?note," "),""), IF(BOUND(?date),CONCAT(" (", str(?date), ")"),"")) AS ?value) } LIMIT 10'
-    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    query='SELECT DISTINCT ?subject ?value WHERE { $subject crm:P34i_was_assessed_by ?assessment . ?assessment crm:P35_has_identified/rdfs:label ?state . OPTIONAL { ?assessment crm:P3_has_note ?note . } OPTIONAL { ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date . } BIND(CONCAT(?state, IF(BOUND(?note),CONCAT(": ",?note," "),""), IF(BOUND(?date),CONCAT(" (", str(?date), ")"),"")) AS ?value) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
 ></semantic-query>
