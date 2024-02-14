@@ -19,6 +19,7 @@ template = Template("""
 <semantic-query
     query='$selectQuery LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}} <semantic-link iri="{{subject.value}}">&nbsp;<i class="fa fa-external-link" style="font-size:0.6rem"></i></semantic-link></li>{{/each}}</ul>'
+    no-result-template='No results'
 ></semantic-query>
 """)
 
