@@ -95,7 +95,7 @@ fields:
 
     - id: mp_bildrechte
       label: Bildrechte
-      datatype: xsd:anyUri
+      datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
           $subject crm:P104_is_subject_to/crm:P2_has_type ?value .
@@ -344,7 +344,8 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P1_is_identified_by ?title .
+          $subject a skkg:Literature ; 
+            crm:P1_is_identified_by ?title .
           ?title crm:P2_has_type aat:300404670 ;
             crm:P190_has_symbolic_content ?value .
         }'
