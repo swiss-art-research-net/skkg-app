@@ -27,10 +27,15 @@ output = ""
 # Sort fields by label
 fields = sorted(fields, key=lambda k: k['label'])
 
+fieldsToOmit = ['mp_masse']
+
+fields = [field for field in fields if field['id'] not in fieldsToOmit]
+
 for field in fields:
     try:
         selectQuery = [d['select'] for d in field['queries'] if 'select' in d][0]
-        selectQuery = selectQuery.replace("SELECT", "SELECT DISTINCT ?subject")
+        selectQuery = selectQuery.replace("SELECT DISTINCT", "SELECT", 1)
+        selectQuery = selectQuery.replace("SELECT", "SELECT DISTINCT ?subject", 1)
         output += template.substitute(fieldName=field['label'],selectQuery=selectQuery)
     except:
         pass
