@@ -372,9 +372,11 @@ fields:
             crm:P14_carried_out_by ?value .
         }'
 
-    - id: mp_werkbezuege
+    - id: mp_werkbezuege_lit
       label: Werkbezüge
       datatype: xsd:anyURI
+      domain: skkg:Literature
+      range: skkg:Object
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crm:P165_incorporates ?expression .

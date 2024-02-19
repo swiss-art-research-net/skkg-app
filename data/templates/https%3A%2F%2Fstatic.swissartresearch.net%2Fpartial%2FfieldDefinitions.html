@@ -262,12 +262,14 @@
     },
 
     {
-        "id" : "mp_werkbezuege",
+        "id" : "mp_werkbezuege_lit",
 
             "label": "Werkbezüge",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
+            "range" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P165_incorporates ?expression . ?expression rdfs:label ?value ; crm:P67_refers_to ?referenced_work . ?referenced_work a skkg:Object . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege_lit"
     },
 
     {
