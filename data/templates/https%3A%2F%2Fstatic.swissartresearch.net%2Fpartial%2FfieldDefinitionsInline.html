@@ -260,14 +260,14 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel"
     }
 [[/inline]]
- [[#*inline "mp_titel_lit"]]
+ [[#*inline "mp_titel_exh_lit"]]
     {
-        "id" : "mp_titel_lit",
+        "id" : "mp_titel_exh_lit",
 
             "label": "Titel",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Literature ; crm:P1_is_identified_by ?title . ?title crm:P2_has_type aat:300404670 ; crm:P190_has_symbolic_content ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel_lit"
+                "selectPattern" : "SELECT ?value WHERE { $subject a ?type ; crm:P1_is_identified_by ?title . ?title crm:P2_has_type aat:300404670 ; crm:P190_has_symbolic_content ?value . VALUES (?type) { (skkg:Exhibition) (skkg:Literature) } }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel_exh_lit"
     }
 [[/inline]]
  [[#*inline "mp_typ"]]

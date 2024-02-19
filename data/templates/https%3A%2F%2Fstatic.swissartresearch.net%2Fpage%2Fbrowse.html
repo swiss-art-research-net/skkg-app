@@ -15,10 +15,11 @@
             ?subject a ?type ;
                 rdfs:label ?label .
             VALUES (?type) {
+                (skkg:Group)
+                (skkg:Exhibition)
+                (skkg:Multimedia)
                 (skkg:Object)
                 (skkg:Person)
-                (skkg:Group)
-                (skkg:Multimedia)
             }
         } ORDER BY ?label'
     ></semantic-search-query-constant>

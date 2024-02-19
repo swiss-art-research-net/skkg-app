@@ -339,15 +339,19 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: mp_titel_lit
+    - id: mp_titel_exh_lit
       label: Titel
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject a skkg:Literature ; 
+          $subject a ?type ;
             crm:P1_is_identified_by ?title .
           ?title crm:P2_has_type aat:300404670 ;
             crm:P190_has_symbolic_content ?value .
+          VALUES (?type) {
+            (skkg:Exhibition)
+            (skkg:Literature)
+          }
         }'
 
     - id: mp_typ
