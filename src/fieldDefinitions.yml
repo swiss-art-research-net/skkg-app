@@ -70,6 +70,15 @@ fields:
           $subject crm:P57_has_number_of_parts ?value
         }'
 
+    - id: mp_ausst_ort
+      label: Ausst.-Ort
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject a skkg:Exhibition ;
+            crm:P7_took_place_at ?value .
+        }'
+
     - id: mp_autor
       label: Autor
       datatype: xsd:string

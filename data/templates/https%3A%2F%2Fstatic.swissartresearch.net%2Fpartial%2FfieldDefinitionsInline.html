@@ -40,6 +40,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_anz_teile"
     }
 [[/inline]]
+ [[#*inline "mp_ausst_ort"]]
+    {
+        "id" : "mp_ausst_ort",
+
+            "label": "Ausst.-Ort",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P7_took_place_at ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ausst_ort"
+    }
+[[/inline]]
  [[#*inline "mp_autor"]]
     {
         "id" : "mp_autor",
