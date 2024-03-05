@@ -320,6 +320,18 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_verlag"
     }
 [[/inline]]
+ [[#*inline "mp_werkbezuege_exh"]]
+    {
+        "id" : "mp_werkbezuege_exh",
+
+            "label": "Werkbezüge",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Exhibition",
+            "range" : "skkg:Object}",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P16_used_specific_object ?set . ?set a la:Set ; la:has_member ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege_exh"
+    }
+[[/inline]]
  [[#*inline "mp_werkbezuege_lit"]]
     {
         "id" : "mp_werkbezuege_lit",

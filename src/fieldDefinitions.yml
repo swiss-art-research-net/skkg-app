@@ -400,6 +400,18 @@ fields:
             crm:P14_carried_out_by ?value .
         }'
 
+    - id: mp_werkbezuege_exh
+      label: Werkbezüge
+      datatype: xsd:anyURI
+      domain: skkg:Exhibition
+      range: skkg:Object
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P16_used_specific_object ?set .
+            ?set a la:Set ;
+              la:has_member ?value .
+          }'
+
     - id: mp_werkbezuege_lit
       label: Werkbezüge
       datatype: xsd:anyURI
