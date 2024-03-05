@@ -372,15 +372,6 @@ fields:
           ?value crm:P127_has_broader_term type:21102 .
         }'
 
-    - id: mp_typ_lit
-      label: Typ (Literatur)
-      datatype: xsd:anyURI
-      queries:
-        - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value crm:P127_has_broader_term type:21098 .
-        }'
-
     - id: mp_typ_obj_cat
       label: Typ (Objekt Kategorie)
       datatype: xsd:anyURI
