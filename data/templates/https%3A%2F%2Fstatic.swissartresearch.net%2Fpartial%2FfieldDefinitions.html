@@ -12,7 +12,7 @@
     {
         "id" : "mp_actor_type",
 
-            "label": "Typ",
+            "label": "Typ (Person/Körperschaft)",
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject a ?value . VALUES(?value) { (skkg:Person) (skkg:Group) } }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_actor_type"
@@ -253,12 +253,39 @@
     },
 
     {
-        "id" : "mp_typ",
+        "id" : "mp_typ_exh",
 
-            "label": "Typ",
+            "label": "Typ (Ausstellung)",
             "xsdDatatype" : "xsd:anyURI",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ"
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21102 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_exh"
+    },
+
+    {
+        "id" : "mp_typ_lit",
+
+            "label": "Typ (Literatur)",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21098 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_lit"
+    },
+
+    {
+        "id" : "mp_typ_obj_cat",
+
+            "label": "Typ (Objekt Kategorie)",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21087 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_obj_cat"
+    },
+
+    {
+        "id" : "mp_typ_obj_type",
+
+            "label": "Typ (Objekt Typ)",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P2_has_type aat:300435443 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_obj_type"
     },
 
     {

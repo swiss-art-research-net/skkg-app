@@ -29,7 +29,7 @@ fields:
           }'
 
     - id: mp_actor_type
-      label: Typ
+      label: Typ (Person/Körperschaft)
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
@@ -363,12 +363,40 @@ fields:
           }
         }'
 
-    - id: mp_typ
-      label: Typ
+    - id: mp_typ_exh
+      label: Typ (Ausstellung)
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
           $subject crm:P2_has_type ?value .
+          ?value crm:P127_has_broader_term type:21102 .
+        }'
+
+    - id: mp_typ_lit
+      label: Typ (Literatur)
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P2_has_type ?value .
+          ?value crm:P127_has_broader_term type:21098 .
+        }'
+
+    - id: mp_typ_obj_cat
+      label: Typ (Objekt Kategorie)
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P2_has_type ?value .
+          ?value crm:P127_has_broader_term type:21087 .
+        }'
+
+    - id: mp_typ_obj_type
+      label: Typ (Objekt Typ)
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P2_has_type ?value .
+          ?value crm:P2_has_type aat:300435443 .
         }'
 
     - id: mp_verlag
