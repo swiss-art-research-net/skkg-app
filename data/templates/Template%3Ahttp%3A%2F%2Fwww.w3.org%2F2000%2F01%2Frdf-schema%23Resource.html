@@ -77,6 +77,16 @@
     BIND(foaf:collaboratedWith AS ?p)
 [[/inline]]
 
+[[#*inline "construct-network-object-producers"]]
+  ?subject crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?o .
+  BIND(foaf:producedBy AS ?p)
+[[/inline]]
+
+[[#*inline "construct-network-objects-produced"]]
+  ?o crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?subject .
+  BIND(foaf:produced AS ?p)
+[[/inline]]
+
 [[#*inline "construct-network-object-exhibitions"]]
     ?o crm:P16_used_specific_object ?set .
     ?set la:has_member ?subject .
@@ -112,6 +122,10 @@
             [[> construct-network-object-exhibitions]]
           } UNION {
             [[> construct-network-objects-exhibited]]
+          } UNION {
+            [[> construct-network-object-producers]]
+          } UNION {
+            [[> construct-network-objects-produced]]
           }
       } LIMIT 1000"
       node-query="
@@ -125,6 +139,10 @@
             [[> construct-network-object-exhibitions]]
           } UNION {
             [[> construct-network-objects-exhibited]]
+          } UNION {
+            [[> construct-network-object-producers]]
+          } UNION {
+            [[> construct-network-objects-produced]]
           }
       } LIMIT 1000"
   ></semantic-sigma-graph>
