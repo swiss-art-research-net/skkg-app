@@ -44,7 +44,7 @@ fields:
       label: Ankaufswert
       datatype: xsd:string
       queries:
-        - select: 'SELECT ?value WHERE {
+        - select: 'SELECT DISTINCT ?value WHERE {
             $subject crm:P24i_changed_ownership_through ?acquisition .
             ?acquisition crm:P9_consists_of ?payment .
             ?payment a la:Payment ;
