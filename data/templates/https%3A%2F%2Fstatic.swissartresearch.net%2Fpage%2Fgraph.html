@@ -14,12 +14,16 @@
     CONSTRUCT {
          ?s ?p ?o 
     } WHERE {
-        BIND(<https://data.skkg.ch/actor/1834> as ?anonymous)
-        ?object crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?s, ?o .
-        FILTER(?s != ?o && ?s != ?anonymous && ?o != ?anonymous)
-        BIND(foaf:collaboratedWith AS ?p)
+        [[> construct-network-collaborations]]
     }"
 ></semantic-sigma-graph>
 
 [[> partial:pageFooter ]]
 [[> partial:contentFooter ]]
+
+[[#*inline construct-network-collaborations]]
+    BIND(<https://data.skkg.ch/actor/1834> as ?anonymous)
+    ?object crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?s, ?o .
+    FILTER(?s != ?o && ?s != ?anonymous && ?o != ?anonymous)
+    BIND(foaf:collaboratedWith AS ?p)
+[[/inline]]
