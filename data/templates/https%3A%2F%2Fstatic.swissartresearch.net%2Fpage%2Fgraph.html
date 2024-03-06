@@ -6,16 +6,15 @@
     height="600px"
     sizes='{
         "nodes": 2,
-        "edges": 1
+        "edges": 0.5
     }'
     query="
-    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-  
-    CONSTRUCT {
-         ?s ?p ?o 
-    } WHERE {
-        [[> construct-network-collaborations]]
-    }"
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+CONSTRUCT {
+        ?s ?p ?o 
+} WHERE {
+    [[> construct-network-objects-co-exhibited]]
+} LIMIT 1000"
 ></semantic-sigma-graph>
 
 [[> partial:pageFooter ]]
@@ -26,4 +25,11 @@
     ?object crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?s, ?o .
     FILTER(?s != ?o && ?s != ?anonymous && ?o != ?anonymous)
     BIND(foaf:collaboratedWith AS ?p)
+[[/inline]]
+
+[[#*inline "construct-network-objects-co-exhibited"]]
+    ?exhibition crm:P16_used_specific_object ?set .
+    ?set la:has_member ?s, ?o .
+    BIND(skkg:exhibitedWith as ?p)
+    FILTER(?s != ?o)
 [[/inline]]
