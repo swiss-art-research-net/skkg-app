@@ -70,6 +70,18 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_bem_erwerb"
     }
 [[/inline]]
+ [[#*inline "mp_beteiligte_exh"]]
+    {
+        "id" : "mp_beteiligte_exh",
+
+            "label": "Beteiligte",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Exhibition",
+            "range" : "crm:E39_Actor}",
+                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P14_carried_out_by ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_beteiligte_exh"
+    }
+[[/inline]]
  [[#*inline "mp_bildrechte"]]
     {
         "id" : "mp_bildrechte",

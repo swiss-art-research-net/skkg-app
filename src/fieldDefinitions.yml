@@ -102,6 +102,18 @@ fields:
           ?acquisition crm:P3_has_note ?value .
         }'
 
+    - id: mp_beteiligte_exh
+      label: Beteiligte
+      datatype: xsd:anyURI
+      domain: skkg:Exhibition
+      range: crm:E39_Actor
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject a skkg:Exhibition ;
+              crm:P14_carried_out_by ?value .
+          }'
+
+
     - id: mp_bildrechte
       label: Bildrechte
       datatype: xsd:anyURI
