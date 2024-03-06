@@ -51,6 +51,9 @@
         <bs-tab event-key="graph" class="tab-ontodia" title="Knowledge Graph">
           <ontodia id='ontodia' hide-toolbar=true hide-panels=true hide-scroll-bars=true hide-navigation-confirmation=true auto-zoom=true settings=nostats iri='[[this]]'></ontodia>
         </bs-tab>
+        <bs-tab event-key="network" title="Network">
+          [[> module-network]]
+        </bs-tab>
         <bs-tab event-key="statements" title="Source">
           [[> Platform:SourceStatements]]
         </bs-tab>
@@ -67,6 +70,65 @@
   </div>
   [[/if]]
 </div>
+
+[[#*inline "construct-network-collaborations"]]
+    ?object crm:P108i_was_produced_by/crm:P9_consists_of/crm:P14_carried_out_by ?subject, ?o .
+    FILTER(?subject != ?o)
+    BIND(foaf:collaboratedWith AS ?p)
+[[/inline]]
+
+[[#*inline "construct-network-object-exhibitions"]]
+    ?o crm:P16_used_specific_object ?set .
+    ?set la:has_member ?subject .
+    BIND(skkg:exhibitedBy as ?p)
+[[/inline]]
+
+[[#*inline "construct-network-objects-exhibited"]]
+    ?subject crm:P16_used_specific_object ?set .
+    ?set la:has_member ?o .
+    BIND(skkg:exhibited as ?p)
+[[/inline]]
+
+[[#*inline "module-network"]]
+
+  <semantic-sigma-graph
+      controls="true"
+      persist-graph="true"
+      width="100%"
+      height="600px"
+      sizes='{
+          "nodes": 10,
+          "edges": 1
+      }'
+      query="
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        CONSTRUCT {
+          ?subject ?p ?o 
+        } WHERE {
+          BIND(<[[this]]> AS ?subject)
+          {
+            [[> construct-network-collaborations]]
+          } UNION {
+            [[> construct-network-object-exhibitions]]
+          } UNION {
+            [[> construct-network-objects-exhibited]]
+          }
+      } LIMIT 1000"
+      node-query="
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        CONSTRUCT {
+          ?subject ?p ?o 
+        } WHERE {
+          {
+            [[> construct-network-collaborations]]
+          } UNION {
+            [[> construct-network-object-exhibitions]]
+          } UNION {
+            [[> construct-network-objects-exhibited]]
+          }
+      } LIMIT 1000"
+  ></semantic-sigma-graph>
+[[/inline]]
 
 [[#*inline "module-images"]]
 
