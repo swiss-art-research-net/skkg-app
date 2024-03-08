@@ -196,6 +196,15 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: mp_exh_intern_extern
+      label: Intern/Extern
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:43086 .
+        }'
+
     - id: mp_gattung
       label: Gattung
       datatype: xsd:anyURI
