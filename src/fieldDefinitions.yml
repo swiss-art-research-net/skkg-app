@@ -205,6 +205,15 @@ fields:
             ?value crm:P127_has_broader_term type:43086 .
         }'
 
+    - id: mp_exh_other_venue
+      label: Stationen
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject a skkg:Exhibition ;
+              crm:P9_consists_of/crm:P7_took_place_at ?value .
+          }'
+
     - id: mp_gattung
       label: Gattung
       datatype: xsd:anyURI

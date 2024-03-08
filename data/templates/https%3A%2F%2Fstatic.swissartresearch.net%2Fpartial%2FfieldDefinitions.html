@@ -147,6 +147,15 @@
     },
 
     {
+        "id" : "mp_exh_other_venue",
+
+            "label": "Stationen",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P9_consists_of/crm:P7_took_place_at ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_other_venue"
+    },
+
+    {
         "id" : "mp_gattung",
 
             "label": "Gattung",
