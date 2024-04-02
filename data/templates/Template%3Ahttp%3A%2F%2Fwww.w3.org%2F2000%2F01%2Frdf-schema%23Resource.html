@@ -22,7 +22,7 @@
 <semantic-if
   query="ASK {
     BIND(<[[this]]> AS ?subject)
-    ?subject la:digitally_shown_by/la:digitally_available_via/la:access_point ?iiif
+    ?subject crm:P138i_has_representation?/la:digitally_shown_by/la:digitally_available_via/la:access_point ?iiif
    }"
   then=""
   else="{{> template-css-hide-images}}">
@@ -185,7 +185,7 @@
     <semantic-query
       query="SELECT ?iiif ?pageNr WHERE {
         BIND(<[[this]]> AS ?subject)
-        ?subject la:digitally_shown_by ?digitalObject .
+        ?subject crm:P138i_has_representation?/la:digitally_shown_by ?digitalObject .
         ?digitalObject la:digitally_available_via/la:access_point ?iiif ;
           crm:P1_is_identified_by ?pageNrId .
         ?pageNrId crm:P2_has_type aat:300445022 ;
