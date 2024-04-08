@@ -183,6 +183,16 @@
     },
 
     {
+        "id" : "mp_institution",
+
+            "label": "Institution",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Address",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P1_is_identified_by ?organisation . ?organisation crm:P2_has_type aat:300445020 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_institution"
+    },
+
+    {
         "id" : "mp_inv_nr",
 
             "label": "Inv.-Nr.",

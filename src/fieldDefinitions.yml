@@ -258,6 +258,17 @@ fields:
           BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value)
         }'
 
+    - id: mp_institution
+      label: Institution
+      domain: skkg:Address
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P1_is_identified_by ?organisation .
+            ?organisation crm:P2_has_type aat:300445020 ;
+              crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: mp_inv_nr
       label: Inv.-Nr.
       datatype: xsd:string
