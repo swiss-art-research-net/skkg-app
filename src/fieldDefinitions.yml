@@ -365,10 +365,22 @@ fields:
 
     - id: mp_ort
       label: Ort
+      domain: skkg:Literature
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
           $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
+        }'
+
+    - id: mp_ort_address
+      label: Ort
+      domain: skkg:Address
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?city .
+          ?city crm:P2_has_type aat:300008389 ;
+            crm:P190_has_symbolic_content ?value .
         }'
 
     - id: mp_pers_korp
@@ -444,7 +456,7 @@ fields:
         }'
 
 
-    - id: mp_ weitere_namen
+    - id: mp_weitere_namen
       label: WeitereName
       datatype: xsd:string
       queries:
