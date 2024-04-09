@@ -344,7 +344,8 @@ fields:
       queries:
         - select: 'SELECT DISTINCT ?value WHERE {
           $subject crm:P1_is_identified_by ?name .
-          ?name crm:P106_is_composed_of/crm:P2_has_type ?name_type .
+          ?name crm:P2_has_type aat:300404670 ;
+            crm:P106_is_composed_of/crm:P2_has_type ?name_type .
           VALUES (?name_type) {
             (aat:300404651)
             (aat:300404652)
@@ -361,6 +362,7 @@ fields:
           }
           BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
         }'
+
     - id: mp_ort
       label: Ort
       datatype: xsd:anyURI
@@ -441,6 +443,32 @@ fields:
             crm:P14_carried_out_by ?value .
         }'
 
+
+    - id: mp_ weitere_namen
+      label: WeitereName
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT DISTINCT ?value WHERE {
+          $subject crm:P1_is_identified_by ?name .
+          ?name crm:P2_has_type aat:300264273 ;
+            crm:P106_is_composed_of/crm:P2_has_type ?name_type .
+          VALUES (?name_type) {
+            (aat:300404651)
+            (aat:300404652)
+          }
+          OPTIONAL {
+            ?name crm:P106_is_composed_of ?lastname .
+            ?lastname crm:P2_has_type aat:300404652 ;
+              crm:P190_has_symbolic_content ?lastname_value .
+          }
+          OPTIONAL {
+            ?name crm:P106_is_composed_of ?firstname .
+            ?firstname crm:P2_has_type aat:300404651 ;
+              crm:P190_has_symbolic_content ?firstname_value .
+          }
+          BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
+        }'
+        
     - id: mp_werkbezuege_exh
       label: Werkbezüge
       datatype: xsd:anyURI
