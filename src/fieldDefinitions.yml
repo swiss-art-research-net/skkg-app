@@ -526,6 +526,15 @@ fields:
             BIND(CONCAT(?invnr, ", ", ?title, (IF(BOUND(?locators), CONCAT(", ", ?locators), ""))) as ?value)
         }'
 
+    - id: mp_zug_dat
+      label: Zug.-Dat.
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P24i_changed_ownership_through ?acquisition .
+          ?acquisition crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
+        }'
+
     - id: mp_zustand
       label: Zustand
       datatype: xsd:string

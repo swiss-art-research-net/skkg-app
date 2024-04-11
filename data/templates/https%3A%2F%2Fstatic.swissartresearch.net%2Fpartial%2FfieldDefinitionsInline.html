@@ -409,6 +409,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege_lit"
     }
 [[/inline]]
+ [[#*inline "mp_zug_dat"]]
+    {
+        "id" : "mp_zug_dat",
+
+            "label": "Zug.-Dat.",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_zug_dat"
+    }
+[[/inline]]
  [[#*inline "mp_zustand"]]
     {
         "id" : "mp_zustand",
