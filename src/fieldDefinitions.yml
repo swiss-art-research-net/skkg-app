@@ -202,7 +202,7 @@ fields:
       queries:
         - select: 'SELECT ?value WHERE {
           $subject crm:P24i_changed_ownership_through ?acquisition .
-          ?acquisition crm:P23_transferred_title_form ?value .
+          ?acquisition crm:P23_transferred_title_from ?value .
         }'
 
     - id: mp_exh_intern_extern

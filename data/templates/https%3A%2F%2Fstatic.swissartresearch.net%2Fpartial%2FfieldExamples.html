@@ -99,7 +99,7 @@
 
 <h3>Erwerb von</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P23_transferred_title_form ?value . } LIMIT 10'
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P23_transferred_title_from ?value . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>
