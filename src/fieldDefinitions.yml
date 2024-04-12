@@ -402,6 +402,18 @@ fields:
           ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value .
         }'
 
+
+    - id: mp_region_address
+      label: Region
+      domain: skkg:Address
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?region .
+          ?region crm:P2_has_type aat:300182722 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: mp_titel
       label: Titel
       datatype: xsd:string
