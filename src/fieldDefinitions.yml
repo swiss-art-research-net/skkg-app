@@ -196,6 +196,15 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: mp_erwerb_von
+      label: Erwerb von
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P24i_changed_ownership_through ?acquisition .
+          ?acquisition crm:P23_transferred_title_form ?value .
+        }'
+
     - id: mp_exh_intern_extern
       label: Intern/Extern
       datatype: xsd:anyURI

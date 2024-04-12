@@ -138,6 +138,15 @@
     },
 
     {
+        "id" : "mp_erwerb_von",
+
+            "label": "Erwerb von",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P23_transferred_title_form ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_erwerb_von"
+    },
+
+    {
         "id" : "mp_exh_intern_extern",
 
             "label": "Intern/Extern",
