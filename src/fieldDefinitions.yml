@@ -306,6 +306,16 @@ fields:
           $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
         }'
 
+    - id: mp_land_address
+      label: Land
+      domain: skkg:Address
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?value .
+          ?value crm:P2_has_type aat:300387506 .
+        }'
+
     - id: mp_mat_technik
       label: Mat./Technik
       datatype: xsd:anyURI

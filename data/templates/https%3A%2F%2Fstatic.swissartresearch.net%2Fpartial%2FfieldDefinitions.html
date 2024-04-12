@@ -229,6 +229,16 @@
     },
 
     {
+        "id" : "mp_land_address",
+
+            "label": "Land",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Address",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?value . ?value crm:P2_has_type aat:300387506 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_land_address"
+    },
+
+    {
         "id" : "mp_mat_technik",
 
             "label": "Mat./Technik",
