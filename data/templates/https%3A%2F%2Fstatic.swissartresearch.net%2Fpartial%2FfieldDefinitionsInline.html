@@ -377,6 +377,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_exh"
     }
 [[/inline]]
+ [[#*inline "mp_typ_mul"]]
+    {
+        "id" : "mp_typ_mul",
+
+            "label": "Typ (Multimedia)",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:23089 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_mul"
+    }
+[[/inline]]
  [[#*inline "mp_typ_obj_cat"]]
     {
         "id" : "mp_typ_obj_cat",

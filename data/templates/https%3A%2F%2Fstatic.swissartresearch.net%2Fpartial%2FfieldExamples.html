@@ -160,6 +160,13 @@
     no-result-template='No results'
 ></semantic-query>
 
+<h3>Land</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?value . ?value crm:P2_has_type aat:300387506 . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
 <h3>Mat./Tech. Ausgabe</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435429 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
@@ -202,6 +209,13 @@
     no-result-template='No results'
 ></semantic-query>
 
+<h3>Region</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?region . ?region crm:P2_has_type aat:300182722 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
 <h3>Same as</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crmdig:L54_is_same-as ?value . } LIMIT 10'
@@ -233,6 +247,13 @@
 <h3>Typ (Ausstellung)</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21102 . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Typ (Multimedia)</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:23089 . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>

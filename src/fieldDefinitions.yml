@@ -458,6 +458,15 @@ fields:
           ?value crm:P127_has_broader_term type:21102 .
         }'
 
+    - id: mp_typ_mul
+      label: Typ (Multimedia)
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P2_has_type ?value .
+          ?value crm:P127_has_broader_term type:23089 .
+        }'
+
     - id: mp_typ_obj_cat
       label: Typ (Objekt Kategorie)
       datatype: xsd:anyURI
