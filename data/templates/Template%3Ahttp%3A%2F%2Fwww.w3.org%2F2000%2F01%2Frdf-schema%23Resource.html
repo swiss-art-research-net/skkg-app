@@ -99,6 +99,16 @@
     BIND(skkg:exhibited as ?p)
 [[/inline]]
 
+[[#*inline "construct-network-object-material"]]
+    ?subject crm:P45_consists_of ?o .
+    BIND(crm:P45_consists_of as ?p)
+[[/inline]]
+
+[[#*inline "construct-network-material-objects"]]
+    ?o crm:P45_consists_of ?subject .
+    BIND(crm:P45i_is_incorporated_in as ?p)
+[[/inline]]
+
 [[#*inline "module-network"]]
 
   <semantic-sigma-graph
@@ -118,6 +128,7 @@
               "[[resolvePrefix "crm:E53_Place"]]": "#00CC66",
               "[[resolvePrefix "crm:E78_Curated_Holding"]]": "#FFD966",
               "[[resolvePrefix "crm:E5_Event"]]": "#0099FF",
+              "[[resolvePrefix "crm:E55_Type"]]": "#fab565",
               "[[resolvePrefix "skkg:Exhibition"]]": "#0099FF",
               "[[resolvePrefix "crm:E22_Human-Made_Object"]]": "#B0927A"
           }'
@@ -141,6 +152,9 @@
             [[> construct-network-object-exhibitions]]
             ?o a ?typeObject .
           } UNION {
+            [[> construct-network-object-material]]
+            ?o a ?typeObject .
+          } UNION {
             [[> construct-network-objects-exhibited]]
             ?o a ?typeObject .
           } UNION {
@@ -148,6 +162,9 @@
             ?o a ?typeObject .
           } UNION {
             [[> construct-network-objects-produced]]
+            ?o a ?typeObject .
+          } UNION {
+            [[> construct-network-material-objects]]
             ?o a ?typeObject .
           }
       } LIMIT 1000"
@@ -166,6 +183,9 @@
             [[> construct-network-object-exhibitions]]
             ?o a ?typeObject .
           } UNION {
+            [[> construct-network-object-material]]
+            ?o a ?typeObject .
+          } UNION {
             [[> construct-network-objects-exhibited]]
             ?o a ?typeObject .
           } UNION {
@@ -173,6 +193,9 @@
             ?o a ?typeObject .
           } UNION {
             [[> construct-network-objects-produced]]
+            ?o a ?typeObject .
+          } UNION {
+            [[> construct-network-material-objects]]
             ?o a ?typeObject .
           }
       } LIMIT 1000"
