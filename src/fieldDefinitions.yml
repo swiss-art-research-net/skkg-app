@@ -215,7 +215,7 @@ fields:
         }'
 
     - id: mp_exh_intern_extern
-      label: Intern/Extern
+      label: Int./Ext.
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
