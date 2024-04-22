@@ -47,7 +47,10 @@
                 {{value.value.value}}{{#if value.value.language}} - {{value.value.language}}{{/if}}
             {{/ifCond}}
             {{#ifCond field.xsdDatatype.value "==" "http://www.w3.org/2001/XMLSchema#dateTime"}}
-                {{value.value.value}}
+            {{dateTimeFormat value.value.value "DD.MM.YYYY HH:MM"}}
+            {{/ifCond}}
+            {{#ifCond field.xsdDatatype.value "==" "http://www.w3.org/2001/XMLSchema#date"}}
+                {{dateTimeFormat value.value.value "DD.MM.YYYY"}}
             {{/ifCond}}
             {{#ifCond field.xsdDatatype.value "=="  "http://www.w3.org/2001/XMLSchema#anyURI"}}
                 {{#if value.value.datatype}}
