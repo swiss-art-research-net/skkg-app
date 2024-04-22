@@ -50,7 +50,7 @@
             {{dateTimeFormat value.value.value "DD.MM.YYYY HH:MM"}}
             {{/ifCond}}
             {{#ifCond field.xsdDatatype.value "==" "http://www.w3.org/2001/XMLSchema#date"}}
-                {{dateTimeFormat value.value.value "DD.MM.YYYY"}}
+                {{dateTimeFormat value.value.value "DD. MMM. YYYY"}}
             {{/ifCond}}
             {{#ifCond field.xsdDatatype.value "=="  "http://www.w3.org/2001/XMLSchema#anyURI"}}
                 {{#if value.value.datatype}}
