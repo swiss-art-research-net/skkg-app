@@ -88,9 +88,10 @@ fields:
           ?authoring crm:P2_has_type ?type ;
             crm:P14_carried_out_by ?author .
           ?type skos:inScheme type:43087 ;
-            rdfs:label ?type_label .
+            skos:prefLabel ?type_label .
           ?author rdfs:label ?author_label .
           BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value)
+          FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__))
         }'
 
     - id: mp_bem_erwerb
@@ -205,8 +206,17 @@ fields:
           ?acquisition crm:P23_transferred_title_from ?value .
         }'
 
+    - id: mp_exh_from
+      label: Von
+      datatype: xsd:date
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject a skkg:Exhibition ;
+            crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?value .
+        }'
+
     - id: mp_exh_intern_extern
-      label: Intern/Extern
+      label: Int./Ext.
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
@@ -222,6 +232,15 @@ fields:
             $subject a skkg:Exhibition ;
               crm:P9_consists_of/crm:P7_took_place_at ?value .
           }'
+
+    - id: mp_exh_to
+      label: Bis
+      datatype: xsd:date
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject a skkg:Exhibition ;
+            crm:P4_has_time-span/crm:P82b_end_of_the_end ?value .
+        }'
 
     - id: mp_gattung
       label: Gattung
@@ -298,7 +317,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: mp_jahr
+    - id: mp_jahr_lit
       label: Jahr
       datatype: xsd:string
       queries:
@@ -382,15 +401,6 @@ fields:
           BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
         }'
 
-    - id: mp_ort
-      label: Ort
-      domain: skkg:Literature
-      datatype: xsd:anyURI
-      queries:
-        - select: 'SELECT ?value WHERE {
-          $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
-        }'
-
     - id: mp_ort_address
       label: Ort
       domain: skkg:Address
@@ -400,6 +410,15 @@ fields:
           $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?city .
           ?city crm:P2_has_type aat:300008389 ;
             crm:P190_has_symbolic_content ?value .
+        }'
+
+    - id: mp_ort_literature
+      label: Ort
+      domain: skkg:Literature
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
         }'
 
     - id: mp_pers_korp
@@ -424,7 +443,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: mp_titel
+    - id: mp_titel_obj
       label: Titel
       datatype: xsd:string
       queries:
@@ -449,6 +468,24 @@ fields:
           }
         }'
 
+    - id: mp_typ_adr
+      label: Typ (Adresse)
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P2_has_type ?value .
+          ?value crm:P127_has_broader_term type:33089 .
+        }'
+
+    - id: mp_typ_obj_cat
+      label: Typ (Objekt Kategorie)
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P2_has_type ?value .
+          ?value crm:P127_has_broader_term type:21087 .
+        }'
+
     - id: mp_typ_exh
       label: Typ (Ausstellung)
       datatype: xsd:anyURI
@@ -465,15 +502,6 @@ fields:
         - select: 'SELECT ?value WHERE {
           $subject crm:P2_has_type ?value .
           ?value crm:P127_has_broader_term type:23089 .
-        }'
-
-    - id: mp_typ_obj_cat
-      label: Typ (Objekt Kategorie)
-      datatype: xsd:anyURI
-      queries:
-        - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value crm:P127_has_broader_term type:21087 .
         }'
 
     - id: mp_typ_obj_type
@@ -497,7 +525,7 @@ fields:
 
 
     - id: mp_weitere_namen
-      label: WeitereName
+      label: Weitere Namen
       datatype: xsd:string
       queries:
         - select: 'SELECT DISTINCT ?value WHERE {

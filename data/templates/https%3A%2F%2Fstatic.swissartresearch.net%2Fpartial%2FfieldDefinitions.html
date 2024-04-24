@@ -50,7 +50,7 @@
 
             "label": "Autor",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; rdfs:label ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, \" (\", ?type_label, \")\") AS ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; skos:prefLabel ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, \" (\", ?type_label, \")\") AS ?value) FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__)) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_autor"
     },
 
@@ -147,9 +147,18 @@
     },
 
     {
+        "id" : "mp_exh_from",
+
+            "label": "Von",
+            "xsdDatatype" : "xsd:date",
+                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_from"
+    },
+
+    {
         "id" : "mp_exh_intern_extern",
 
-            "label": "Intern/Extern",
+            "label": "Int./Ext.",
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:43086 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_intern_extern"
@@ -162,6 +171,15 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P9_consists_of/crm:P7_took_place_at ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_other_venue"
+    },
+
+    {
+        "id" : "mp_exh_to",
+
+            "label": "Bis",
+            "xsdDatatype" : "xsd:date",
+                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P4_has_time-span/crm:P82b_end_of_the_end ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_to"
     },
 
     {
@@ -220,12 +238,12 @@
     },
 
     {
-        "id" : "mp_jahr",
+        "id" : "mp_jahr_lit",
 
             "label": "Jahr",
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_jahr"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_jahr_lit"
     },
 
     {
@@ -275,16 +293,6 @@
     },
 
     {
-        "id" : "mp_ort",
-
-            "label": "Ort",
-            "xsdDatatype" : "xsd:anyURI",
-            "domain" : "skkg:Literature",
-                "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ort"
-    },
-
-    {
         "id" : "mp_ort_address",
 
             "label": "Ort",
@@ -292,6 +300,16 @@
             "domain" : "skkg:Address",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?city . ?city crm:P2_has_type aat:300008389 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ort_address"
+    },
+
+    {
+        "id" : "mp_ort_literature",
+
+            "label": "Ort",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
+                "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ort_literature"
     },
 
     {
@@ -314,12 +332,12 @@
     },
 
     {
-        "id" : "mp_titel",
+        "id" : "mp_titel_obj",
 
             "label": "Titel",
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P190_has_symbolic_content ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel_obj"
     },
 
     {
@@ -329,6 +347,24 @@
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { $subject a ?type ; crm:P1_is_identified_by ?title . ?title crm:P2_has_type aat:300404670 ; crm:P190_has_symbolic_content ?value . VALUES (?type) { (skkg:Exhibition) (skkg:Literature) } }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel_exh_lit"
+    },
+
+    {
+        "id" : "mp_typ_adr",
+
+            "label": "Typ (Adresse)",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:33089 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_adr"
+    },
+
+    {
+        "id" : "mp_typ_obj_cat",
+
+            "label": "Typ (Objekt Kategorie)",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21087 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_obj_cat"
     },
 
     {
@@ -347,15 +383,6 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:23089 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_mul"
-    },
-
-    {
-        "id" : "mp_typ_obj_cat",
-
-            "label": "Typ (Objekt Kategorie)",
-            "xsdDatatype" : "xsd:anyURI",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21087 . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_obj_cat"
     },
 
     {
@@ -379,7 +406,7 @@
     {
         "id" : "mp_weitere_namen",
 
-            "label": "WeitereName",
+            "label": "Weitere Namen",
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P2_has_type aat:300264273 ; crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, \"\"), IF(BOUND(?lastname_value), CONCAT(\" \", ?lastname_value), \"\")) as ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_weitere_namen"
