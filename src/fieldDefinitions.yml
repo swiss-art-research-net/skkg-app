@@ -264,10 +264,11 @@ fields:
     - id: mp_in_lit
       label: In
       datatype: xsd:anyUri
-      queries: 'SELECT ?value WHERE {
-        $subject a skkg:Literature ;
-          crm:P165i_is_incorporated_in ?value .
-      }'
+      queries: 
+        - select: 'SELECT ?value WHERE {
+            $subject a skkg:Literature ;
+              crm:P165i_is_incorporated_in ?value .
+          }'
 
     - id: mp_inschr_sign
       label: Inschr./Sign.

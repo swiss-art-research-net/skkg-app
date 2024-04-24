@@ -201,6 +201,15 @@
     },
 
     {
+        "id" : "mp_in_lit",
+
+            "label": "In",
+            "xsdDatatype" : "xsd:anyUri",
+                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Literature ; crm:P165i_is_incorporated_in ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_in_lit"
+    },
+
+    {
         "id" : "mp_inschr_sign",
 
             "label": "Inschr./Sign.",
@@ -329,6 +338,15 @@
             "domain" : "skkg:Address",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?region . ?region crm:P2_has_type aat:300182722 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_region_address"
+    },
+
+    {
+        "id" : "mp_series",
+
+            "label": "Reihe",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P106i_forms_part_of ?value . ?value crm:P2_has_type aat:300026642 }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_series"
     },
 
     {
