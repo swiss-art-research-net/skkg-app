@@ -88,9 +88,10 @@ fields:
           ?authoring crm:P2_has_type ?type ;
             crm:P14_carried_out_by ?author .
           ?type skos:inScheme type:43087 ;
-            rdfs:label ?type_label .
+            skos:prefLabel ?type_label .
           ?author rdfs:label ?author_label .
           BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value)
+          FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__))
         }'
 
     - id: mp_bem_erwerb
@@ -316,7 +317,7 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
-    - id: mp_jahr
+    - id: mp_jahr_lit
       label: Jahr
       datatype: xsd:string
       queries:

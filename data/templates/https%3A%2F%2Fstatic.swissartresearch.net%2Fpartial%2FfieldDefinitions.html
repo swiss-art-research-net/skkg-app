@@ -50,7 +50,7 @@
 
             "label": "Autor",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; rdfs:label ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, \" (\", ?type_label, \")\") AS ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; skos:prefLabel ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, \" (\", ?type_label, \")\") AS ?value) FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__)) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_autor"
     },
 
@@ -238,12 +238,12 @@
     },
 
     {
-        "id" : "mp_jahr",
+        "id" : "mp_jahr_lit",
 
             "label": "Jahr",
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_jahr"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_jahr_lit"
     },
 
     {
