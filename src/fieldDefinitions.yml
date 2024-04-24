@@ -261,6 +261,14 @@ fields:
             crm:P14_carried_out_by ?value .
         }'
 
+    - id: mp_in_lit
+      label: In
+      datatype: xsd:anyUri
+      queries: 'SELECT ?value WHERE {
+        $subject a skkg:Literature ;
+          crm:P165i_is_incorporated_in ?value .
+      }'
+
     - id: mp_inschr_sign
       label: Inschr./Sign.
       datatype: xsd:string
@@ -441,6 +449,15 @@ fields:
           $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?region .
           ?region crm:P2_has_type aat:300182722 ;
             crm:P190_has_symbolic_content ?value .
+        }'
+
+    - id: mp_series
+      label: Reihe
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P106i_forms_part_of ?value .
+          ?value crm:P2_has_type aat:300026642
         }'
 
     - id: mp_titel_obj
