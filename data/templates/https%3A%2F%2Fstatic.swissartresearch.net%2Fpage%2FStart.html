@@ -12,18 +12,24 @@
                 and to explore the <semantic-link iri="page:vocabularies">vocabularies</semantic-link>.</p>
             <p class="skkg-component summary">
                 <semantic-query
-                    query="SELECT DISTINCT ?type (COUNT(DISTINCT ?s) as ?num) WHERE {
-                        ?s a ?type .
-                        ?type rdfs:subClassOf skkg:Entity .
-                        ?type rdfs:label ?label .
-                        } GROUP BY ?type ORDER BY ?label"
+                    query="SELECT DISTINCT ?type ?rounded_num WHERE {
+                        {
+                            SELECT DISTINCT ?type (COUNT(DISTINCT ?s) as ?num) WHERE {
+                                ?s a ?type .
+                                ?type rdfs:subClassOf skkg:Entity .
+                                ?type rdfs:label ?label .
+                            } GROUP BY ?type ORDER BY DESC(?num)
+                        }
+                        BIND(IF(STRLEN(STR(?num))>3, CONCAT(SUBSTR(STR(?num), 0, STRLEN(STR(?num)) - 3), '\'000'), ?num) as ?rounded_num)
+                    }
+                   "
                     template="{{> template-summary}}"
                 >
                     <template id="template-summary">
                         
-                        <p>Currently, the instance contains
+                        <p>Currently, the instance contains about
                         {{#each bindings}}
-                            {{#if @last}} and {{/if}}{{num.value}} <mp-label iri="{{type.value}}"></mp-label> items{{#if @last}}.{{/if}}{{#unless @last}}, {{/unless}}
+                            {{#if @last}} and {{/if}}{{rounded_num.value}} <mp-label iri="{{type.value}}"></mp-label> items{{#if @last}}.{{/if}}{{#unless @last}}, {{/unless}}
                             
                         {{/each}}
                         </p>
