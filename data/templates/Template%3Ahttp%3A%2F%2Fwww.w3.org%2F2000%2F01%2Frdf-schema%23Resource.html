@@ -104,10 +104,21 @@
     BIND(crm:P45_consists_of as ?p)
 [[/inline]]
 
+[[#*inline "construct-network-objects-referenced"]]
+    ?subject crm:P165_incorporates/crm:P67_refers_to ?o .
+    BIND(crm:P67_refers_to as ?p)
+[[/inline]]
+
 [[#*inline "construct-network-material-objects"]]
     ?o crm:P45_consists_of ?subject .
     BIND(crm:P45i_is_incorporated_in as ?p)
 [[/inline]]
+
+[[#*inline "construct-network-referenced-in-literature"]]
+    ?o crm:P165_incorporates/crm:P67_refers_to ?subject .
+    BIND(crm:P67i_is_referred_to_by as ?p)
+[[/inline]]
+
 
 [[#*inline "module-network"]]
 
@@ -166,6 +177,12 @@
           } UNION {
             [[> construct-network-material-objects]]
             ?o a ?typeObject .
+          } UNION {
+            [[> construct-network-objects-referenced]]
+            ?o a ?typeObject .
+          } UNION {
+            [[> construct-network-referenced-in-literature]]
+            ?o a ?typeObject .
           }
       } LIMIT 1000"
       node-query="
@@ -196,6 +213,12 @@
             ?o a ?typeObject .
           } UNION {
             [[> construct-network-material-objects]]
+            ?o a ?typeObject .
+          } UNION {
+            [[> construct-network-objects-referenced]]
+            ?o a ?typeObject .
+          } UNION {
+            [[> construct-network-referenced-in-literature]]
             ?o a ?typeObject .
           }
       } LIMIT 1000"
