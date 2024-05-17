@@ -94,6 +94,16 @@ fields:
           FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__))
         }'
 
+    - id: mp_band
+      label: Band
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P67i_is_referred_to_by ?statement .
+          ?statement crm:P2_has_type aat:300265632 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: mp_bem_erwerb
       label: Bem. Erwerb
       datatype: xsd:string
@@ -169,7 +179,7 @@ fields:
 
     - id: mp_edition_auflage
       label: Edition/Auflage
-      datatype: xsd:anyURI
+      datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
           $subject crm:P67i_is_referred_to_by ?statement .

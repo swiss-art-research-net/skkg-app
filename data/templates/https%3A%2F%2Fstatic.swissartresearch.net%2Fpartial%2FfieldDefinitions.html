@@ -55,6 +55,15 @@
     },
 
     {
+        "id" : "mp_band",
+
+            "label": "Band",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300265632 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_band"
+    },
+
+    {
         "id" : "mp_bem_erwerb",
 
             "label": "Bem. Erwerb",
@@ -114,7 +123,7 @@
         "id" : "mp_edition_auflage",
 
             "label": "Edition/Auflage",
-            "xsdDatatype" : "xsd:anyURI",
+            "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435435 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_edition_auflage"
     },
