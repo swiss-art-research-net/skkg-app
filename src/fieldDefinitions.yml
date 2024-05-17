@@ -263,7 +263,7 @@ fields:
 
     - id: mp_in_lit
       label: In
-      datatype: xsd:anyUri
+      datatype: xsd:anyURI
       queries: 
         - select: 'SELECT ?value WHERE {
             $subject a skkg:Literature ;
