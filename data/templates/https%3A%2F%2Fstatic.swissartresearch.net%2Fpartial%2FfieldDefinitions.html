@@ -331,6 +331,16 @@
     },
 
     {
+        "id" : "mp_page_num",
+
+            "label": "Seiten",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P43_has_dimension ?page_count . ?page_count crm:P91_has_unit aat:300194222 ; crm:P90_has_value ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_page_num"
+    },
+
+    {
         "id" : "mp_pers_korp",
 
             "label": "Pers./Körp",

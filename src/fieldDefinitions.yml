@@ -438,6 +438,17 @@ fields:
           $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
         }'
 
+    - id: mp_page_num
+      label: Seiten
+      domain: skkg:Literature
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P43_has_dimension ?page_count .
+            ?page_count crm:P91_has_unit aat:300194222 ;
+              crm:P90_has_value ?value .
+        }'
+
     - id: mp_pers_korp
       label: Pers./Körp
       datatype: xsd:anyURI
