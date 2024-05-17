@@ -344,6 +344,14 @@ fields:
           ?value crm:P2_has_type aat:300387506 .
         }'
 
+    - id: mp_language
+      label: Sprache
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P72_has_language ?value .
+        }'
+
     - id: mp_mat_technik
       label: Mat./Technik
       datatype: xsd:anyURI
