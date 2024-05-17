@@ -359,12 +359,30 @@
     },
 
     {
-        "id" : "mp_pers_korp",
+        "id" : "mp_person_korp_lit",
+
+            "label": "Pers./Körp",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67_refers_to ?value . ?value a skkg:Person . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_person_korp_lit"
+    },
+
+    {
+        "id" : "mp_person_korp_lit_typed",
+
+            "label": "Pers./Körp (typisiert)",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P01i_is_domain_of ?reference. ?reference crm:P02_has_range ?referencedPerson ; crm:P67.1_has_type ?referenceType . ?referencedPerson skos:prefLabel ?personLabel . ?referenceType skos:prefLabel ?typeLabel . BIND(CONCAT(?personLabel, \" (\", ?typeLabel, \")\") AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_person_korp_lit_typed"
+    },
+
+    {
+        "id" : "mp_pers_korp_obj",
 
             "label": "Pers./Körp",
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_obj"
     },
 
     {
