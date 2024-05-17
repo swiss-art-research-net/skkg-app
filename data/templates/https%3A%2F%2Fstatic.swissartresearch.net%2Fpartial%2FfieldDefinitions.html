@@ -256,6 +256,15 @@
     },
 
     {
+        "id" : "mp_isbn",
+
+            "label": "ISBN",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P1_is_identified_by ?isbn . ?isbn crm:P2_has_type aat:300417443 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_isbn"
+    },
+
+    {
         "id" : "mp_jahr_lit",
 
             "label": "Jahr",

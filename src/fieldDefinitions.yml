@@ -336,6 +336,16 @@ fields:
             crm:P190_has_symbolic_content ?value .
         }'
 
+    - id: mp_isbn
+      label: ISBN
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P1_is_identified_by ?isbn .
+          ?isbn crm:P2_has_type aat:300417443 ;
+            crm:P190_has_symbolic_content ?value .
+        }'
+
     - id: mp_jahr_lit
       label: Jahr
       datatype: xsd:string
