@@ -22,7 +22,14 @@
 
 <h3>Autor</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; rdfs:label ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value) } LIMIT 10'
+    query='SELECT DISTINCT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; skos:prefLabel ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value) FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__)) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Band</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300265632 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>
@@ -44,6 +51,13 @@
 <h3>Bildrechte</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crm:P104_is_subject_to/crm:P2_has_type ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Bis</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject a skkg:Exhibition ; crm:P4_has_time-span/crm:P82b_end_of_the_end ?value . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>
@@ -118,6 +132,20 @@
     no-result-template='No results'
 ></semantic-query>
 
+<h3>ISBN</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P1_is_identified_by ?isbn . ?isbn crm:P2_has_type aat:300417443 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>In</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject a skkg:Literature ; crm:P165i_is_incorporated_in ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
 <h3>Inschr./Sign.</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crm:P128_carries ?inscription . ?inscription crm:P2_has_type aat:300028702 ; crm:P190_has_symbolic_content ?inscription_value . OPTIONAL { ?inscription crm:P2_has_type ?inscription_type . ?inscription_type skos:inScheme type:32096 ; rdfs:label ?inscription_type_label . } OPTIONAL { ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation . } OPTIONAL { ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position . } OPTIONAL { ?inscription crm:P3_has_notes ?inscription_notes . } BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value) } LIMIT 10'
@@ -132,7 +160,7 @@
     no-result-template='No results'
 ></semantic-query>
 
-<h3>Intern/Extern</h3>
+<h3>Int./Ext.</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:43086 . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
@@ -190,14 +218,21 @@
 
 <h3>Ort</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value . } LIMIT 10'
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?city . ?city crm:P2_has_type aat:300008389 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>
 
 <h3>Ort</h3>
 <semantic-query
-    query='SELECT DISTINCT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?city . ?city crm:P2_has_type aat:300008389 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
+    query='SELECT DISTINCT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Pers./Körp</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P67_refers_to ?value . ?value a skkg:Person . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>
@@ -209,6 +244,13 @@
     no-result-template='No results'
 ></semantic-query>
 
+<h3>Pers./Körp (typisiert)</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P01i_is_domain_of ?reference. ?reference crm:P02_has_range ?referencedPerson ; crm:P67.1_has_type ?referenceType . ?referencedPerson skos:prefLabel ?personLabel . ?referenceType skos:prefLabel ?typeLabel . BIND(CONCAT(?personLabel, " (", ?typeLabel, ")") AS ?value) } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
 <h3>Region</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?region . ?region crm:P2_has_type aat:300182722 ; crm:P190_has_symbolic_content ?value . } LIMIT 10'
@@ -216,9 +258,30 @@
     no-result-template='No results'
 ></semantic-query>
 
+<h3>Reihe</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P106i_forms_part_of ?value . ?value crm:P2_has_type aat:300026642 } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
 <h3>Same as</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crmdig:L54_is_same-as ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Seiten</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P43_has_dimension ?page_count . ?page_count crm:P91_has_unit aat:300194222 ; crm:P90_has_value ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Sprache</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P72_has_language ?value . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>
@@ -240,6 +303,13 @@
 <h3>Titel</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject a ?type ; crm:P1_is_identified_by ?title . ?title crm:P2_has_type aat:300404670 ; crm:P190_has_symbolic_content ?value . VALUES (?type) { (skkg:Exhibition) (skkg:Literature) } } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Typ (Adresse)</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:33089 . } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
     no-result-template='No results'
 ></semantic-query>
@@ -286,7 +356,14 @@
     no-result-template='No results'
 ></semantic-query>
 
-<h3>WeitereName</h3>
+<h3>Von</h3>
+<semantic-query
+    query='SELECT DISTINCT ?value WHERE { $subject a skkg:Exhibition ; crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?value . } LIMIT 10'
+    template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
+    no-result-template='No results'
+></semantic-query>
+
+<h3>Weitere Namen</h3>
 <semantic-query
     query='SELECT DISTINCT ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P2_has_type aat:300264273 ; crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value) } LIMIT 10'
     template='<ul>{{#each bindings}}<li>{{#if (isIri value)}}<semantic-link iri="{{value.value}}"></semantic-link>{{else}}{{value.value}}{{/if}}</li>{{/each}}</ul>'
