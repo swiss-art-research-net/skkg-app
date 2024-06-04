@@ -232,11 +232,16 @@
       query="SELECT ?iiif ?pageNr WHERE {
         BIND(<[[this]]> AS ?subject)
         ?subject crm:P138i_has_representation?/la:digitally_shown_by ?digitalObject .
-        ?digitalObject la:digitally_available_via/la:access_point ?iiif ;
-          crm:P1_is_identified_by ?pageNrId .
-        ?pageNrId crm:P2_has_type aat:300445022 ;
-          crm:P190_has_symbolic_content ?pageNr .
-      } ORDER BY xsd:integer(?pageNr)"
+        ?digitalObject la:digitally_available_via/la:access_point ?iiif .
+        
+        ?digitalObject ^la:digitally_shown_by ?multimediaItem .
+        ?multimediaItem crm:P1_is_identified_by ?orderId .
+        ?orderId crm:P2_has_type type:sortlnu ;
+            crm:P190_has_symbolic_content ?order .
+        ?assignment crm:P140_assigned_attribute_to ?multimediaItem ;
+            crm:P141_assigned ?orderId ;
+            crm:P16_used_specific_object ?subject .
+      } ORDER BY xsd:integer(?order)"
       template='{{> template-images }}'
     >
       <template id="template-images">
