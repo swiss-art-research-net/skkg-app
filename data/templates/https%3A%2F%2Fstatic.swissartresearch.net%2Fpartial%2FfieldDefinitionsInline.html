@@ -504,8 +504,18 @@
 
             "label": "Typ (Multimedia)",
             "xsdDatatype" : "xsd:anyURI",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:23089 . }",
+                "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:23089 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_mul"
+    }
+[[/inline]]
+ [[#*inline "mp_typ_mul_iiif"]]
+    {
+        "id" : "mp_typ_mul_iiif",
+
+            "label": "Typ (Multimedia)",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject ^la:access_point/^la:digitally_available_via/^la:digitally_shown_by/crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:23089 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_mul_iiif"
     }
 [[/inline]]
  [[#*inline "mp_typ_obj_type"]]

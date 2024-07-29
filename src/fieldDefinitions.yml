@@ -9,7 +9,7 @@ namespaces:
   crminf: http://www.ics.forth.gr/isl/CRMinf/
   crmsci: http://www.cidoc-crm.org/extensions/crmsci/
   frbroo: http://iflastandards.info/ns/fr/frbr/frbroo/
-  la: http://www.linkedart.org/schema/
+  la: https://linked.art/ns/terms/
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   prov: http://www.w3.org/ns/prov#
   search: https://platform.swissartresearch.net/search/
@@ -579,9 +579,18 @@ fields:
       label: Typ (Multimedia)
       datatype: xsd:anyURI
       queries:
-        - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value crm:P127_has_broader_term type:23089 .
+        - select: 'SELECT DISTINCT ?value WHERE {
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:23089 .
+        }'
+
+    - id: mp_typ_mul_iiif
+      label: Typ (Multimedia)
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT DISTINCT ?value WHERE {
+            $subject ^la:access_point/^la:digitally_available_via/^la:digitally_shown_by/crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:23089 .
         }'
 
     - id: mp_typ_obj_type
