@@ -40,6 +40,14 @@ fields:
           }
         }'
 
+    - id: mp_akt_standort
+      label: Aktueller Standort
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P55_has_current_location ?value .
+        }'
+
     - id: mp_ankaufswert
       label: Ankaufswert
       datatype: xsd:string

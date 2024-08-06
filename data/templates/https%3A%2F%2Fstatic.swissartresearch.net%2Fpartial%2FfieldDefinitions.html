@@ -19,6 +19,15 @@
     },
 
     {
+        "id" : "mp_akt_standort",
+
+            "label": "Aktueller Standort",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P55_has_current_location ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_akt_standort"
+    },
+
+    {
         "id" : "mp_ankaufswert",
 
             "label": "Ankaufswert",
