@@ -446,6 +446,16 @@ fields:
           BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
         }'
 
+    - id: mp_obj_obj_ref
+      label: Obj.-Obj.-Ref.
+      domain: skkg:Object
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            ?value crm:P129_is_about ?subject ;
+              crm:P2_has_type/crm:P127_has_broader_term type:21116 .
+        }'
+
     - id: mp_ort_address
       label: Ort
       domain: skkg:Address
