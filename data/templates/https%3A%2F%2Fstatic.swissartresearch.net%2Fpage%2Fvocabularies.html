@@ -63,7 +63,7 @@
         type="query"
         page-size="1000"
         config='{
-            "rootsQuery": "SELECT ?item ?label ?hasChildren WHERE {
+            "rootsQuery": "SELECT DISTINCT ?item ?label ?hasChildren WHERE {
                     ?item a skos:ConceptScheme ;
                         rdfs:label ?label .
                     OPTIONAL {
