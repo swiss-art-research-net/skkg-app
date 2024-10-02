@@ -409,12 +409,17 @@ fields:
                 ?part crm:P2_has_type/rdfs:label ?dimension_type ;
                   crm:P43_has_dimension ?dimension .
                 OPTIONAL {
-                  ?part crm:P3_has_note ?part_note .
+                  ?part crm:P3_has_note ?suffix .
                 }
+                OPTIONAL {
+                    ?part crm:P67i_is_referred_to_by ?prefix_statement .
+                    ?prefix_statement crm:P2_has_type aat:300435430 ;
+                      crm:P190_has_symbolic_content ?prefix
+                  }
                 ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension ;
                   crm:P90_has_value ?dimension_value ;
                   crm:P91_has_unit/rdfs:label ?dimension_unit .
-                BIND(CONCAT(?dimension_dimension,IF(BOUND(?part_note),CONCAT(" ", ?part_note, " "), " "), ?dimension_value, ?dimension_unit) AS ?dimension_string)
+                BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, " "), ""),?dimension_dimension, " ", ?dimension_value, ?dimension_unit,IF(BOUND(?suffix),CONCAT(" (", ?suffix, ") "), "")) AS ?dimension_string)
                 FILTER(LANG(?dimension_dimension) = "de")
               } GROUP BY ?dimension_type
             }
