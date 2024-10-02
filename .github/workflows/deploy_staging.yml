@@ -1,4 +1,4 @@
-name: Update Staging app
+name: Update STAGING app
 
 on:
   pull_request:
