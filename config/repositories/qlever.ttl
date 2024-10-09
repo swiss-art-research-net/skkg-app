@@ -9,11 +9,11 @@
 @prefix fedsail: <http://www.openrdf.org/config/sail/federation#> .
 
 [] a rep:Repository;
-  rep:repositoryID "default";
+  rep:repositoryID "qlever";
   rdfs:label "Main repository";
   rep:repositoryImpl [
       rep:repositoryType "researchspace:SPARQLRepository";
-      sparql:query-endpoint <http://blazegraph:8080/blazegraph/sparql>;
+      sparql:query-endpoint <http://qlever:7001>;
       mph:quadMode true;
       mph:writable true
     ] .
