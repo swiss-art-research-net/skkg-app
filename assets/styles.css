@@ -130,9 +130,15 @@
 .text-align-right {
   text-align: right;
 }
+body {
+  background-color: #fff;
+}
 ul {
   margin-left: 0;
   padding-left: 10px;
+}
+table {
+  background-color: #fff !important;
 }
 #template-content > div > .row {
   margin-left: 0;
@@ -140,6 +146,9 @@ ul {
 }
 .form-control {
   width: 95%;
+}
+.nav.nav-tabs > li:first-of-type {
+  padding: 9px 15px !important;
 }
 .notification-action-wrapper {
   text-align: right;
