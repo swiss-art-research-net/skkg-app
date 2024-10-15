@@ -42,7 +42,7 @@
               no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
             >
               <template id='report'>
-                <semantic-link iri='{{report.value}}'>Report - {{dateTimeFormat ended.value "LLL"}}</semantic-link>
+                <semantic-link iri='{{report.value}}'><mp-label iri="{{report.value}}"> - {{dateTimeFormat ended.value "LLL"}}</semantic-link>
               </template>
             </semantic-table>
           </mp-panel-body>
