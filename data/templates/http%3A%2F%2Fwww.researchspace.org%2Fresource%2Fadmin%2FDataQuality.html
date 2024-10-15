@@ -15,107 +15,37 @@
   <div class="container-fluid" style="margin-bottom: 40px;">
     <bs-row class="row-center">
       <bs-col xs=12 sm=11 md=10 lg=9 class="rs-col-xl-8">
-      <bs-tabs id="tabs" class='page__body-navtabs' unmount-on-exit=true>
-        <bs-tab event-key='1' title='Results'>
-          <div>
-              <div>
-                <mp-panel>
-                  <mp-panel-header>
-                    <span>Validation Reports</span>
-                  </mp-panel-header>
-                  <mp-panel-body>
-                    <semantic-table
-                      query='
-                        SELECT ?report ?conforms ?ended WHERE {
-                          ?report a <http://www.w3.org/ns/shacl#ValidationReport> ;
-                                  <http://www.w3.org/ns/shacl#conforms> ?conforms ;
-                                  <http://www.w3.org/ns/prov#endedAtTime> ?ended .
-                        } ORDER BY DESC(?ended)
-                      '
-                      column-configuration='[
-                        {"displayName":"Report", "variableName": "ended" , "cellTemplate": "{{> report}}"},
-
-                        {"displayName":"Conformance", "variableName": "conforms" }
-                      ]'
-                      options='{
-                        "showFilter": false
-                      }'
-                      no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
-                    >
-                      <template id='report'>
-                        <semantic-link iri='{{report.value}}'>Report - {{dateTimeFormat ended.value "LLL"}}</semantic-link>
-                      </template>
-                    </semantic-table>
-                  </mp-panel-body>
-                </mp-panel>
-              </div>
-          </div>
-        </bs-tab>
-        <bs-tab event-key='2' title='Referenced Queries'>
-          <div>
-            <bs-alert bs-style='info'>
-              Queries that are referenced from the SHACL test cases.
-            </bs-alert>
-              <semantic-table
-                query='
-                  prefix sh: <http://www.w3.org/ns/shacl#>
-                  prefix mpqa: <http://www.metaphacts.com/ontologies/qa#>
-
-                  SELECT DISTINCT ?queryTemplate WHERE {
-                    ?shape a sh:NodeShape ;
-                      sh:sparql ?sparql .
-                    ?sparql mpqa:hasSPINQueryTemplate ?queryTemplate .
+        <mp-panel>
+          <mp-panel-header>
+            <span>Validation Reports</span>
+          </mp-panel-header>
+          <mp-panel-body>
+            <semantic-table
+              query='SELECT ?report ?conforms ?ended (COUNT(?result) as ?num_results) WHERE {
+                  ?report a <http://www.w3.org/ns/shacl#ValidationReport> ;
+                          <http://www.w3.org/ns/shacl#conforms> ?conforms ;
+                          <http://www.w3.org/ns/prov#endedAtTime> ?ended .
+                  OPTIONAL {
+                    ?report sh:result ?result .
                   }
-                '
-                column-configuration='[
-                  {
-                    "displayName": "",
-                    "cellTemplate": "{{> consistencyCheck}}"
-                  }
-                ]'
-                no-result-template="<i>No SHACL/SPIN queries from the query catalog referenced from test cases.</i>"
-              >
-                <template id='consistencyCheck'>
-                  <semantic-context repository='assets'>
-                    <semantic-query
-                      query='SELECT (<{{queryTemplate.value}}>  as ?template) ?plainQueryString ?label  WHERE {
-                        <{{queryTemplate.value}}> a <http://spinrdf.org/spin#Template>;
-                                    rdfs:label ?label;
-                                    <http://spinrdf.org/spin#body>/<http://spinrdf.org/sp#text> ?plainQueryString .
-                        } LIMIT 1
-                      '
-                      template='{{> executeQuery}}'
-                    >
-                      <template id='executeQuery'>
-                        <div>
-                          <mp-link url='/sparql' urlqueryparam-query='{{{bindings.0.plainQueryString.value}}}'>
-                            <i class="fa fa-play-circle" aria-hidden="true"></i>
-                          </mp-link>
-
-                          <mp-overlay-dialog title="Edit Consistency Check" type='modal' bs-size='large'>
-                            <mp-overlay-dialog-trigger><a style='margin-left: 5px;'>{{bindings.0.label.value}} </a></mp-overlay-dialog-trigger>
-                            <mp-overlay-dialog-content>
-                              <div>
-                                <semantic-context repository='assets'>
-                                  <mp-spin-query-template-editor iri='{{bindings.0.template.value}}'></mp-spin-query-template-editor>
-                                </semantic-context>
-                              </div>
-                            </mp-overlay-dialog-content>
-                          </mp-overlay-dialog>
-                        </div>
-                      </template>
-                    </semantic-query>
-                </template>
-              </semantic-table>
-            </div>
-          </bs-tab>
-          <bs-tab event-key='3' title='Test Case Management'>
-            <mp-rdf-unit-manager></mp-rdf-unit-manager>
-            [[#if (hasPermission "job:create:data-quality")]]
-          [[/if]]
-          </bs-tab>
-
-      </bs-tabs>
-    </bs-col>
+                }
+                GROUP BY ?report ?conforms ?ended 
+                ORDER BY DESC(?ended)'
+              column-configuration='[
+                {"displayName":"Report", "variableName": "ended" , "cellTemplate": "{{> report}}"},
+                {"displayName":"Num Results", "variableName": "num_results" },
+                {"displayName":"Conformance", "variableName": "conforms" }
+              ]'
+              options='{
+                "showFilter": false
+              }'
+              no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
+            >
+              <template id='report'>
+                <semantic-link iri='{{report.value}}'>Report - {{dateTimeFormat ended.value "LLL"}}</semantic-link>
+              </template>
+            </semantic-table>
+          </mp-panel-body>
+        </mp-panel>
   </bs-row>
 </div>
