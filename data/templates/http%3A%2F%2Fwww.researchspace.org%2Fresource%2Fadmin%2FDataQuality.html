@@ -22,9 +22,9 @@
           <mp-panel-body>
             <semantic-table
               query='SELECT ?report ?conforms ?ended (COUNT(?result) as ?num_results) WHERE {
-                  ?report a <http://www.w3.org/ns/shacl#ValidationReport> ;
-                          <http://www.w3.org/ns/shacl#conforms> ?conforms ;
-                          <http://www.w3.org/ns/prov#endedAtTime> ?ended .
+                  ?report a sh:ValidationReport ;
+                         sh:conforms ?conforms ;
+                        <http://www.w3.org/ns/prov#endedAtTime> ?ended .
                   OPTIONAL {
                     ?report sh:result ?result .
                   }
