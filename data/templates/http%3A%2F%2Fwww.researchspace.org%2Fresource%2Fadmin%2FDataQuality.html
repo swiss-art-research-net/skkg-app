@@ -32,7 +32,8 @@
                 GROUP BY ?report ?conforms ?ended 
                 ORDER BY DESC(?ended)'
               column-configuration='[
-                {"displayName":"Report", "variableName": "ended" , "cellTemplate": "{{> report}}"},
+                {"displayName":"Report", "variableName": "report"},
+                {"displayName":"Ended", "variableName": "ended", "cellTemplate": "{{dateTimeFormat ended.value \"LLL\"}}" },
                 {"displayName":"Num Results", "variableName": "num_results" },
                 {"displayName":"Conformance", "variableName": "conforms" }
               ]'
@@ -41,9 +42,6 @@
               }'
               no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
             >
-              <template id='report'>
-                <semantic-link iri='{{report.value}}'><mp-label iri="{{report.value}}"> - {{dateTimeFormat ended.value "LLL"}}</semantic-link>
-              </template>
             </semantic-table>
           </mp-panel-body>
         </mp-panel>
