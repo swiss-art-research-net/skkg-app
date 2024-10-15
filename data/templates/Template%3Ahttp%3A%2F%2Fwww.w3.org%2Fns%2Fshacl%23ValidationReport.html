@@ -1,0 +1,44 @@
+<ol class="page-breadcrumb">
+  <li>
+    <mp-link title="Home" url="/">Home</mp-link>
+  </li>
+  
+  <li>
+    <semantic-link title="Administration" iri='[[resolvePrefix "rsp:admin"]]'>Administration</semantic-link>
+  </li>
+  <li>
+    <semantic-link iri='http://www.researchspace.org/resource/admin/DataQuality'>Data Quality</semantic-link>
+  </li>
+
+  <li class="active">Validation Report</li>
+</ol>
+
+<div class="page">
+  <div class="page__header">
+    <div class='page__header-body'>
+      <h2>Validation Report</h2>
+    </div>
+  </div>
+  <div class='page__body'>   
+    
+    <mp-panel>
+      <mp-panel-header>
+        <span>Results</span>
+      </mp-panel-header>
+      <mp-panel-body>
+        <div>
+          <semantic-table id='table' 
+            query='SELECT ?result ?subject ?message ?shape WHERE {
+                ?? sh:result ?result .
+                ?result sh:focusNode ?subject ;
+                        sh:resultMessage ?message ;
+                        sh:sourceShape ?shape .
+              }'
+          >
+          </semantic-table> 
+        </div>
+      </mp-panel-body>
+    </mp-panel>    
+    
+  </div>
+<div>

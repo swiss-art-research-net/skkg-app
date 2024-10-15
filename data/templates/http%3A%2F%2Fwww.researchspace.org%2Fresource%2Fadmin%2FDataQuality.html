@@ -1,0 +1,49 @@
+<ol class="page-breadcrumb">
+  <li>
+    <mp-link title="Home" url="/">Home</mp-link>
+  </li>
+  <li>
+    <semantic-link title="Administration" iri='[[resolvePrefix "rsp:admin"]]'>Administration</semantic-link>
+  </li>
+  <li class="active">Data Quality</li>
+</ol>
+
+<div class="page">
+
+  [[> rsp:adminPageHeader title="Data Quality" materialIcon="check"]]
+
+  <div class="container-fluid" style="margin-bottom: 40px;">
+    <bs-row class="row-center">
+      <bs-col xs=12 sm=11 md=10 lg=9 class="rs-col-xl-8">
+        <mp-panel>
+          <mp-panel-header>
+            <span>Validation Reports</span>
+          </mp-panel-header>
+          <mp-panel-body>
+            <semantic-table
+              query='SELECT ?report ?conforms ?ended (COUNT(?result) as ?num_results) WHERE {
+                  ?report a sh:ValidationReport ;
+                         sh:conforms ?conforms ;
+                        <http://www.w3.org/ns/prov#endedAtTime> ?ended .
+                  OPTIONAL {
+                    ?report sh:result ?result .
+                  }
+                }
+                GROUP BY ?report ?conforms ?ended 
+                ORDER BY DESC(?ended)'
+              column-configuration='[
+                {"displayName":"Report", "variableName": "report"},
+                {"displayName":"Ended", "variableName": "ended", "cellTemplate": "{{dateTimeFormat ended.value \"LLL\"}}" },
+                {"displayName":"Num Results", "variableName": "num_results" },
+                {"displayName":"Conformance", "variableName": "conforms" }
+              ]'
+              options='{
+                "showFilter": false
+              }'
+              no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
+            >
+            </semantic-table>
+          </mp-panel-body>
+        </mp-panel>
+  </bs-row>
+</div>
