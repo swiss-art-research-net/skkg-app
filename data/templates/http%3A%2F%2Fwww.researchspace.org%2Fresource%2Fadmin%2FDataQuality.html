@@ -15,47 +15,10 @@
   <div class="container-fluid" style="margin-bottom: 40px;">
     <bs-row class="row-center">
       <bs-col xs=12 sm=11 md=10 lg=9 class="rs-col-xl-8">
-
       <bs-tabs id="tabs" class='page__body-navtabs' unmount-on-exit=true>
         <bs-tab event-key='1' title='Results'>
           <div>
-      
-            <semantic-context repository="tests">
               <div>
-                <mp-panel>
-                  <mp-panel-header>
-                    <span>Data Quality Trend</span>
-                  </mp-panel-header>
-                  <mp-panel-body>
-                    <semantic-chart
-                      type="line"
-                      sets='[{"dataSetName": "failed checks", "category": "ended", "y": "failed"}, {"dataSetName": "succeeded checks", "category": "ended", "y": "succeeded"}]'
-                      styles='[{
-                        "provider": "chartjs",
-                        "style": {
-                          "options": {
-                            "legend": {
-                              "display": false
-                            }
-                          }
-                        }
-                      }]'
-                      query='
-                        prefix sh: <http://www.w3.org/ns/shacl#>
-
-                        SELECT ?ended ?failed ?succeeded WHERE {
-                          ?report a sh:ValidationReport ;
-                                    <http://rdfunit.aksw.org/ns/core#testsSuceedded> ?succeeded ;
-                                    <http://rdfunit.aksw.org/ns/core#testsFailed> ?failed ;
-                                  <http://www.w3.org/ns/prov#endedAtTime> ?ended .
-                        }
-                        ORDER BY ASC(?ended)
-                      '
-                      no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
-                    >
-                    </semantic-chart>
-                  </mp-panel-body>
-                </mp-panel>
                 <mp-panel>
                   <mp-panel-header>
                     <span>Validation Reports</span>
@@ -72,8 +35,7 @@
                       column-configuration='[
                         {"displayName":"Report", "variableName": "ended" , "cellTemplate": "{{> report}}"},
 
-                        {"displayName":"Conformance", "variableName": "conforms" },
-                        {"displayName":"Actions", "cellTemplate": "{{> actions}}" }
+                        {"displayName":"Conformance", "variableName": "conforms" }
                       ]'
                       options='{
                         "showFilter": false
@@ -81,24 +43,12 @@
                       no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
                     >
                       <template id='report'>
-                        <semantic-link iri='{{report.value}}'>Full Report - {{dateTimeFormat ended.value "LLL"}}</semantic-link>
-                      </template>
-                      <template id='actions'>
-                        <div>
-                          [[#if (hasPermission "api:ldp:container:http://www.metaphacts.com/ontologies/platform#validationReportContainer:delete:any")]]
-                            <semantic-context repository='tests'>
-                              <mp-ldp-remove-from-container-action iri="{{report.value}}" container="http://www.metaphacts.com/ontologies/platform#validationReportContainer">
-                                <button class="btn btn-xs btn-danger" style="margin-right: 8px;"><i class="fa fa-trash" aria-hidden=true></i> Delete</button>
-                              </mp-ldp-remove-from-container-action>   
-                            </semantic-context>
-                          [[/if]]
-                        </div>
+                        <semantic-link iri='{{report.value}}'>Report - {{dateTimeFormat ended.value "LLL"}}</semantic-link>
                       </template>
                     </semantic-table>
                   </mp-panel-body>
                 </mp-panel>
               </div>
-            </semantic-context>
           </div>
         </bs-tab>
         <bs-tab event-key='2' title='Referenced Queries'>
@@ -106,7 +56,6 @@
             <bs-alert bs-style='info'>
               Queries that are referenced from the SHACL test cases.
             </bs-alert>
-            <semantic-context repository='tests'>
               <semantic-table
                 query='
                   prefix sh: <http://www.w3.org/ns/shacl#>
@@ -156,10 +105,8 @@
                         </div>
                       </template>
                     </semantic-query>
-                  </semantic-context>
                 </template>
               </semantic-table>
-            </semantic-context>
             </div>
           </bs-tab>
           <bs-tab event-key='3' title='Test Case Management'>
