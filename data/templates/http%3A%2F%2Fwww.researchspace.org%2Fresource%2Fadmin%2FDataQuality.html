@@ -20,29 +20,31 @@
             <span>Validation Reports</span>
           </mp-panel-header>
           <mp-panel-body>
-            <semantic-table
-              query='SELECT ?report ?conforms ?ended (COUNT(?result) as ?num_results) WHERE {
-                  ?report a sh:ValidationReport ;
-                         sh:conforms ?conforms ;
-                        <http://www.w3.org/ns/prov#endedAtTime> ?ended .
-                  OPTIONAL {
-                    ?report sh:result ?result .
+            <semantic-context repository="secondary">
+              <semantic-table
+                query='SELECT ?report ?conforms ?ended (COUNT(?result) as ?num_results) WHERE {
+                    ?report a sh:ValidationReport ;
+                          sh:conforms ?conforms ;
+                          <http://www.w3.org/ns/prov#endedAtTime> ?ended .
+                    OPTIONAL {
+                      ?report sh:result ?result .
+                    }
                   }
-                }
-                GROUP BY ?report ?conforms ?ended 
-                ORDER BY DESC(?ended)'
-              column-configuration='[
-                {"displayName":"Report", "variableName": "report"},
-                {"displayName":"Ended", "variableName": "ended", "cellTemplate": "{{dateTimeFormat ended.value \"LLL\"}}" },
-                {"displayName":"Num Results", "variableName": "num_results" },
-                {"displayName":"Conformance", "variableName": "conforms" }
-              ]'
-              options='{
-                "showFilter": false
-              }'
-              no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
-            >
-            </semantic-table>
+                  GROUP BY ?report ?conforms ?ended 
+                  ORDER BY DESC(?ended)'
+                column-configuration='[
+                  {"displayName":"Report", "variableName": "report"},
+                  {"displayName":"Ended", "variableName": "ended", "cellTemplate": "{{dateTimeFormat ended.value \"LLL\"}}" },
+                  {"displayName":"Num Results", "variableName": "num_results" },
+                  {"displayName":"Conformance", "variableName": "conforms" }
+                ]'
+                options='{
+                  "showFilter": false
+                }'
+                no-result-template="<i>No test results available. Most likely no test cases have been executed so far.</i>"
+              >
+              </semantic-table>
+            </semantic-context>
           </mp-panel-body>
         </mp-panel>
   </bs-row>

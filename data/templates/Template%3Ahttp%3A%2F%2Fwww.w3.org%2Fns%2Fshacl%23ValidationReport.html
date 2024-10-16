@@ -34,7 +34,18 @@
                         sh:resultMessage ?message ;
                         sh:sourceShape ?shape .
               }'
+           
+            column-configuration='[
+              {"displayName":"Result", "variableName": "result"},
+              {"displayName":"Subject", "variableName": "subject", "cellTemplate": "{{> template-subject}}"},
+              {"displayName":"Message", "variableName": "message"},
+              {"displayName":"Shape", "variableName": "shape"}
+            ]'
           >
+              <template id="template-subject">
+                <semantic-context repository="default">
+                  <semantic-link iri='{{subject.value}}'></semantic-link>
+                </semantic-context>
           </semantic-table> 
         </div>
       </mp-panel-body>
