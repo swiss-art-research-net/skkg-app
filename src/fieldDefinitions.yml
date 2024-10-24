@@ -33,20 +33,20 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject a ?value .
-          VALUES(?value) {
-            (skkg:Person)
-            (skkg:Group)
-          }
-        }'
+            $subject a ?value .
+            VALUES(?value) {
+              (skkg:Person)
+              (skkg:Group)
+            }
+          }'
 
     - id: mp_akt_standort
       label: Aktueller Standort
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P55_has_current_location ?value .
-        }'
+            $subject crm:P55_has_current_location ?value .
+          }'
 
     - id: mp_ankaufswert
       label: Ankaufswert
@@ -68,58 +68,58 @@ fields:
               BIND(CONCAT(STR(?converted_monetary_currency), " ", STR(?converted_monetary_value)) AS ?converted_value)
             }
             BIND(CONCAT(STR(?monetary_currency), " ", STR(?monetary_value),IF(BOUND(?converted_value),CONCAT(" (", ?converted_value, ")"),"")) AS ?value)
-        }'
+          }'
 
     - id: mp_anz_teile
       label: Anz. Teile
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P57_has_number_of_parts ?value
-        }'
+            $subject crm:P57_has_number_of_parts ?value
+          }'
 
     - id: mp_ausst_ort
       label: Ausst.-Ort
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject a skkg:Exhibition ;
-            crm:P7_took_place_at ?value .
-        }'
+            $subject a skkg:Exhibition ;
+              crm:P7_took_place_at ?value .
+          }'
 
     - id: mp_autor
       label: Autor
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring .
-          ?authoring crm:P2_has_type ?type ;
-            crm:P14_carried_out_by ?author .
-          ?type skos:inScheme type:43087 ;
-            skos:prefLabel ?type_label .
-          ?author rdfs:label ?author_label .
-          BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value)
-          FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__))
-        }'
+            $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring .
+            ?authoring crm:P2_has_type ?type ;
+              crm:P14_carried_out_by ?author .
+            ?type skos:inScheme type:43087 ;
+              skos:prefLabel ?type_label .
+            ?author rdfs:label ?author_label .
+            BIND(CONCAT(?author_label, " (", ?type_label, ")") AS ?value)
+            FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__))
+          }'
 
     - id: mp_band
       label: Band
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P67i_is_referred_to_by ?statement .
-          ?statement crm:P2_has_type aat:300265632 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P67i_is_referred_to_by ?statement .
+            ?statement crm:P2_has_type aat:300265632 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_bem_erwerb
       label: Bem. Erwerb
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P24i_changed_ownership_through ?acquisition .
-          ?acquisition crm:P3_has_note ?value .
-        }'
+            $subject crm:P24i_changed_ownership_through ?acquisition .
+            ?acquisition crm:P3_has_note ?value .
+          }'
 
     - id: mp_beteiligte_exh
       label: Beteiligte
@@ -138,62 +138,62 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P104_is_subject_to/crm:P2_has_type ?value .
-        }'
+            $subject crm:P104_is_subject_to/crm:P2_has_type ?value .
+          }'
 
     - id: mp_creditline
       label: Creditline
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P67i_is_referred_to_by ?statement .
-          ?statement crm:P2_has_type aat:300026687 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P67i_is_referred_to_by ?statement .
+            ?statement crm:P2_has_type aat:300026687 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_daten
       label: Daten
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          {
-            $subject a skkg:Person .
-            OPTIONAL {
-              $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate .
+            {
+              $subject a skkg:Person .
+              OPTIONAL {
+                $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate .
+              }
+              OPTIONAL {
+                $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate .
+              }
+            } UNION {
+              $subject a skkg:Group .
+              OPTIONAL {
+                $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate .
+              }
+              OPTIONAL {
+                $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate .
+              }
             }
-            OPTIONAL {
-              $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate .
-            }
-          } UNION {
-            $subject a skkg:Group .
-            OPTIONAL {
-              $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate .
-            }
-            OPTIONAL {
-              $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate .
-            }
-          }
-          BIND(CONCAT(IF(BOUND(?birthdate), CONCAT("Geboren: ", ?birthdate, " "), ""), IF(BOUND(?deathdate), CONCAT("Gestorben: ", ?deathdate, " "), ""), IF(BOUND(?foundationdate), CONCAT("Gegründet: ", ?foundationdate, " "), ""), IF(BOUND(?dissolutiondate), CONCAT("Aufgelöst: ", ?dissolutiondate, " "), "")) as ?value)
-          FILTER(?value != "")
-        }'
+            BIND(CONCAT(IF(BOUND(?birthdate), CONCAT("Geboren: ", ?birthdate, " "), ""), IF(BOUND(?deathdate), CONCAT("Gestorben: ", ?deathdate, " "), ""), IF(BOUND(?foundationdate), CONCAT("Gegründet: ", ?foundationdate, " "), ""), IF(BOUND(?dissolutiondate), CONCAT("Aufgelöst: ", ?dissolutiondate, " "), "")) as ?value)
+            FILTER(?value != "")
+          }'
 
     - id: mp_datierung
       label: Datierung
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
-        }'
+            $subject crm:P108i_was_produced_by/crm:P4_has_time-span/rdfs:label ?value .
+          }'
 
     - id: mp_edition_auflage
       label: Edition/Auflage
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P67i_is_referred_to_by ?statement .
-          ?statement crm:P2_has_type aat:300435435 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P67i_is_referred_to_by ?statement .
+            ?statement crm:P2_has_type aat:300435435 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_erw_art
       label: Erw. Art.
@@ -202,36 +202,36 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crm:P24i_changed_ownership_through ?acquisition .
             ?acquisition crm:P2_has_type ?value .
-        }'
+          }'
 
     - id: mp_erw_ref_nr
       label: Erw. Ref. Nr.
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P24i_changed_ownership_through ?acquisition .
-          ?acquisition crm:P67i_is_referred_to_by ?statement .
-          ?statement crm:P2_has_type aat:300417447 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P24i_changed_ownership_through ?acquisition .
+            ?acquisition crm:P67i_is_referred_to_by ?statement .
+            ?statement crm:P2_has_type aat:300417447 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_erwerb_von
       label: Erwerb von
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P24i_changed_ownership_through ?acquisition .
-          ?acquisition crm:P23_transferred_title_from ?value .
-        }'
+            $subject crm:P24i_changed_ownership_through ?acquisition .
+            ?acquisition crm:P23_transferred_title_from ?value .
+          }'
 
     - id: mp_exh_from
       label: Von
       datatype: xsd:date
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject a skkg:Exhibition ;
-            crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?value .
-        }'
+            $subject a skkg:Exhibition ;
+              crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?value .
+          }'
 
     - id: mp_exh_intern_extern
       label: Int./Ext.
@@ -240,7 +240,7 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crm:P2_has_type ?value .
             ?value crm:P127_has_broader_term type:43086 .
-        }'
+          }'
 
     - id: mp_exh_other_venue
       label: Stationen
@@ -256,28 +256,28 @@ fields:
       datatype: xsd:date
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject a skkg:Exhibition ;
-            crm:P4_has_time-span/crm:P82b_end_of_the_end ?value .
-        }'
+            $subject a skkg:Exhibition ;
+              crm:P4_has_time-span/crm:P82b_end_of_the_end ?value .
+          }'
 
     - id: mp_gattung
       label: Gattung
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value skos:inScheme type:21087 .
-        }'
+            $subject crm:P2_has_type ?value .
+            ?value skos:inScheme type:21087 .
+          }'
 
     - id: mp_herausgeber
       label: Herausgeber
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
-          ?editing crm:P2_has_type aat:300189515 ;
-            crm:P14_carried_out_by ?value .
-        }'
+            $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
+            ?editing crm:P2_has_type aat:300189515 ;
+              crm:P14_carried_out_by ?value .
+          }'
 
     - id: mp_in_lit
       label: In
@@ -293,25 +293,25 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P128_carries ?inscription .
-          ?inscription crm:P2_has_type aat:300028702 ;
-            crm:P190_has_symbolic_content ?inscription_value .
-          OPTIONAL {
-            ?inscription crm:P2_has_type ?inscription_type .
-            ?inscription_type skos:inScheme type:32096 ;
-              rdfs:label ?inscription_type_label .
-          }
-          OPTIONAL {
-            ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation .
-          }
-          OPTIONAL {
-            ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position .
-          }
-          OPTIONAL {
-            ?inscription crm:P3_has_notes ?inscription_notes .
-          }
-          BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value)
-        }'
+            $subject crm:P128_carries ?inscription .
+            ?inscription crm:P2_has_type aat:300028702 ;
+              crm:P190_has_symbolic_content ?inscription_value .
+            OPTIONAL {
+              ?inscription crm:P2_has_type ?inscription_type .
+              ?inscription_type skos:inScheme type:32096 ;
+                rdfs:label ?inscription_type_label .
+            }
+            OPTIONAL {
+              ?inscription crm:P73_has_translation/crm:P190_has_symbolic_content ?inscription_translation .
+            }
+            OPTIONAL {
+              ?inscription crm:P1_is_identified_by/rdfs:label ?inscription_position .
+            }
+            OPTIONAL {
+              ?inscription crm:P3_has_notes ?inscription_notes .
+            }
+            BIND(CONCAT(IF(BOUND(?inscription_type_label), CONCAT(?inscription_type_label, ": "), ""), ?inscription_value, IF(BOUND(?inscription_translation), CONCAT(" (", ?inscription_translation, ") "), ""), IF(BOUND(?inscription_position), CONCAT(", ", ?inscription_position), ""), IF(BOUND(?inscription_notes), CONCAT(" (", ?inscription_notes, ") "), "")) as ?value)
+          }'
 
     - id: mp_institution
       label: Institution
@@ -319,48 +319,48 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P1_is_identified_by ?organisation .
-            ?organisation crm:P2_has_type aat:300445020 ;
-              crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P1_is_identified_by ?organisation .
+              ?organisation crm:P2_has_type aat:300445020 ;
+                crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_inv_nr
       label: Inv.-Nr.
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P1_is_identified_by ?identifier .
-          ?identifier crm:P2_has_type type:invnr ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P1_is_identified_by ?identifier .
+            ?identifier crm:P2_has_type type:invnr ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_inv_remark
       label: Inv. Bemerkung
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P67i_is_referred_to_by ?statement .
-          ?statement crm:P2_has_type aat:300027045 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P67i_is_referred_to_by ?statement .
+            ?statement crm:P2_has_type aat:300027045 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_isbn
       label: ISBN
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P1_is_identified_by ?isbn .
-          ?isbn crm:P2_has_type aat:300417443 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P1_is_identified_by ?isbn .
+            ?isbn crm:P2_has_type aat:300417443 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_jahr_lit
       label: Jahr
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
-        }'
+            $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
+          }'
 
     - id: mp_land_address
       label: Land
@@ -368,17 +368,17 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?value .
-          ?value crm:P2_has_type aat:300387506 .
-        }'
+            $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?value .
+            ?value crm:P2_has_type aat:300387506 .
+          }'
 
     - id: mp_language
       label: Sprache
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P72_has_language ?value .
-        }'
+            $subject crm:P72_has_language ?value .
+          }'
 
     - id: mp_mat_technik
       label: Mat./Technik
@@ -386,17 +386,17 @@ fields:
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crm:P45_consists_of ?value .
-        }'
+          }'
 
     - id: mp_mat_technik_ausgabe
       label: Mat./Tech. Ausgabe
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P67i_is_referred_to_by ?statement .
-          ?statement crm:P2_has_type aat:300435429 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P67i_is_referred_to_by ?statement .
+            ?statement crm:P2_has_type aat:300435429 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_masse
       label: Masse
@@ -426,33 +426,33 @@ fields:
                 
               } GROUP BY ?dimension_type
             }
-          BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value)
-        }'
+            BIND(CONCAT(?dimension_type, ": ", ?dimensions) AS ?value)
+          }'
 
     - id: mp_name
       label: Name
       datatype: xsd:string
       queries:
         - select: 'SELECT DISTINCT ?value WHERE {
-          $subject crm:P1_is_identified_by ?name .
-          ?name crm:P2_has_type aat:300404670 ;
-            crm:P106_is_composed_of/crm:P2_has_type ?name_type .
-          VALUES (?name_type) {
-            (aat:300404651)
-            (aat:300404652)
-          }
-          OPTIONAL {
-            ?name crm:P106_is_composed_of ?lastname .
-            ?lastname crm:P2_has_type aat:300404652 ;
-              crm:P190_has_symbolic_content ?lastname_value .
-          }
-          OPTIONAL {
-            ?name crm:P106_is_composed_of ?firstname .
-            ?firstname crm:P2_has_type aat:300404651 ;
-              crm:P190_has_symbolic_content ?firstname_value .
-          }
-          BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
-        }'
+            $subject crm:P1_is_identified_by ?name .
+            ?name crm:P2_has_type aat:300404670 ;
+              crm:P106_is_composed_of/crm:P2_has_type ?name_type .
+            VALUES (?name_type) {
+              (aat:300404651)
+              (aat:300404652)
+            }
+            OPTIONAL {
+              ?name crm:P106_is_composed_of ?lastname .
+              ?lastname crm:P2_has_type aat:300404652 ;
+                crm:P190_has_symbolic_content ?lastname_value .
+            }
+            OPTIONAL {
+              ?name crm:P106_is_composed_of ?firstname .
+              ?firstname crm:P2_has_type aat:300404651 ;
+                crm:P190_has_symbolic_content ?firstname_value .
+            }
+            BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
+          }'
 
     - id: mp_obj_obj_ref
       label: Obj.-Obj.-Ref.
@@ -462,7 +462,7 @@ fields:
         - select: 'SELECT ?value WHERE {
             ?value crm:P129_is_about ?subject ;
               crm:P2_has_type/crm:P127_has_broader_term type:21116 .
-        }'
+          }'
 
     - id: mp_ort_address
       label: Ort
@@ -470,10 +470,10 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?city .
-          ?city crm:P2_has_type aat:300008389 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?city .
+            ?city crm:P2_has_type aat:300008389 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_ort_literature
       label: Ort
@@ -481,8 +481,8 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
-        }'
+            $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
+          }'
 
     - id: mp_page_num
       label: Seiten
@@ -493,7 +493,7 @@ fields:
             $subject crm:P43_has_dimension ?page_count .
             ?page_count crm:P91_has_unit aat:300194222 ;
               crm:P90_has_value ?value .
-        }'
+          }'
 
     - id: mp_person_korp_lit
       label: Pers./Körp
@@ -502,7 +502,7 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crm:P67_refers_to ?value .
             ?value a skkg:Person .
-        }'
+          }'
 
     - id: mp_person_korp_lit_typed
       label: Pers./Körp (typisiert)
@@ -515,7 +515,7 @@ fields:
             ?referencedPerson skos:prefLabel ?personLabel .
             ?referenceType skos:prefLabel ?typeLabel .
             BIND(CONCAT(?personLabel, " (", ?typeLabel, ")") AS ?value)
-        }'
+          }'
 
 
     - id: mp_pers_korp_obj
@@ -523,10 +523,10 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P108i_was_produced_by ?production .
-          ?production crm:P9_consists_of ?subProduction .
-          ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value .
-        }'
+            $subject crm:P108i_was_produced_by ?production .
+            ?production crm:P9_consists_of ?subProduction .
+            ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value .
+          }'
 
 
     - id: mp_region_address
@@ -535,71 +535,71 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?region .
-          ?region crm:P2_has_type aat:300182722 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P76_has_contact_point/crm:P106_is_composed_of ?region .
+            ?region crm:P2_has_type aat:300182722 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_series
       label: Reihe
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P106i_forms_part_of ?value .
-          ?value crm:P2_has_type aat:300026642
-        }'
+            $subject crm:P106i_forms_part_of ?value .
+            ?value crm:P2_has_type aat:300026642
+          }'
 
     - id: mp_titel_obj
       label: Titel
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P1_is_identified_by ?title .
-          ?title crm:P2_has_type/skos:inScheme type:32089 ;
-            crm:P190_has_symbolic_content ?value .
-        }'
+            $subject crm:P1_is_identified_by ?title .
+            ?title crm:P2_has_type/skos:inScheme type:32089 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
 
     - id: mp_titel_exh_lit
       label: Titel
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject a ?type ;
-            crm:P1_is_identified_by ?title .
-          ?title crm:P2_has_type aat:300404670 ;
-            crm:P190_has_symbolic_content ?value .
-          VALUES (?type) {
-            (skkg:Exhibition)
-            (skkg:Literature)
-          }
-        }'
+            $subject a ?type ;
+              crm:P1_is_identified_by ?title .
+            ?title crm:P2_has_type aat:300404670 ;
+              crm:P190_has_symbolic_content ?value .
+            VALUES (?type) {
+              (skkg:Exhibition)
+              (skkg:Literature)
+            }
+          }'
 
     - id: mp_typ_adr
       label: Typ (Adresse)
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value crm:P127_has_broader_term type:33089 .
-        }'
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:33089 .
+          }'
 
     - id: mp_typ_obj_cat
       label: Typ (Objekt Kategorie)
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value crm:P127_has_broader_term type:21087 .
-        }'
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:21087 .
+          }'
 
     - id: mp_typ_exh
       label: Typ (Ausstellung)
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value crm:P127_has_broader_term type:21102 .
-        }'
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:21102 .
+          }'
 
     - id: mp_typ_mul
       label: Typ (Multimedia)
@@ -608,7 +608,7 @@ fields:
         - select: 'SELECT DISTINCT ?value WHERE {
             $subject crm:P2_has_type ?value .
             ?value crm:P127_has_broader_term type:23089 .
-        }'
+          }'
 
     - id: mp_typ_mul_iiif
       label: Typ (Multimedia)
@@ -617,26 +617,26 @@ fields:
         - select: 'SELECT DISTINCT ?value WHERE {
             $subject ^la:access_point/^la:digitally_available_via/^la:digitally_shown_by/crm:P2_has_type ?value .
             ?value crm:P127_has_broader_term type:23089 .
-        }'
+          }'
 
     - id: mp_typ_obj_type
       label: Typ (Objekt Typ)
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P2_has_type ?value .
-          ?value crm:P2_has_type aat:300435443 .
-        }'
+            $subject crm:P2_has_type ?value .
+            ?value crm:P2_has_type aat:300435443 .
+          }'
 
     - id: mp_verlag
       label: Verlag
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
-          ?editing crm:P2_has_type aat:300443925 ;
-            crm:P14_carried_out_by ?value .
-        }'
+            $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing .
+            ?editing crm:P2_has_type aat:300443925 ;
+              crm:P14_carried_out_by ?value .
+          }'
 
 
     - id: mp_weitere_namen
@@ -644,25 +644,25 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT DISTINCT ?value WHERE {
-          $subject crm:P1_is_identified_by ?name .
-          ?name crm:P2_has_type aat:300264273 ;
-            crm:P106_is_composed_of/crm:P2_has_type ?name_type .
-          VALUES (?name_type) {
-            (aat:300404651)
-            (aat:300404652)
-          }
-          OPTIONAL {
-            ?name crm:P106_is_composed_of ?lastname .
-            ?lastname crm:P2_has_type aat:300404652 ;
-              crm:P190_has_symbolic_content ?lastname_value .
-          }
-          OPTIONAL {
-            ?name crm:P106_is_composed_of ?firstname .
-            ?firstname crm:P2_has_type aat:300404651 ;
-              crm:P190_has_symbolic_content ?firstname_value .
-          }
-          BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
-        }'
+            $subject crm:P1_is_identified_by ?name .
+            ?name crm:P2_has_type aat:300264273 ;
+              crm:P106_is_composed_of/crm:P2_has_type ?name_type .
+            VALUES (?name_type) {
+              (aat:300404651)
+              (aat:300404652)
+            }
+            OPTIONAL {
+              ?name crm:P106_is_composed_of ?lastname .
+              ?lastname crm:P2_has_type aat:300404652 ;
+                crm:P190_has_symbolic_content ?lastname_value .
+            }
+            OPTIONAL {
+              ?name crm:P106_is_composed_of ?firstname .
+              ?firstname crm:P2_has_type aat:300404651 ;
+                crm:P190_has_symbolic_content ?firstname_value .
+            }
+            BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
+          }'
         
     - id: mp_werkbezuege_exh
       label: Werkbezüge
@@ -694,9 +694,9 @@ fields:
       datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-          $subject crm:P24i_changed_ownership_through ?acquisition .
-          ?acquisition crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
-        }'
+            $subject crm:P24i_changed_ownership_through ?acquisition .
+            ?acquisition crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
+          }'
 
     - id: mp_zustand
       label: Zustand
