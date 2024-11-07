@@ -210,6 +210,19 @@
                 {{/each}}
             </template>
         </semantic-query>
+        <semantic-query
+            query="SELECT ?value WHERE { 
+                    <{{iri}}> crm:P67i_is_referred_to_by ?value .
+                    ?value crm:P2_has_type aat:300435416 . 
+                }"
+            template="{{> template-descriptive-note}}">
+            <template id="template-descriptive-note">
+                <dt>Descriptive note</dt>
+                {{#each bindings}}
+                    <dd><mp-label iri="{{value.value}}"></mp-label></dd>
+                {{/each}}
+            </template>
+        </semantic-query>
     </dl>
 
     [[> partial:fieldDefinitionsInline ]]

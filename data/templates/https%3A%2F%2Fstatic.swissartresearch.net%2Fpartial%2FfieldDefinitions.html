@@ -1,5 +1,15 @@
 [
     {
+        "id" : "descriptive_note",
+
+            "label": "Descriptive note",
+            "description" : "A note that describes the subject",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?value . ?value crm:P2_has_type aat:300435416 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/descriptive_note"
+    },
+
+    {
         "id" : "has_broader_term",
 
             "label": "Broader term",

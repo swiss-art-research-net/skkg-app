@@ -19,6 +19,16 @@ namespaces:
 
 fields:
 
+    - id: descriptive_note
+      label: Descriptive note
+      description: A note that describes the subject
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P67i_is_referred_to_by ?value .
+            ?value crm:P2_has_type aat:300435416 .
+          }'
+
     - id: has_broader_term
       label: Broader term
       description: The broader term of the subject
