@@ -460,6 +460,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_obj"
     }
 [[/inline]]
+ [[#*inline "mp_redaktionsstatus"]]
+    {
+        "id" : "mp_redaktionsstatus",
+
+            "label": "Redaktionsstatus",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P70i_is_documented_in/crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:45152 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_redaktionsstatus"
+    }
+[[/inline]]
  [[#*inline "mp_region_address"]]
     {
         "id" : "mp_region_address",
