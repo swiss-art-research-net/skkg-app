@@ -656,6 +656,14 @@ fields:
               crm:P14_carried_out_by ?value .
           }'
 
+    - id: mp_typ_verwendung
+      label: Verwendung
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT DISTINCT ?value WHERE {
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:20060 .
+          }'
 
     - id: mp_weitere_namen
       label: Weitere Namen
