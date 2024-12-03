@@ -501,6 +501,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel_obj"
     }
 [[/inline]]
+ [[#*inline "mp_titel_obj_short"]]
+    {
+        "id" : "mp_titel_obj_short",
+
+            "label": "Titel (kurz)",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P1_is_identified_by ?title . ?title crm:P2_has_type/skos:inScheme type:32089 ; crm:P139_has_alternative_form ?short_title . ?short_title crm:P2_has_type aat:300417208 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_titel_obj_short"
+    }
+[[/inline]]
  [[#*inline "mp_titel_exh_lit"]]
     {
         "id" : "mp_titel_exh_lit",
