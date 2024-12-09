@@ -139,12 +139,30 @@
     },
 
     {
+        "id" : "mp_datum_mul",
+
+            "label": "Datum (Multimedia)",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P94i_was_created_by ?creation . ?creation crm:P2_has_type aat:300237864 ; crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_datum_mul"
+    },
+
+    {
         "id" : "mp_edition_auflage",
 
             "label": "Edition/Auflage",
             "xsdDatatype" : "xsd:string",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435435 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_edition_auflage"
+    },
+
+    {
+        "id" : "mp_erstelldatum_mul",
+
+            "label": "Erstelldatum (Multimedia)",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P94i_was_created_by/crm:P9_consists_of ?photography . ?photography crm:P2_has_type aat:300054225 ; crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_erstelldatum_mul"
     },
 
     {
