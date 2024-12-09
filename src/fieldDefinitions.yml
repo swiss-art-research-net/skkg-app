@@ -147,7 +147,7 @@ fields:
       label: Bildrechte
       datatype: xsd:string
       queries:
-        - select: 'SELECT ?value WHERE {
+        - select: 'SELECT DISTINCT ?value WHERE {
             $subject crm:P104_is_subject_to/crm:P2_has_type/rdfs:label ?right_type .
               OPTIONAL {
                 $subject crm:P104_is_subject_to ?original_right, ?successor_right .
