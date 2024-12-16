@@ -425,11 +425,25 @@ fields:
 
     - id: mp_mat_technik
       label: Mat./Technik
-      datatype: xsd:anyURI
+      datatype: xsd:string
       queries:
         - select: 'SELECT ?value WHERE {
-            $subject crm:P45_consists_of ?value .
-          }'
+            $subject crm:P45_consists_of ?material .
+            ?material skos:prefLabel ?material_label
+            OPTIONAL {
+              ?materialAssignment crm:P140_assigned_attribute_to $subject ;
+                crm:P141_assigned ?material .
+                OPTIONAL {
+                  ?materialAssignment crm:P3_has_note ?note .
+                }
+                OPTIONAL {
+                  ?materialAssignment crm:P1_is_identified_by ?sort_id .
+                  ?sort_id crm:P2_has_type type:sortlnu ;
+                    crm:P190_has_symbolic_content ?sort .
+                }
+            }
+            BIND(CONCAT(?material_label, IF(BOUND(?note), CONCAT(" (", ?note, ")"), "")) AS ?value)
+          } ORDER BY ?sort'
 
     - id: mp_mat_technik_ausgabe
       label: Mat./Tech. Ausgabe
