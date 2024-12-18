@@ -520,6 +520,15 @@ fields:
             BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
           }'
 
+    - id: mp_nationalitaet
+      label: Nationalität
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P2_has_type ?value .
+            ?value crm:P2_has_type aat:300379842 .
+          }'
+
     - id: mp_obj_obj_ref
       label: Obj.-Obj.-Ref.
       domain: skkg:Object

@@ -416,6 +416,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_name"
     }
 [[/inline]]
+ [[#*inline "mp_nationalitaet"]]
+    {
+        "id" : "mp_nationalitaet",
+
+            "label": "Nationalität",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P2_has_type aat:300379842 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_nationalitaet"
+    }
+[[/inline]]
  [[#*inline "mp_obj_obj_ref"]]
     {
         "id" : "mp_obj_obj_ref",
