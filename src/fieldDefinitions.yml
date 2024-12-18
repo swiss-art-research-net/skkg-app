@@ -742,7 +742,7 @@ fields:
             ?value crm:P127_has_broader_term type:20060 .
           }'
 
-    - id: mp_weitere_namen
+    - id: mp_weitere_namen_adress
       label: Weitere Namen
       datatype: xsd:string
       queries:
@@ -766,6 +766,19 @@ fields:
             }
             BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, ""), IF(BOUND(?lastname_value), CONCAT(" ", ?lastname_value), "")) as ?value)
           }'
+
+    - id: mp_weitere_namen_person
+      label: Weitere Namen
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+          $subject crm:P1_is_identified_by ?name .
+          ?name crm:P2_has_type ?name_type ;
+            crm:P190_has_symbolic_content ?name_label .
+          ?name_type crm:P127_has_broader_term type:21100 ;
+            skos:prefLabel ?name_type_label .
+          BIND(CONCAT(?name_label, " (", ?name_type_label, ")") AS ?value)
+        }'
         
     - id: mp_werkbezuege_exh
       label: Werkbezüge
