@@ -312,6 +312,15 @@ fields:
             ?value skos:inScheme type:21087 .
           }'
 
+    - id: mp_geschlecht
+      label: Geschlecht
+      datatype: xsd:anyURI
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:20088 .
+          }'
+
     - id: mp_herausgeber
       label: Herausgeber
       datatype: xsd:anyURI
