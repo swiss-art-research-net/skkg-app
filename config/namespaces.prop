@@ -12,4 +12,5 @@ person = https://data.skkg.ch/person/
 exhibition = https://data.skkg.ch/exhibition/
 multimedia = https://data.skkg.ch/multimedia/
 address = https://data.skkg.ch/address/
+literature = https://data.skkg.ch/literature/
 sh = http://www.w3.org/ns/shacl#
