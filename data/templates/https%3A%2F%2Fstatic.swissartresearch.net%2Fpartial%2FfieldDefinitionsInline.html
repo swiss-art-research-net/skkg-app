@@ -381,7 +381,7 @@
 
             "label": "Mat./Technik",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P45_consists_of ?material . ?material skos:prefLabel ?material_label OPTIONAL { ?materialAssignment crm:P140_assigned_attribute_to $subject ; crm:P141_assigned ?material . OPTIONAL { ?materialAssignment crm:P3_has_note ?note . } OPTIONAL { ?materialAssignment crm:P1_is_identified_by ?sort_id . ?sort_id crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . } } BIND(CONCAT(?material_label, IF(BOUND(?note), CONCAT(\" (\", ?note, \")\"), \"\")) AS ?value) } ORDER BY ?sort",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P45_consists_of ?material . ?material skos:prefLabel ?material_label OPTIONAL { ?materialAssignment crm:P140_assigned_attribute_to $subject ; crm:P141_assigned ?material . OPTIONAL { ?materialAssignment crm:P3_has_note ?note . } OPTIONAL { ?materialAssignment crm:P1_is_identified_by ?sort_id . ?sort_id crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . } OPTIONAL { ?materialAssignment crm:P141_assigned ?technique . $subject crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique . ?technique skos:prefLabel ?technique_label } } BIND(CONCAT(?material_label, IF(BOUND(?technique_label), CONCAT(\", \", ?technique_label), \"\"), IF(BOUND(?note), CONCAT(\" (\", ?note, \")\"), \"\")) AS ?value) } ORDER BY ?sort",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_mat_technik"
     }
 [[/inline]]
