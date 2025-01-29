@@ -10,16 +10,16 @@
 
 [[#*inline "component-card-body"]]
 <div class="skkg-component card-image">
-    <mp-resource-thumbnail iri={{subject}} no-result-template="{{> no-image-template}}">
+    <sari-resource-thumbnail iri={{subject}} no-result-template="{{> no-image-template}}">
         <template id="no-image-template">
             <semantic-query
                 query="SELECT ?type ?image WHERE {
                     <{{subject}}> a ?type .
                     VALUES (?type ?image) {
                         (skkg:Address '/images/fcs/places.svg')
-                        (skkg:Collection '/assets/icons/folder-open.svg')
+                        (skkg:Collection '/images/icons/folder-open.svg')
                         (skkg:Exhibition '/images/fcs/building-columns-solid.svg')
-                        (skkg:Group '/assets/icons/group.svg')
+                        (skkg:Group '/images/icons/group.svg')
                         (skkg:Literature '/images/fcs/book.svg')
                         (skkg:Multimedia '/images/fcs/file.svg')
                         (skkg:Object '/images/fcs/things.svg')
@@ -39,7 +39,7 @@
                 </template>
             </semantic-query>
         </template>
-    </mp-resource-thumbnail>
+    </sari-resource-thumbnail>
 </div>
 <div class="skkg-component card-body">
     <mp-label iri="{{subject}}"></mp-label> 
