@@ -177,25 +177,6 @@ ol.page-breadcrumb {
 .semantic-facet-holder .facet-relations {
   width: auto;
 }
-.system-spinner {
-  font-weight: bold;
-}
-.system-spinner__icon {
-  vertical-align: middle;
-  animation: fa-spin 2s infinite linear;
-}
-@keyframes fa-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(359deg);
-  }
-}
-.system-spinner__icon:before {
-  content: '\f1ce';
-  font-weight: bold;
-}
 .pagination,
 .griddle-footer .pagination {
   justify-content: center;
