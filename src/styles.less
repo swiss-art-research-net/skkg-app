@@ -20,8 +20,10 @@
         
     }
     &.horizontal-scroll {
-        overflow-x: scroll;
+        overflow-x: auto;
         flex-flow: unset;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch; 
         &::-webkit-scrollbar {
           display: none;
         }
@@ -30,7 +32,9 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
         .card {
-          min-width: 20rem;
+          flex: 0 0 20rem;
+          max-width: 20rem;
+          width: 100%;
         }
     }
     .card {
