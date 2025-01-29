@@ -134,6 +134,16 @@
 .text-align-right {
   text-align: right;
 }
+#record-tabs #tabs li:first-child {
+  margin-left: 2rem;
+}
+#record-tabs #tabs-pane-statements,
+#record-tabs #tabs-pane-image {
+  padding: 2rem;
+}
+#record-tabs .table.rs-table th:first-child {
+  padding-left: 2rem;
+}
 ul {
   margin-left: 0;
   padding-left: 10px;
