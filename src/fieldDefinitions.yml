@@ -142,7 +142,6 @@ fields:
               crm:P14_carried_out_by ?value .
           }'
 
-
     - id: mp_bildrechte
       label: Bildrechte
       datatype: xsd:string
@@ -895,3 +894,64 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crmdig:L54_is_same-as ?value .
           }'
+
+display:
+- mp_inv_nr
+- mp_inv_remark
+- mp_pers_korp_obj
+- mp_titel_obj
+- mp_datierung
+- mp_mat_technik_ausgabe
+- mp_edition_auflage
+- mp_masse
+- mp_gattung
+- has_broader_term
+- mp_mat_technik
+- mp_inschr_sign
+- mp_anz_teile
+- mp_typ_obj_cat
+- same_as
+- mp_erw_art
+- mp_erwerb_von
+- mp_zug_dat
+- mp_ankaufswert
+- mp_erw_ref_nr
+- mp_bem_erwerb
+- mp_zustand
+- mp_creditline
+- mp_ausst_ort
+- mp_exh_from
+- mp_exh_to
+- mp_beteiligte_exh
+- mp_exh_intern_extern
+- mp_typ_exh
+- mp_exh_other_venue
+- mp_werkbezuege_exh
+- mp_autor
+- mp_herausgeber
+- mp_in_lit
+- mp_series
+- mp_jahr_lit
+- mp_band
+- mp_ort_literature
+- mp_verlag
+- mp_page_num
+- mp_isbn
+- mp_language
+- mp_typ_obj_type
+- mp_werkbezuege_lit
+- mp_titel_exh_lit
+- mp_person_korp_lit
+- mp_person_korp_lit_typed
+- mp_typ_mul
+- mp_typ_mul_iiif
+- mp_bildrechte
+- mp_actor_type
+- mp_weitere_namen
+- mp_daten
+- mp_typ_adr
+- mp_name
+- mp_institution
+- mp_ort_address
+- mp_region_address
+- mp_land_address
