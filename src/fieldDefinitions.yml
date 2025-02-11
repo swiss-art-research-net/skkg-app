@@ -5,6 +5,7 @@ container: http://www.metaphacts.com/ontologies/platform#fieldDefinitionContaine
 namespaces:
   aat: http://vocab.getty.edu/aat/
   crm: http://www.cidoc-crm.org/cidoc-crm/
+  crmaaa: https://takin.solutions/ontologies/crmaaa/
   crmdig: http://www.ics.forth.gr/isl/CRMdig/
   crminf: http://www.ics.forth.gr/isl/CRMinf/
   crmsci: http://www.cidoc-crm.org/extensions/crmsci/
