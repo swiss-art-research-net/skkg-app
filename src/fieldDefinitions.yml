@@ -541,7 +541,7 @@ fields:
                 }
                 ?dimension crm:P90_has_value ?dimension_value ;
                   crm:P91_has_unit/rdfs:label ?dimension_unit .
-                BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, " "), ""),IF(BOUND(?dimension_dimension), ?dimension_dimension,""), " ", ?dimension_value, ?dimension_unit,IF(BOUND(?suffix),CONCAT(" (", ?suffix, ") "), "")) AS ?dimension_string)
+                BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, " "), ""),IF(BOUND(?dimension_dimension), ?dimension_dimension,""), " ", ?dimension_value, " ", ?dimension_unit,IF(BOUND(?suffix),CONCAT(" (", ?suffix, ") "), "")) AS ?dimension_string)
                 
               } GROUP BY ?dimension_type
             }
