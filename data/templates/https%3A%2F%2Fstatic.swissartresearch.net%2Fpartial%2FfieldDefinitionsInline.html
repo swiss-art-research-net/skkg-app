@@ -119,7 +119,14 @@
 
             "label": "Bildrechte",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P104_is_subject_to/crm:P2_has_type/rdfs:label ?right_type . OPTIONAL { $subject crm:P104_is_subject_to ?original_right, ?successor_right . ?original_right crm:P75i_is_possessed_by ?original_right_holder . ?original_right_holder skos:prefLabel ?original_right_holder_label . ?successor_right crm:P75i_is_possessed_by ?successor_right_holder . ?successor_right_holder skos:prefLabel ?successor_right_holder_label . ?successor_right_status crm:P67_refers_to ?successor_right . ?original_right_status crm:P67_refers_to ?original_right . ?original_right_status crm:P173i_ends_after_or_with_the_start_of ?successor_right_status . ?successor_right_status crm:P4_has_time-span/crm:P82b_end_of_the_end ?successor_right_end_year . BIND(\"true\"^^xsd:boolean as ?extended_information) } BIND(IF(BOUND(?extended_information), CONCAT(?right_type, \" \", ?original_right_holder_label, \" / \", STR(?successor_right_end_year), \" \", ?successor_right_holder_label), ?right_type) as ?value) }",
+                "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P104_is_subject_to ?right .
+OPTIONAL { ?right crm:P2_has_type ?right_type . ?right_type skos:prefLabel ?right_type_label . VALUES (?right_type) { (<https://data.skkg.ch/type/56153/255981>) (<https://data.skkg.ch/type/56153/255982>) } }
+OPTIONAL { $subject crm:P104_is_subject_to ?original_right, ?successor_right . ?original_right crm:P75i_is_possessed_by ?original_right_holder . ?original_right_holder skos:prefLabel ?original_right_holder_label . ?successor_right crm:P75i_is_possessed_by ?successor_right_holder . ?successor_right_holder skos:prefLabel ?successor_right_holder_label . ?successor_right_status crm:P67_refers_to ?successor_right . ?original_right_status crm:P67_refers_to ?original_right . ?original_right_status crm:P173i_ends_after_or_with_the_start_of ?successor_right_status . ?successor_right_status crm:P4_has_time-span/crm:P82b_end_of_the_end ?successor_right_end_year . BIND(\"true\"^^xsd:boolean AS ?extended_information) }
+OPTIONAL { ?right_status a crmaaa:ZE30_Property_Right_Status ; crm:P67_refers_to ?right ; crm:P4_has_time-span/crm:P82b_end_of_the_end ?right_date . }
+OPTIONAL { $subject crm:P94i_was_created_by/crm:P9_consists_of ?photography . ?photography crm:P2_has_type aat:300054225 .
+OPTIONAL { ?photography crm:P14_carried_out_by/skos:prefLabel ?photographer . }
+OPTIONAL { ?photography crm:P4_has_time-span/crm:P82_at_some_time_within ?photography_date . } }
+BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?right_date), CONCAT(\" / \", YEAR(?right_date)), \"\"), IF(BOUND(?original_right_holder_label), CONCAT(\" \", ?original_right_holder_label), \"\"), IF( BOUND(?photography), CONCAT( \". Foto:\", IF(BOUND(?photographer), CONCAT(\" \", ?photographer), \"\"), IF(BOUND(?photography_date), CONCAT(\" \", STR(YEAR(?photography_date))), \"\") ), \"\" ), IF(BOUND(?right_type_label), CONCAT(\" \", ?right_type_label), \"\") ) AS ?value ) } ",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_bildrechte"
     }
 [[/inline]]
@@ -401,7 +408,7 @@
 
             "label": "Masse",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=\", \") as ?dimensions) WHERE { $subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?suffix . } OPTIONAL { ?part crm:P67i_is_referred_to_by ?prefix_statement . ?prefix_statement crm:P2_has_type aat:300435430 ; crm:P190_has_symbolic_content ?prefix } OPTIONAL { ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension  . FILTER(LANG(?dimension_dimension) = \"de\") } ?dimension crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, \" \"), \"\"),IF(BOUND(?dimension_dimension), ?dimension_dimension,\"\"), \" \", ?dimension_value, ?dimension_unit,IF(BOUND(?suffix),CONCAT(\" (\", ?suffix, \") \"), \"\")) AS ?dimension_string)
+                "selectPattern" : "SELECT ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=\", \") as ?dimensions) WHERE { $subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?suffix . } OPTIONAL { ?part crm:P67i_is_referred_to_by ?prefix_statement . ?prefix_statement crm:P2_has_type aat:300435430 ; crm:P190_has_symbolic_content ?prefix } OPTIONAL { ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension  . FILTER(LANG(?dimension_dimension) = \"de\") } ?dimension crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, \" \"), \"\"),IF(BOUND(?dimension_dimension), ?dimension_dimension,\"\"), \" \", ?dimension_value, \" \", ?dimension_unit,IF(BOUND(?suffix),CONCAT(\" (\", ?suffix, \") \"), \"\")) AS ?dimension_string)
 } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, \": \", ?dimensions) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_masse"
     }
@@ -433,7 +440,7 @@
             "label": "Obj.-Obj.-Ref.",
             "xsdDatatype" : "xsd:anyURI",
             "domain" : "skkg:Object",
-                "selectPattern" : "SELECT ?value WHERE { ?value crm:P129_is_about ?subject ; crm:P2_has_type/crm:P127_has_broader_term type:21116 . }",
+                "selectPattern" : "SELECT ?value WHERE { ?value crm:P129_is_about $subject ; crm:P2_has_type/crm:P127_has_broader_term type:21116 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_obj_obj_ref"
     }
 [[/inline]]

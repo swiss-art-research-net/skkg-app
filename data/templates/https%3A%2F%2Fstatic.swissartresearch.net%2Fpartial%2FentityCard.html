@@ -10,7 +10,7 @@
 
 [[#*inline "component-card-body"]]
 <div class="skkg-component card-image">
-    <sari-resource-thumbnail iri={{subject}} no-result-template="{{> no-image-template}}">
+    <mp-resource-thumbnail iri={{subject}} no-result-template="{{> no-image-template}}">
         <template id="no-image-template">
             <semantic-query
                 query="SELECT ?type ?image WHERE {
@@ -39,7 +39,7 @@
                 </template>
             </semantic-query>
         </template>
-    </sari-resource-thumbnail>
+    </mp-resource-thumbnail>
 </div>
 <div class="skkg-component card-body">
     <mp-label iri="{{subject}}"></mp-label> 

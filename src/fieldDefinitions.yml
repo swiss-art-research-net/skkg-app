@@ -5,6 +5,7 @@ container: http://www.metaphacts.com/ontologies/platform#fieldDefinitionContaine
 namespaces:
   aat: http://vocab.getty.edu/aat/
   crm: http://www.cidoc-crm.org/cidoc-crm/
+  crmaaa: https://takin.solutions/ontologies/crmaaa/
   crmdig: http://www.ics.forth.gr/isl/CRMdig/
   crminf: http://www.ics.forth.gr/isl/CRMinf/
   crmsci: http://www.cidoc-crm.org/extensions/crmsci/
@@ -142,27 +143,74 @@ fields:
               crm:P14_carried_out_by ?value .
           }'
 
-
     - id: mp_bildrechte
       label: Bildrechte
       datatype: xsd:string
       queries:
         - select: 'SELECT DISTINCT ?value WHERE {
-            $subject crm:P104_is_subject_to/crm:P2_has_type/rdfs:label ?right_type .
-              OPTIONAL {
-                $subject crm:P104_is_subject_to ?original_right, ?successor_right .
-                ?original_right crm:P75i_is_possessed_by ?original_right_holder .
-                ?original_right_holder skos:prefLabel ?original_right_holder_label .
-                ?successor_right crm:P75i_is_possessed_by ?successor_right_holder .
-                ?successor_right_holder skos:prefLabel ?successor_right_holder_label .
-                ?successor_right_status crm:P67_refers_to ?successor_right .
-                ?original_right_status crm:P67_refers_to ?original_right .
-                ?original_right_status crm:P173i_ends_after_or_with_the_start_of ?successor_right_status .
-                ?successor_right_status crm:P4_has_time-span/crm:P82b_end_of_the_end ?successor_right_end_year .
-                BIND("true"^^xsd:boolean as ?extended_information)
+            $subject crm:P104_is_subject_to ?right .
+  
+            OPTIONAL {
+              ?right crm:P2_has_type ?right_type .
+              ?right_type skos:prefLabel ?right_type_label .
+              VALUES (?right_type) {
+                (<https://data.skkg.ch/type/56153/255981>)
+                (<https://data.skkg.ch/type/56153/255982>)
               }
-              BIND(IF(BOUND(?extended_information), CONCAT(?right_type, " ", ?original_right_holder_label, " / ", STR(?successor_right_end_year), " ", ?successor_right_holder_label), ?right_type) as ?value)       
-          }'
+            }
+
+            OPTIONAL {
+              $subject crm:P104_is_subject_to ?original_right, ?successor_right .
+              ?original_right crm:P75i_is_possessed_by ?original_right_holder .
+              ?original_right_holder skos:prefLabel ?original_right_holder_label .
+              ?successor_right crm:P75i_is_possessed_by ?successor_right_holder .
+              ?successor_right_holder skos:prefLabel ?successor_right_holder_label .
+              ?successor_right_status crm:P67_refers_to ?successor_right .
+              ?original_right_status crm:P67_refers_to ?original_right .
+              ?original_right_status crm:P173i_ends_after_or_with_the_start_of ?successor_right_status .
+              ?successor_right_status crm:P4_has_time-span/crm:P82b_end_of_the_end ?successor_right_end_year .
+              BIND("true"^^xsd:boolean AS ?extended_information)
+            }
+
+            OPTIONAL {
+              ?right_status a crmaaa:ZE30_Property_Right_Status ;
+                crm:P67_refers_to ?right ;
+                crm:P4_has_time-span/crm:P82b_end_of_the_end ?right_date .
+            }
+
+            OPTIONAL {
+              $subject crm:P94i_was_created_by/crm:P9_consists_of ?photography .
+              ?photography crm:P2_has_type aat:300054225 .
+              
+              OPTIONAL {
+                ?photography crm:P14_carried_out_by/skos:prefLabel ?photographer .
+              }
+              
+              OPTIONAL {
+                ?photography crm:P4_has_time-span/crm:P82_at_some_time_within ?photography_date .
+              }
+            }
+
+            BIND(
+              CONCAT(
+                "© ",
+                COALESCE(?successor_right_holder_label, ""), 
+                IF(BOUND(?right_date), CONCAT(" / ", YEAR(?right_date)), ""), 
+                IF(BOUND(?original_right_holder_label), CONCAT(" ", ?original_right_holder_label), ""), 
+                IF(
+                  BOUND(?photography), 
+                  CONCAT(
+                    ". Foto:", 
+                    IF(BOUND(?photographer), CONCAT(" ", ?photographer), ""), 
+                    IF(BOUND(?photography_date), CONCAT(" ", STR(YEAR(?photography_date))), "")
+                  ), 
+                  ""
+                ),
+                IF(BOUND(?right_type_label), CONCAT(" ", ?right_type_label), "")
+              ) 
+              AS ?value
+            )
+          } '
 
     - id: mp_creditline
       label: Creditline
@@ -493,7 +541,7 @@ fields:
                 }
                 ?dimension crm:P90_has_value ?dimension_value ;
                   crm:P91_has_unit/rdfs:label ?dimension_unit .
-                BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, " "), ""),IF(BOUND(?dimension_dimension), ?dimension_dimension,""), " ", ?dimension_value, ?dimension_unit,IF(BOUND(?suffix),CONCAT(" (", ?suffix, ") "), "")) AS ?dimension_string)
+                BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, " "), ""),IF(BOUND(?dimension_dimension), ?dimension_dimension,""), " ", ?dimension_value, " ", ?dimension_unit,IF(BOUND(?suffix),CONCAT(" (", ?suffix, ") "), "")) AS ?dimension_string)
                 
               } GROUP BY ?dimension_type
             }
@@ -540,7 +588,7 @@ fields:
       datatype: xsd:anyURI
       queries:
         - select: 'SELECT ?value WHERE {
-            ?value crm:P129_is_about ?subject ;
+            ?value crm:P129_is_about $subject ;
               crm:P2_has_type/crm:P127_has_broader_term type:21116 .
           }'
 
@@ -847,3 +895,64 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crmdig:L54_is_same-as ?value .
           }'
+
+display:
+- mp_inv_nr
+- mp_inv_remark
+- mp_pers_korp_obj
+- mp_titel_obj
+- mp_datierung
+- mp_mat_technik_ausgabe
+- mp_edition_auflage
+- mp_masse
+- mp_gattung
+- has_broader_term
+- mp_mat_technik
+- mp_inschr_sign
+- mp_anz_teile
+- mp_typ_obj_cat
+- same_as
+- mp_erw_art
+- mp_erwerb_von
+- mp_zug_dat
+- mp_ankaufswert
+- mp_erw_ref_nr
+- mp_bem_erwerb
+- mp_zustand
+- mp_creditline
+- mp_ausst_ort
+- mp_exh_from
+- mp_exh_to
+- mp_beteiligte_exh
+- mp_exh_intern_extern
+- mp_typ_exh
+- mp_exh_other_venue
+- mp_werkbezuege_exh
+- mp_autor
+- mp_herausgeber
+- mp_in_lit
+- mp_series
+- mp_jahr_lit
+- mp_band
+- mp_ort_literature
+- mp_verlag
+- mp_page_num
+- mp_isbn
+- mp_language
+- mp_typ_obj_type
+- mp_werkbezuege_lit
+- mp_titel_exh_lit
+- mp_person_korp_lit
+- mp_person_korp_lit_typed
+- mp_typ_mul
+- mp_typ_mul_iiif
+- mp_bildrechte
+- mp_actor_type
+- mp_weitere_namen
+- mp_daten
+- mp_typ_adr
+- mp_name
+- mp_institution
+- mp_ort_address
+- mp_region_address
+- mp_land_address
