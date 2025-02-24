@@ -134,7 +134,7 @@
 .text-align-right {
   text-align: right;
 }
-#record-tabs #tabs li:first-child {
+#record-tabs #tabs > ul li:first-child {
   margin-left: 2rem;
 }
 #record-tabs #tabs-pane-statements,
