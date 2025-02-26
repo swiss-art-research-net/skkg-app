@@ -26,7 +26,7 @@
 
             <rs-iiif-mirador 
                 image-or-region="{{ bindings.0.image.value }}"
-                image-id-pattern="BIND (REPLACE(STR(?imageIRI), '^(.*[/])', '') AS ?imageID)" 
+                image-id-pattern="BIND (REPLACE(STR(?imageIRI), '^(.*[/])', '') AS ?imageID) BIND(?imageID as ?carrierImageIRI)" 
                 iiif-server-url="{{ bindings.0.server.value }}">
             </rs-iiif-mirador>
 
