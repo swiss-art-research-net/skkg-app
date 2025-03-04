@@ -229,7 +229,7 @@
 
   <div class="skkg-component card-container entity-details-images">
     <semantic-query
-      query="SELECT ?iiif ?pageNr WHERE {
+      query="SELECT ?iiif ?multimediaItem ?pageNr WHERE {
         BIND(<[[this]]> AS ?subject)
         ?subject crm:P138i_has_representation?/la:digitally_shown_by ?digitalObject .
         ?digitalObject la:digitally_available_via/la:access_point ?iiif .
@@ -246,22 +246,29 @@
     >
       <template id="template-images">
         {{#each bindings}}
-          <mp-overlay-dialog title="Image Viewer" type="modal" bs-size="large">
-              <mp-overlay-dialog-trigger>
-                <a href="{{iiif.value}}/full/max/0/default.jpg" class="skkg-component card">
-                  <img src="{{iiif.value}}/full/300,/0/default.jpg"/>
-                  <p class="text-align-center">{{pageNr.value}}</p>
-                </a>
-              </mp-overlay-dialog-trigger>
-              <mp-overlay-dialog-content
-                  id="image-modal">
-                      <mp-page-loader 
-                          iri="[[ resolvePrefix 'page:viewImage']]"
-                          urlqueryparam-imageiri="{{iiif.value}}"
-                          urlqueryparam-overlay="true"
-                      ></mp-page-loader>
-              </mp-overlay-dialog-content>
-          </mp-overlay-dialog>
+          <div class="skkg-component panel">
+            <div>
+              <mp-overlay-dialog title="Image Viewer" type="modal" bs-size="large">
+                  <mp-overlay-dialog-trigger>
+                    <a href="{{iiif.value}}/full/max/0/default.jpg" class="skkg-component card">
+                      <img src="{{iiif.value}}/full/300,/0/default.jpg"/>
+                      <p class="text-align-center">{{pageNr.value}}</p>
+                    </a>
+                  </mp-overlay-dialog-trigger>
+                  <mp-overlay-dialog-content
+                      id="image-modal">
+                          <mp-page-loader 
+                              iri="[[ resolvePrefix 'page:viewImage']]"
+                              urlqueryparam-imageiri="{{iiif.value}}"
+                              urlqueryparam-overlay="true"
+                          ></mp-page-loader>
+                  </mp-overlay-dialog-content>
+              </mp-overlay-dialog>
+            </div>
+            <div>
+              <semantic-link iri="{{multimediaItem.value}}">{{pageNr.value}}</semantic-link>
+            </div>
+          </div>
         {{/each}}
       </template>
     </semantic-query>
