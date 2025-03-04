@@ -24,6 +24,7 @@
 
             "label": "Typ (Person/Körperschaft)",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "crm:E39_Actor",
                 "selectPattern" : "SELECT ?value WHERE { $subject a ?value . VALUES(?value) { (skkg:Person) (skkg:Group) } }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_actor_type"
     },
@@ -42,6 +43,7 @@
 
             "label": "Ankaufswert",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P9_consists_of ?payment . ?payment a la:Payment ; la:paid_amount ?monetary_amount . ?monetary_amount crm:P90_has_value ?monetary_value ; crm:P180_has_currency/rdfs:label ?monetary_currency . OPTIONAL { ?conversion crmsci:O11_described ?monetary_amount ; crmsci:O10_assigned_dimension ?converted_monetary_amount . ?converted_monetary_amount crm:P90_has_value ?converted_monetary_value ; crm:P180_has_currency/rdfs:label ?converted_monetary_currency . FILTER(DATATYPE(?converted_monetary_currency) = xsd:string) BIND(CONCAT(STR(?converted_monetary_currency), \" \", STR(?converted_monetary_value)) AS ?converted_value) } BIND(CONCAT(STR(?monetary_currency), \" \", STR(?monetary_value),IF(BOUND(?converted_value),CONCAT(\" (\", ?converted_value, \")\"),\"\")) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ankaufswert"
     },
@@ -60,6 +62,7 @@
 
             "label": "Ausst.-Ort",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Exhibition",
                 "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P7_took_place_at ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ausst_ort"
     },
@@ -69,6 +72,7 @@
 
             "label": "Autor",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?authoring . ?authoring crm:P2_has_type ?type ; crm:P14_carried_out_by ?author . ?type skos:inScheme type:43087 ; skos:prefLabel ?type_label . ?author rdfs:label ?author_label . BIND(CONCAT(?author_label, \" (\", ?type_label, \")\") AS ?value) FILTER(LANGMATCHES(LANG(?type_label), ?__userPreferredLanguage__)) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_autor"
     },
@@ -78,6 +82,7 @@
 
             "label": "Band",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300265632 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_band"
     },
@@ -87,6 +92,7 @@
 
             "label": "Bem. Erwerb",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P3_has_note ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_bem_erwerb"
     },
@@ -107,14 +113,9 @@
 
             "label": "Bildrechte",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P104_is_subject_to ?right .
-OPTIONAL { ?right crm:P2_has_type ?right_type . ?right_type skos:prefLabel ?right_type_label . VALUES (?right_type) { (<https://data.skkg.ch/type/56153/255981>) (<https://data.skkg.ch/type/56153/255982>) } }
-OPTIONAL { $subject crm:P104_is_subject_to ?original_right, ?successor_right . ?original_right crm:P75i_is_possessed_by ?original_right_holder . ?original_right_holder skos:prefLabel ?original_right_holder_label . ?successor_right crm:P75i_is_possessed_by ?successor_right_holder . ?successor_right_holder skos:prefLabel ?successor_right_holder_label . ?successor_right_status crm:P67_refers_to ?successor_right . ?original_right_status crm:P67_refers_to ?original_right . ?original_right_status crm:P173i_ends_after_or_with_the_start_of ?successor_right_status . ?successor_right_status crm:P4_has_time-span/crm:P82b_end_of_the_end ?successor_right_end_year . BIND(\"true\"^^xsd:boolean AS ?extended_information) }
-OPTIONAL { ?right_status a crmaaa:ZE30_Property_Right_Status ; crm:P67_refers_to ?right ; crm:P4_has_time-span/crm:P82b_end_of_the_end ?right_date . }
-OPTIONAL { $subject crm:P94i_was_created_by/crm:P9_consists_of ?photography . ?photography crm:P2_has_type aat:300054225 .
-OPTIONAL { ?photography crm:P14_carried_out_by/skos:prefLabel ?photographer . }
-OPTIONAL { ?photography crm:P4_has_time-span/crm:P82_at_some_time_within ?photography_date . } }
-BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?right_date), CONCAT(\" / \", YEAR(?right_date)), \"\"), IF(BOUND(?original_right_holder_label), CONCAT(\" \", ?original_right_holder_label), \"\"), IF( BOUND(?photography), CONCAT( \". Foto:\", IF(BOUND(?photographer), CONCAT(\" \", ?photographer), \"\"), IF(BOUND(?photography_date), CONCAT(\" \", STR(YEAR(?photography_date))), \"\") ), \"\" ), IF(BOUND(?right_type_label), CONCAT(\" \", ?right_type_label), \"\") ) AS ?value ) } ",
+            "domain" : "skkg:Multimedia",
+                "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P104_is_subject_to ?right . FILTER NOT EXISTS { ?predecessor_right_status crm:P67_refers_to ?right . ?predecessor_right_status crm:P173i_ends_after_or_with_the_start_of ?original_right_status . } OPTIONAL { $subject crm:P104_is_subject_to ?original_right . ?right_status crm:P67_refers_to ?right . ?original_right_status crm:P67_refers_to ?original_right . ?original_right_status crm:P173i_ends_after_or_with_the_start_of ?right_status . OPTIONAL { ?original_right crm:P75i_is_possessed_by ?original_rights_holder . ?original_rights_holder crm:P1_is_identified_by/crm:P106_is_composed_of ?original_right_holder_name_entity . ?original_right_holder_name_entity crm:P2_has_type ?name_type ; crm:P190_has_symbolic_content ?original_right_holder_name . } } OPTIONAL { ?right crm:P2_has_type/skos:prefLabel ?right_type . FILTER(LANG(?right_type) = \"de\") } OPTIONAL { ?right crm:P75i_is_possessed_by ?rights_holder . ?rights_holder crm:P1_is_identified_by/crm:P106_is_composed_of ?right_holder_name_entity . ?right_holder_name_entity crm:P2_has_type ?name_type ; crm:P190_has_symbolic_content ?right_holder_name . VALUES (?name_type) { (aat:300404652) (aat:300404688) } FILTER NOT EXISTS { ?right_status crm:P67_refers_to ?right . ?right_status crm:P173i_ends_after_or_with_the_start_of ?successor_right_status . } } OPTIONAL { ?right_status crm:P67_refers_to ?right . ?right_status crm:P4_has_time-span/crm:P82b_end_of_the_end ?right_year . } OPTIONAL { ?right crm:P3_has_note ?right_note } OPTIONAL { ?subject crm:P94i_was_created_by ?creation . OPTIONAL { ?creation crm:P14_carried_out_by ?creator . ?creator crm:P1_is_identified_by/crm:P106_is_composed_of ?creator_name_entity . ?creator_name_entity crm:P2_has_type ?name_type ; crm:P190_has_symbolic_content ?creator_name . VALUES (?name_type) { (aat:300404652) (aat:300404688) } } OPTIONAL { ?creation crm:P9_consists_of ?photography . ?photography crm:P2_has_type aat:300054225 ; crm:P4_has_time-span/crm:P82_at_some_time_within ?photography_date . BIND(YEAR(?photography_date) as ?photography_year)
+} } BIND( CONCAT( ?right_type, \" \", IF(BOUND(?original_right_holder_name), CONCAT(?original_right_holder_name, \"/\"), \"\"), IF(BOUND(?right_year), CONCAT(xsd:string(?right_year), \", \"), \"\"), IF(BOUND(?right_holder_name), ?right_holder_name, \"\"), IF( BOUND(?creator_name) || BOUND(?photography_year), CONCAT(IF(BOUND(?original_right_holder_name) || BOUND(?right_year) || BOUND(?right_holder_name), \". Foto:\", \"Foto:\"), IF(BOUND(?creator_name), CONCAT(\" \", ?creator_name), \"\"), IF(BOUND(?photography_year), CONCAT(\" \", xsd:string(?photography_year)), \"\") ),\"\") ) AS ?value ) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_bildrechte"
     },
 
@@ -132,6 +133,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Daten",
             "xsdDatatype" : "xsd:string",
+            "domain" : "crm:E39_Actor",
                 "selectPattern" : "SELECT ?value WHERE { { $subject a skkg:Person . OPTIONAL { $subject crm:P98i_was_born/crm:P4_has_time-span/rdfs:label ?birthdate . } OPTIONAL { $subject crm:P100i_died_in/crm:P4_has_time-span/rdfs:label ?deathdate . } } UNION { $subject a skkg:Group . OPTIONAL { $subject crm:P95i_was_formed_by/crm:P4_has_time-span/rdfs:label ?foundationdate . } OPTIONAL { $subject crm:P99i_was_dissolved_by/crm:P4_has_time-span/rdfs:label ?dissolutiondate . } } BIND(CONCAT(IF(BOUND(?birthdate), CONCAT(\"Geboren: \", ?birthdate, \" \"), \"\"), IF(BOUND(?deathdate), CONCAT(\"Gestorben: \", ?deathdate, \" \"), \"\"), IF(BOUND(?foundationdate), CONCAT(\"Gegründet: \", ?foundationdate, \" \"), \"\"), IF(BOUND(?dissolutiondate), CONCAT(\"Aufgelöst: \", ?dissolutiondate, \" \"), \"\")) as ?value) FILTER(?value != \"\") }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_daten"
     },
@@ -150,6 +152,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Datum (Multimedia)",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Multimedia",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P94i_was_created_by ?creation . ?creation crm:P2_has_type aat:300237864 ; crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_datum_mul"
     },
@@ -159,6 +162,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Edition/Auflage",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435435 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_edition_auflage"
     },
@@ -168,6 +172,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Erstelldatum (Multimedia)",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Multimedia",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P94i_was_created_by/crm:P9_consists_of ?photography . ?photography crm:P2_has_type aat:300054225 ; crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_erstelldatum_mul"
     },
@@ -204,6 +209,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Von",
             "xsdDatatype" : "xsd:date",
+            "domain" : "skkg:Exhibition",
                 "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P4_has_time-span/crm:P82a_begin_of_the_begin ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_from"
     },
@@ -213,6 +219,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Int./Ext.",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Exhibition",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:43086 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_intern_extern"
     },
@@ -222,6 +229,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Stationen",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Exhibition",
                 "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P9_consists_of/crm:P7_took_place_at ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_other_venue"
     },
@@ -231,6 +239,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Bis",
             "xsdDatatype" : "xsd:date",
+            "domain" : "skkg:Exhibition",
                 "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Exhibition ; crm:P4_has_time-span/crm:P82b_end_of_the_end ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_to"
     },
@@ -249,6 +258,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Geschlecht",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Person",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:20088 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_geschlecht"
     },
@@ -258,6 +268,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Herausgeber",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing . ?editing crm:P2_has_type aat:300189515 ; crm:P14_carried_out_by ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_herausgeber"
     },
@@ -267,6 +278,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "In",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Literature ; crm:P165i_is_incorporated_in ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_in_lit"
     },
@@ -313,6 +325,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "ISBN",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P1_is_identified_by ?isbn . ?isbn crm:P2_has_type aat:300417443 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_isbn"
     },
@@ -322,6 +335,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Jahr",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_jahr_lit"
     },
@@ -350,6 +364,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Mat./Technik",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P45_consists_of ?material . ?material skos:prefLabel ?material_label OPTIONAL { ?materialAssignment crm:P140_assigned_attribute_to $subject ; crm:P141_assigned ?material . OPTIONAL { ?materialAssignment crm:P3_has_note ?note . } OPTIONAL { ?materialAssignment crm:P1_is_identified_by ?sort_id . ?sort_id crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . } OPTIONAL { ?materialAssignment crm:P141_assigned ?technique . $subject crm:P108i_was_produced_by/crm:P32_used_general_technique ?technique . ?technique skos:prefLabel ?technique_label } } BIND(CONCAT(?material_label, IF(BOUND(?technique_label), CONCAT(\", \", ?technique_label), \"\"), IF(BOUND(?note), CONCAT(\" (\", ?note, \")\"), \"\")) AS ?value) } ORDER BY ?sort",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_mat_technik"
     },
@@ -359,6 +374,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Mat./Tech. Ausgabe",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300435429 ; crm:P190_has_symbolic_content ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_mat_technik_ausgabe"
     },
@@ -368,6 +384,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Masse",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { { SELECT ?dimension_type (GROUP_CONCAT(?dimension_string;SEPARATOR=\", \") as ?dimensions) WHERE { $subject crm:P46_is_composed_of ?part . ?part crm:P2_has_type/rdfs:label ?dimension_type ; crm:P43_has_dimension ?dimension . OPTIONAL { ?part crm:P3_has_note ?suffix . } OPTIONAL { ?part crm:P67i_is_referred_to_by ?prefix_statement . ?prefix_statement crm:P2_has_type aat:300435430 ; crm:P190_has_symbolic_content ?prefix } OPTIONAL { ?dimension crm:P2_has_type/rdfs:label ?dimension_dimension  . FILTER(LANG(?dimension_dimension) = \"de\") } ?dimension crm:P90_has_value ?dimension_value ; crm:P91_has_unit/rdfs:label ?dimension_unit . BIND(CONCAT(IF(BOUND(?prefix), CONCAT(?prefix, \" \"), \"\"),IF(BOUND(?dimension_dimension), ?dimension_dimension,\"\"), \" \", ?dimension_value, \" \", ?dimension_unit,IF(BOUND(?suffix),CONCAT(\" (\", ?suffix, \") \"), \"\")) AS ?dimension_string)
 } GROUP BY ?dimension_type } BIND(CONCAT(?dimension_type, \": \", ?dimensions) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_masse"
@@ -378,6 +395,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Name",
             "xsdDatatype" : "xsd:string",
+            "domain" : "crm:E39_Actor",
                 "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P2_has_type aat:300404670 ; crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, \"\"), IF(BOUND(?lastname_value), CONCAT(\" \", ?lastname_value), \"\")) as ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_name"
     },
@@ -387,6 +405,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Nationalität",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "crm:E39_Actor",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P2_has_type aat:300379842 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_nationalitaet"
     },
@@ -436,6 +455,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Pers./Körp",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P67_refers_to ?value . ?value a skkg:Person . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_person_korp_lit"
     },
@@ -445,6 +465,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Pers./Körp (typisiert)",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P01i_is_domain_of ?reference. ?reference crm:P02_has_range ?referencedPerson ; crm:P67.1_has_type ?referenceType . ?referencedPerson skos:prefLabel ?personLabel . ?referenceType skos:prefLabel ?typeLabel . BIND(CONCAT(?personLabel, \" (\", ?typeLabel, \")\") AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_person_korp_lit_typed"
     },
@@ -454,6 +475,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Pers./Körp",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_obj"
     },
@@ -482,6 +504,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Reihe",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P106i_forms_part_of ?value . ?value crm:P2_has_type aat:300026642 }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_series"
     },
@@ -518,6 +541,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Typ (Adresse)",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Address",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:33089 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_adr"
     },
@@ -527,6 +551,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Typ (Objekt Kategorie)",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21087 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_obj_cat"
     },
@@ -536,6 +561,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Typ (Ausstellung)",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Exhibition",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:21102 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_exh"
     },
@@ -545,6 +571,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Typ (Multimedia)",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Multimedia",
                 "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:23089 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_mul"
     },
@@ -563,6 +590,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Typ (Objekt Typ)",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P2_has_type aat:300435443 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_obj_type"
     },
@@ -572,6 +600,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Verlag",
             "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
                 "selectPattern" : "SELECT ?value WHERE { $subject frbroo:R24i_was_created_through/crm:P9_consists_of ?editing . ?editing crm:P2_has_type aat:300443925 ; crm:P14_carried_out_by ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_verlag"
     },
@@ -590,6 +619,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Weitere Namen",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Address",
                 "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P2_has_type aat:300264273 ; crm:P106_is_composed_of/crm:P2_has_type ?name_type . VALUES (?name_type) { (aat:300404651) (aat:300404652) } OPTIONAL { ?name crm:P106_is_composed_of ?lastname . ?lastname crm:P2_has_type aat:300404652 ; crm:P190_has_symbolic_content ?lastname_value . } OPTIONAL { ?name crm:P106_is_composed_of ?firstname . ?firstname crm:P2_has_type aat:300404651 ; crm:P190_has_symbolic_content ?firstname_value . } BIND(CONCAT(IF(BOUND(?firstname_value), ?firstname_value, \"\"), IF(BOUND(?lastname_value), CONCAT(\" \", ?lastname_value), \"\")) as ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_weitere_namen_adress"
     },
@@ -599,6 +629,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Weitere Namen",
             "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Person",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P1_is_identified_by ?name . ?name crm:P2_has_type ?name_type ; crm:P190_has_symbolic_content ?name_label . ?name_type crm:P127_has_broader_term type:21100 ; skos:prefLabel ?name_type_label . BIND(CONCAT(?name_label, \" (\", ?name_type_label, \")\") AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_weitere_namen_person"
     },
@@ -639,7 +670,7 @@ BIND( CONCAT( \"© \", COALESCE(?successor_right_holder_label, \"\"), IF(BOUND(?
 
             "label": "Zustand",
             "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P34i_was_assessed_by ?assessment . { SELECT DISTINCT ?assessment (GROUP_CONCAT(DISTINCT ?state;SEPARATOR=\"/\") as ?state) ?note ?date WHERE  { ?assessment crm:P35_has_identified/rdfs:label ?state . OPTIONAL { ?assessment crm:P3_has_note ?note . } OPTIONAL { ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date . } } GROUP BY ?assessment ?note ?date } BIND(CONCAT(?state, IF(BOUND(?note),CONCAT(\": \",?note,\" \"),\"\"), IF(BOUND(?date),CONCAT(\" (\", str(?date), \")\"),\"\")) AS ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P34i_was_assessed_by ?assessment . { SELECT DISTINCT ?assessment (GROUP_CONCAT(DISTINCT ?state_in;SEPARATOR=\"/\") as ?state_concat) ?note ?date WHERE  { ?assessment crm:P35_has_identified/rdfs:label ?state_in . OPTIONAL { ?assessment crm:P3_has_note ?note . } OPTIONAL { ?assessment crm:P4_has_time-span/crm:P82_at_some_time_within ?date . } } GROUP BY ?assessment ?note ?date } BIND(CONCAT(?state_concat, IF(BOUND(?note),CONCAT(\": \",?note,\" \"),\"\"), IF(BOUND(?date),CONCAT(\" (\", str(?date), \")\"),\"\")) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_zustand"
     },
 
