@@ -885,6 +885,20 @@ fields:
               skos:prefLabel ?name_type_label .
             BIND(CONCAT(?name_label, " (", ?name_type_label, ")") AS ?value)
           }'
+
+    - id: mp_weitere_nummern
+      label: Weitere Nummern
+      datatype: xsd:string
+      domain: skkg:Object
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P1_is_identified_by ?identifier .
+            ?identifier crm:P2_has_type ?type ;
+              crm:P190_has_symbolic_content ?content .
+            ?type crm:P127_has_broader_term type:42134 ;
+              skos:prefLabel ?type_label .
+            BIND(CONCAT(?content, " (", ?type_label, ")") AS ?value)
+          }'
         
     - id: mp_werkbezuege_exh
       label: Werkbezüge
