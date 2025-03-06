@@ -3,6 +3,7 @@ crmaaa = https://takin.solutions/ontologies/crmaaa/
 crmsci = http://www.cidoc-crm.org/extensions/crmsci/
 graph = https://data.skkg.ch/graph/
 gndo = https://d-nb.info/standards/elementset/gnd#
+gvp = http://vocab.getty.edu/ontology#
 type = https://data.skkg.ch/type/
 la = https://linked.art/ns/terms/
 skkg = https://ontology.skkg.ch/
