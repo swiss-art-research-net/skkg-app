@@ -1,0 +1,36 @@
+[[> partial:pageHeader ]]
+<div class="skkg-component home-title">
+    <bs-row>
+        <bs-col md="10" md-offset="1">
+            <div>
+                <h2>Recent Items</h2>
+                <semantic-query
+                    query="SELECT  ?type WHERE {
+                        ?type rdfs:subClassOf* skkg:Entity .
+                    } ORDER BY ?type"
+                    template="{{> template}}"
+                >
+                    <template id="template">
+                        [[> template-recent-items]]
+                    </template>
+                </semantic-query>
+            </div>
+        </bs-col>
+    </bs-row>
+</div>
+
+[[#*inline "template-recent-items"]]
+    <div>
+        {{#each bindings}}
+            <div>
+                <h3><mp-label iri="{{type.value}}"></mp-label></h3>
+                <semantic-table
+                    query="SELECT ?subject ?lastUpdate WHERE {
+                        ?subject a <{{type.value}}> ;
+                            crm:P70i_is_documented_in/crm:P94i_was_created_by/crm:P4_has_time-span/crm:P82_at_some_time_within ?lastUpdate .
+                    } ORDER BY DESC(?lastUpdate) LIMIT 10"
+                ></semantic-table>
+            </div>
+        {{/each}}
+    </div>
+[[/inline]]
