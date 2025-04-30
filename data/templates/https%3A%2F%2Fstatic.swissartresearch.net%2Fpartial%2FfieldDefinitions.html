@@ -667,6 +667,17 @@
     },
 
     {
+        "id" : "mp_werkbe_objectgroup",
+
+            "label": "Werke",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:ObjectGroup",
+            "range" : "skkg:Object",
+                "selectPattern" : "SELECT ?value WHERE { $subject la:has_member ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbe_objectgroup"
+    },
+
+    {
         "id" : "mp_zug_dat",
 
             "label": "Zug.-Dat.",

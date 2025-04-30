@@ -925,6 +925,16 @@ fields:
             ?referenced_work a skkg:Object .
           }'
 
+    - id: mp_werkbe_objectgroup
+      label: Werke
+      datatype: xsd:anyURI
+      domain: skkg:ObjectGroup
+      range: skkg:Object
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject la:has_member ?value .
+          }'
+
     - id: mp_zug_dat
       label: Zug.-Dat.
       datatype: xsd:string
