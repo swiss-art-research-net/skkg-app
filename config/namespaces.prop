@@ -9,6 +9,7 @@ la = https://linked.art/ns/terms/
 skkg = https://ontology.skkg.ch/
 wd = http://www.wikidata.org/entity/
 object = https://data.skkg.ch/object/
+objectgroup = https://data.skkg.ch/objectgroup/
 person = https://data.skkg.ch/person/
 exhibition = https://data.skkg.ch/exhibition/
 multimedia = https://data.skkg.ch/multimedia/
