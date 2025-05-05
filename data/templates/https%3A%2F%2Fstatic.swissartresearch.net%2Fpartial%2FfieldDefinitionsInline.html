@@ -430,6 +430,28 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_masse"
     }
 [[/inline]]
+ [[#*inline "mp_metadata_created"]]
+    {
+        "id" : "mp_metadata_created",
+
+            "label": "Medata creation",
+            "xsdDatatype" : "xsd:date",
+            "domain" : "skkg:Entity",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P70i_is_documented_in/crm:P94i_was_created_by/crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_metadata_created"
+    }
+[[/inline]]
+ [[#*inline "mp_metadata_last_update"]]
+    {
+        "id" : "mp_metadata_last_update",
+
+            "label": "Medata last update",
+            "xsdDatatype" : "xsd:date",
+            "domain" : "skkg:Entity",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P70i_is_documented_in/crm:P94i_was_created_by/crm:P9_consists_of ?update . ?update crm:P2_has_type aat:300417255; crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_metadata_last_update"
+    }
+[[/inline]]
  [[#*inline "mp_name"]]
     {
         "id" : "mp_name",
