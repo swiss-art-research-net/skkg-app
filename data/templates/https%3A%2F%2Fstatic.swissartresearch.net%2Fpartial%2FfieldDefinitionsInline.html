@@ -583,6 +583,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_series"
     }
 [[/inline]]
+ [[#*inline "mp_texte"]]
+    {
+        "id" : "mp_texte",
+
+            "label": "Texte",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Object",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?text . ?text crm:P2_has_type/crm:P127_has_broader_term type:42150 ; crm:P190_has_symbolic_content ?text_content . OPTIONAL { ?text crm:P1_is_identified_by ?title . ?title a crm:E35_Title ; crm:P190_has_symbolic_content ?title_content . } BIND(CONCAT(IF(BOUND(?title_content), CONCAT(?title_content, \": \"), \"\"), ?text_content) AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_texte"
+    }
+[[/inline]]
  [[#*inline "mp_titel_obj"]]
     {
         "id" : "mp_titel_obj",
