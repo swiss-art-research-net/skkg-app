@@ -63,6 +63,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_anz_teile"
     }
 [[/inline]]
+ [[#*inline "mp_art_eigentum"]]
+    {
+        "id" : "mp_art_eigentum",
+
+            "label": "Art Eigentum",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:54159 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_art_eigentum"
+    }
+[[/inline]]
  [[#*inline "mp_ausst_ort"]]
     {
         "id" : "mp_ausst_ort",

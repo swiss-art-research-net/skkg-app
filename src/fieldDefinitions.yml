@@ -91,6 +91,16 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject crm:P57_has_number_of_parts ?value
           }'
+    
+    - id: mp_art_eigentum
+      label: Art Eigentum
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:54159 .
+          }'
 
     - id: mp_ausst_ort
       label: Ausst.-Ort
