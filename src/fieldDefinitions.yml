@@ -301,6 +301,15 @@ fields:
               crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
           }'
 
+    - id: mp_datum_own
+      label: Datum
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P4_has_time-span ?value .
+          }'
+
     - id: mp_edition_auflage
       label: Edition/Auflage
       domain: skkg:Literature

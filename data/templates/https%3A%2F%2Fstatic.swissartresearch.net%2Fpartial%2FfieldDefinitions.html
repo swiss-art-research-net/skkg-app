@@ -168,6 +168,16 @@
     },
 
     {
+        "id" : "mp_datum_own",
+
+            "label": "Datum",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P4_has_time-span ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_datum_own"
+    },
+
+    {
         "id" : "mp_edition_auflage",
 
             "label": "Edition/Auflage",
