@@ -63,15 +63,15 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_anz_teile"
     }
 [[/inline]]
- [[#*inline "mp_art_eigentum"]]
+ [[#*inline "mp_art_besitz"]]
     {
-        "id" : "mp_art_eigentum",
+        "id" : "mp_art_besitz",
 
-            "label": "Art Eigentum",
+            "label": "Art Besitz",
             "xsdDatatype" : "xsd:anyURI",
             "domain" : "skkg:Provenance",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:54159 . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_art_eigentum"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_art_besitz"
     }
 [[/inline]]
  [[#*inline "mp_ausst_ort"]]
@@ -571,6 +571,17 @@
             "domain" : "skkg:Object",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P108i_was_produced_by ?production . ?production crm:P9_consists_of ?subProduction . ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_obj"
+    }
+[[/inline]]
+ [[#*inline "mp_pers_korp_own"]]
+    {
+        "id" : "mp_pers_korp_own",
+
+            "label": "Pers./Körp",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P11_had_participant ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_own"
     }
 [[/inline]]
  [[#*inline "mp_redaktionsstatus"]]

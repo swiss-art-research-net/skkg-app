@@ -92,8 +92,8 @@ fields:
             $subject crm:P57_has_number_of_parts ?value
           }'
     
-    - id: mp_art_eigentum
-      label: Art Eigentum
+    - id: mp_art_besitz
+      label: Art Besitz
       datatype: xsd:anyURI
       domain: skkg:Provenance
       queries:
@@ -737,6 +737,15 @@ fields:
             $subject crm:P108i_was_produced_by ?production .
             ?production crm:P9_consists_of ?subProduction .
             ?subProduction crm:P14_carried_out_by|crm:P15_was_influenced_by ?value .
+          }'
+
+    - id: mp_pers_korp_own
+      label: Pers./Körp
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P9_consists_of/crm:P11_had_participant ?value .
           }'
 
     - id: mp_redaktionsstatus
