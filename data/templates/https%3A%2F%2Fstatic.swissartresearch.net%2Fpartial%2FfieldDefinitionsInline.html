@@ -238,6 +238,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_erw_art"
     }
 [[/inline]]
+ [[#*inline "mp_erw_art_own"]]
+    {
+        "id" : "mp_erw_art_own",
+
+            "label": "Erw. Art.",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:54156 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_erw_art_own"
+    }
+[[/inline]]
  [[#*inline "mp_erw_ref_nr"]]
     {
         "id" : "mp_erw_ref_nr",
