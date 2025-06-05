@@ -102,6 +102,17 @@ fields:
             ?value crm:P127_has_broader_term type:54159 .
           }'
 
+    - id: mp_art_pers_korp
+      label: Art (Person/Körperschaft)
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      queries:
+        - select: 'SELECT ?value WHERE {
+            ?subject crm:P9_consists_of/crm:P11_had_participant ?group .
+            ?group a crm:E74_Group ;
+              crm:P2_has_type ?value .
+          }'
+
     - id: mp_ausst_ort
       label: Ausst.-Ort
       datatype: xsd:anyURI
@@ -755,6 +766,7 @@ fields:
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crm:P9_consists_of/crm:P11_had_participant ?value .
+            ?value a skkg:Person .
           }'
 
     - id: mp_redaktionsstatus
