@@ -692,6 +692,15 @@ fields:
             $subject frbroo:R24i_was_created_through/crm:P7_took_place_at ?value .
           }'
 
+    - id: mp_ort_own
+      label: Ort
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P7_took_place_at/crm:P1_is_identified_by ?value .
+          }'
+
     - id: mp_page_num
       label: Seiten
       domain: skkg:Literature

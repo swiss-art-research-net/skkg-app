@@ -481,6 +481,16 @@
     },
 
     {
+        "id" : "mp_ort_own",
+
+            "label": "Ort",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P7_took_place_at/crm:P1_is_identified_by ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ort_own"
+    },
+
+    {
         "id" : "mp_page_num",
 
             "label": "Seiten",
