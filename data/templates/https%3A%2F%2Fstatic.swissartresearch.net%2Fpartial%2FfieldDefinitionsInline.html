@@ -627,6 +627,18 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_redaktionsstatus"
     }
 [[/inline]]
+ [[#*inline "mp_preis"]]
+    {
+        "id" : "mp_preis",
+
+            "label": "Preis",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of ?payment . ?payment a la:Payment ; la:paid_amount ?monetary_amount . ?monetary_amount crm:P90_has_value ?monetary_value ; crm:P180_has_currency/rdfs:label ?monetary_currency . OPTIONAL { ?conversion crmsci:O11_described ?monetary_amount ; crmsci:O10_assigned_dimension ?converted_monetary_amount . ?converted_monetary_amount crm:P90_has_value ?converted_monetary_value ; crm:P180_has_currency/rdfs:label ?converted_monetary_currency . FILTER(DATATYPE(?converted_monetary_currency) = xsd:string) BIND(CONCAT(STR(?converted_monetary_currency), \" \", STR(?converted_monetary_value)) AS ?converted_value) } OPTIONAL { ?payment crm:P3_has_note ?note . } OPTIONAL { ?payment crm:P1_is_identified_by ?sort_id . ?sort_id crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . } BIND(CONCAT(IF(BOUND(?converted_value), CONCAT(\"(\", ?converted_value, \") \"), \"\"), IF(BOUND(?note), CONCAT(\" (\", ?note, \") \"), \"\"), IF(BOUND(?sort), CONCAT(\" (\", ?sort, \") \"), \"\"), STR(?monetary_currency), \" \", STR(?monetary_value)) AS ?value)
+}",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_preis"
+    }
+[[/inline]]
  [[#*inline "mp_region_address"]]
     {
         "id" : "mp_region_address",
