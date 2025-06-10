@@ -819,6 +819,18 @@ fields:
           
           }'
 
+    - id: mp_publizierbare_provenienz
+      label: Publizierbare Provenienz
+      domain: skkg:Provenance
+      datatype: xsd:string
+      queries: 
+        - select: 'SELECT ?value WHERE {
+            $subject a skkg:Provenance ;
+              crm:P67i_is_referred_to_by ?statement .
+            ?statement crm:P2_has_type aat:300418049 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
+
     - id: mp_region_address
       label: Region
       domain: skkg:Address
