@@ -789,6 +789,17 @@
     },
 
     {
+        "id" : "mp_werke_own",
+
+            "label": "Werke",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+            "range" : "skkg:Object",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P16_used_specific_object ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werke_own"
+    },
+
+    {
         "id" : "mp_zug_dat",
 
             "label": "Zug.-Dat.",

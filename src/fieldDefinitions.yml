@@ -1073,6 +1073,16 @@ fields:
             $subject la:has_member ?value .
           }'
 
+    - id: mp_werke_own
+      label: Werke
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      range: skkg:Object
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P9_consists_of/crm:P16_used_specific_object ?value .
+          }'
+
     - id: mp_zug_dat
       label: Zug.-Dat.
       datatype: xsd:string
