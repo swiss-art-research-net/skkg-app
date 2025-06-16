@@ -613,7 +613,7 @@
             "label": "Pers./Körp",
             "xsdDatatype" : "xsd:anyURI",
             "domain" : "skkg:Provenance",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P11_had_participant ?value . ?value a skkg:Person . }",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P11_had_participant/crm:P107_has_current_or_former_member ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_own"
     }
 [[/inline]]
@@ -856,16 +856,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege_lit"
     }
 [[/inline]]
- [[#*inline "mp_werkbe_objectgroup"]]
+ [[#*inline "mp_werke_objectgroup"]]
     {
-        "id" : "mp_werkbe_objectgroup",
+        "id" : "mp_werke_objectgroup",
 
             "label": "Werke",
             "xsdDatatype" : "xsd:anyURI",
             "domain" : "skkg:ObjectGroup",
             "range" : "skkg:Object}",
                 "selectPattern" : "SELECT ?value WHERE { $subject la:has_member ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbe_objectgroup"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werke_objectgroup"
     }
 [[/inline]]
  [[#*inline "mp_zug_dat"]]

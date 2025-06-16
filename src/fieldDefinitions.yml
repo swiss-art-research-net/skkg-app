@@ -775,8 +775,7 @@ fields:
       domain: skkg:Provenance
       queries:
         - select: 'SELECT ?value WHERE {
-            $subject crm:P9_consists_of/crm:P11_had_participant ?value .
-            ?value a skkg:Person .
+            $subject crm:P9_consists_of/crm:P11_had_participant/crm:P107_has_current_or_former_member ?value .
           }'
 
     - id: mp_redaktionsstatus
@@ -1064,7 +1063,7 @@ fields:
             ?referenced_work a skkg:Object .
           }'
 
-    - id: mp_werkbe_objectgroup
+    - id: mp_werke_objectgroup
       label: Werke
       datatype: xsd:anyURI
       domain: skkg:ObjectGroup
