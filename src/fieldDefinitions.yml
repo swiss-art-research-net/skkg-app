@@ -1081,7 +1081,14 @@ fields:
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crm:P9_consists_of/crm:P16_used_specific_object ?value .
-          }'
+            OPTIONAL {
+              ?value crm:P1_is_identified_by ?sortId .
+              ?sortId crm:P2_has_type type:sortlnu ;
+                crm:P190_has_symbolic_content ?sort .
+              ?assignment crm:P141_assigned ?sortId ;
+                crm:P16_used_specific_object $subject .
+            }
+          } ORDER BY ?sort'
 
     - id: mp_zug_dat
       label: Zug.-Dat.
