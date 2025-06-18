@@ -830,6 +830,16 @@ fields:
               crm:P190_has_symbolic_content ?value .
           }'
 
+    - id: mp_quellen_literatur_own
+      label: Quellen Literatur
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      queries:
+        - select: 'SELECT ?value WHERE {
+            ?value a skkg:Literature ;
+              crm:P165_incorporates/crm:P67_refers_to $subject .
+          }'
+
     - id: mp_region_address
       label: Region
       domain: skkg:Address

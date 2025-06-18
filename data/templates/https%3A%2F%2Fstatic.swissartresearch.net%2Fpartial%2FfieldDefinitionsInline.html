@@ -650,6 +650,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_publizierbare_provenienz"
     }
 [[/inline]]
+ [[#*inline "mp_quellen_literatur_own"]]
+    {
+        "id" : "mp_quellen_literatur_own",
+
+            "label": "Quellen Literatur",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { ?value a skkg:Literature ; crm:P165_incorporates/crm:P67_refers_to $subject . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_quellen_literatur_own"
+    }
+[[/inline]]
  [[#*inline "mp_region_address"]]
     {
         "id" : "mp_region_address",
