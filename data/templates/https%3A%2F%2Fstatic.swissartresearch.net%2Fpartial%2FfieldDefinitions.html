@@ -431,6 +431,16 @@
     },
 
     {
+        "id" : "mp_merkmale",
+
+            "label": "Merkmale",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { ?characteristics a crm:E73_Information_Object ; crm:P15i_influenced $subject . OPTIONAL { ?characteristics crm:P2_has_type ?type . ?type crm:P127_has_broader_term type:54164 ; skos:prefLabel ?type_label . FILTER(LANG(?type_label) = \"de\") } OPTIONAL { ?characteristics crm:P2_has_type ?characteristic . ?characteristic crm:P127_has_broader_term type:54163 ; skos:prefLabel ?characteristic_label . FILTER(LANG(?characteristic_label) = \"de\") } OPTIONAL { ?characteristics crm:P3_has_note ?note . } BIND(CONCAT(IF(BOUND(?type_label), CONCAT(\"Typ: \",?type_label, \" \"), \"\"), IF(BOUND(?characteristic_label), CONCAT(\"Merkmal: \", ?characteristic_label, \" \"), \"\"), IF(BOUND(?note), CONCAT(\" (\", ?note, \") \"), \"\")) AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_merkmale"
+    },
+
+    {
         "id" : "mp_metadata_created",
 
             "label": "Medata creation",
