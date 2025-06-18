@@ -1075,6 +1075,41 @@ fields:
               skos:prefLabel ?type_label .
             BIND(CONCAT(?content, " (", ?type_label, ")") AS ?value)
           }'
+    
+    - id: mp_weitere_quellen
+      label: Weitere Quellen
+      datatype: xsd:anyURI
+      domain: skkg:Provenance
+      queries:
+        - select: 'SELECT ?value WHERE {
+            ?source a crm:E73_Information_Object ;
+              crm:P67_refers_to $subject .
+            $subject a skkg:Provenance .
+            OPTIONAL {
+              ?source crm:P3_has_note ?note .
+            }
+            OPTIONAL {
+              ?source crm:P2_has_type ?type .
+              ?type crm:P127_has_broader_term type:55154 ;
+                skos:prefLabel ?type_label .
+              FILTER(LANG(?type_label) = "de")
+            }
+            OPTIONAL {
+              ?source crm:P2_has_type ?relevance .
+              ?relevance crm:P127_has_broader_term type:55153 ;
+                skos:prefLabel ?relevance_label .
+              FILTER(LANG(?relevance_label) = "de")
+            }
+            OPTIONAL {
+              ?source crm:P1_is_identified_by ?address .
+              ?address crm:P2_has_type aat:300404630 ;
+                crm:P190_has_symbolic_content ?url .
+            }
+            BIND(CONCAT(IF(BOUND(?type_label), CONCAT("Typ: ", ?type_label, " "), ""), 
+                        IF(BOUND(?relevance_label), CONCAT("Relevanz: ", ?relevance_label, " "), ""), 
+                        IF(BOUND(?note), CONCAT(" (", ?note, ") "), ""),
+                        IF(BOUND(?url), CONCAT(" (", ?url, ")"), "")) AS ?value)
+          }'
         
     - id: mp_werkbezuege_exh
       label: Werkbezüge
