@@ -134,7 +134,7 @@
             "label": "Bezug (Person/Körperschaft)",
             "xsdDatatype" : "xsd:anyURI",
             "domain" : "skkg:Person",
-                "selectPattern" : "SELECT ?value WHERE { ?status a aaao:ZE55_Social_Relation_Status ; aaao:ZP105_has_social_relation_subject $subject ; aaao:ZP103_ascribes_social_relation_target ?target ; aaao:ZP104_ascribes_social_relation ?type . ?target skos:prefLabel ?targetLabel . ?type skos:prefLabel ?typeLabel . BIND(CONCAT(?targetLabel, \" (\", ?typeLabel, \")\") AS ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { { ?status a aaao:ZE55_Social_Relation_Status ; aaao:ZP105_has_social_relation_subject $subject ; aaao:ZP103_ascribes_social_relation_target ?target ; aaao:ZP104_ascribes_social_relation ?type . ?target skos:prefLabel ?targetLabel . ?type skos:prefLabel ?typeLabel . } UNION { ?status a aaao:ZE55_Social_Relation_Status ; aaao:ZP105_has_social_relation_subject ?target ; aaao:ZP103_ascribes_social_relation_target $subject ; aaao:ZP104_ascribes_social_relation/owl:inverseOf ?type . ?target skos:prefLabel ?targetLabel . ?type skos:prefLabel ?typeLabel . } BIND(CONCAT(?targetLabel, \" (\", ?typeLabel, \")\") AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_bezug_pers_korp"
     },
 
