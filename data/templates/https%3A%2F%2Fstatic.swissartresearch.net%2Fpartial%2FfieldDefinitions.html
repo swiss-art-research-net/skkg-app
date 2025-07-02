@@ -341,6 +341,16 @@
     },
 
     {
+        "id" : "mp_kategorie_mul",
+
+            "label": "Kategorie",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Multimedia",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:43088 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_kategorie_mul"
+    },
+
+    {
         "id" : "mp_land_address",
 
             "label": "Land",

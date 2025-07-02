@@ -498,6 +498,16 @@ fields:
             $subject frbroo:R24i_was_created_through/crm:P4_has_time-span/crm:P82_at_some_time_within ?value .
           }'
 
+    - id: mp_kategorie_mul
+      label: Kategorie
+      datatype: xsd:anyURI
+      domain: skkg:Multimedia
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P2_has_type ?value .
+            ?value crm:P127_has_broader_term type:43088 .
+          }'
+
     - id: mp_land_address
       label: Land
       datatype: xsd:anyURI
