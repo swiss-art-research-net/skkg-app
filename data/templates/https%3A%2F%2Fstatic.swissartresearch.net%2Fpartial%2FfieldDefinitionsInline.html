@@ -247,6 +247,28 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_intern_extern"
     }
 [[/inline]]
+ [[#*inline "mp_exh_lit"]]
+    {
+        "id" : "mp_exh_lit",
+
+            "label": "Ausstellung",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Literature",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67_refers_to ?value . ?value a skkg:Literature . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_lit"
+    }
+[[/inline]]
+ [[#*inline "mp_exh_lit_typed"]]
+    {
+        "id" : "mp_exh_lit_typed",
+
+            "label": "Ausstellung (typisiert)",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P01i_is_domain_of ?reference. ?reference crm:P02_has_range ?referencedExhibition ; crm:P67.1_has_type ?referenceType . ?referencedExhibition a skkg:Exhibition ; skos:prefLabel ?exhibitionLabel . ?referenceType skos:prefLabel ?typeLabel . BIND(CONCAT(?exhibitionLabel, \" (\", ?typeLabel, \")\") AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_exh_lit_typed"
+    }
+[[/inline]]
  [[#*inline "mp_exh_other_venue"]]
     {
         "id" : "mp_exh_other_venue",
@@ -547,7 +569,7 @@
             "label": "Pers./Körp (typisiert)",
             "xsdDatatype" : "xsd:string",
             "domain" : "skkg:Literature",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P01i_is_domain_of ?reference. ?reference crm:P02_has_range ?referencedPerson ; crm:P67.1_has_type ?referenceType . ?referencedPerson skos:prefLabel ?personLabel . ?referenceType skos:prefLabel ?typeLabel . BIND(CONCAT(?personLabel, \" (\", ?typeLabel, \")\") AS ?value) }",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P01i_is_domain_of ?reference. ?reference crm:P02_has_range ?referencedPerson ; crm:P67.1_has_type ?referenceType . ?referencedPerson a skkg:Person ; skos:prefLabel ?personLabel . ?referenceType skos:prefLabel ?typeLabel . BIND(CONCAT(?personLabel, \" (\", ?typeLabel, \")\") AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_person_korp_lit_typed"
     }
 [[/inline]]

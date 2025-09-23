@@ -369,6 +369,31 @@ fields:
             ?value crm:P127_has_broader_term type:43086 .
           }'
 
+    - id: mp_exh_lit
+      label: Ausstellung
+      datatype: xsd:anyURI
+      domain: skkg:Literature
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P67_refers_to ?value .
+            ?value a skkg:Literature .
+          }'
+
+    - id: mp_exh_lit_typed
+      label: Ausstellung (typisiert)
+      datatype: xsd:string
+      domain: skkg:Literature
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P01i_is_domain_of ?reference.
+            ?reference crm:P02_has_range ?referencedExhibition ;
+              crm:P67.1_has_type ?referenceType .
+            ?referencedExhibition a skkg:Exhibition ;
+                skos:prefLabel ?exhibitionLabel .
+            ?referenceType skos:prefLabel ?typeLabel .
+            BIND(CONCAT(?exhibitionLabel, " (", ?typeLabel, ")") AS ?value)
+          }'
+          
     - id: mp_exh_other_venue
       label: Stationen
       datatype: xsd:anyURI
@@ -720,7 +745,8 @@ fields:
             $subject crm:P01i_is_domain_of ?reference.
             ?reference crm:P02_has_range ?referencedPerson ;
               crm:P67.1_has_type ?referenceType .
-            ?referencedPerson skos:prefLabel ?personLabel .
+            ?referencedPerson a skkg:Person ;
+              skos:prefLabel ?personLabel .
             ?referenceType skos:prefLabel ?typeLabel .
             BIND(CONCAT(?personLabel, " (", ?typeLabel, ")") AS ?value)
           }'
