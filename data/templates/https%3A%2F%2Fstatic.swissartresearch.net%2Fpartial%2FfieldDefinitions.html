@@ -560,6 +560,24 @@
     },
 
     {
+        "id" : "mp_status",
+
+            "label": "Status",
+            "xsdDatatype" : "xsd:anyURI",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P70i_is_documented_in/crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:54160 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_status"
+    },
+
+    {
+        "id" : "mp_status_date",
+
+            "label": "Status (datum)",
+            "xsdDatatype" : "xsd:date",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P70i_is_documented_in ?meta . ?meta crm:P2_has_type ?status . ?status crm:P127_has_broader_term type:54160 . ?assignment crm:P140_assigned_attribute_to ?meta ; crm:P141_assigned ?status ; crm:P4_has_time-span/crm:P82_at_some_time_within ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_status_date"
+    },
+
+    {
         "id" : "mp_texte",
 
             "label": "Texte",
