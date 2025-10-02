@@ -235,12 +235,15 @@
         ?digitalObject la:digitally_available_via/la:access_point ?iiif .
         
         ?digitalObject ^la:digitally_shown_by ?multimediaItem .
-        ?multimediaItem crm:P1_is_identified_by ?orderId .
-        ?orderId crm:P2_has_type type:sortlnu ;
+
+        OPTIONAL {
+          ?multimediaItem crm:P1_is_identified_by ?orderId .
+          ?orderId crm:P2_has_type type:sortlnu ;
             crm:P190_has_symbolic_content ?order .
-        ?assignment crm:P140_assigned_attribute_to ?multimediaItem ;
+          ?assignment crm:P140_assigned_attribute_to ?multimediaItem ;
             crm:P141_assigned ?orderId ;
             crm:P16_used_specific_object ?subject .
+        }
       } ORDER BY xsd:integer(?order)"
       template='{{> template-images }}'
     >
