@@ -1,0 +1,17 @@
+[[> partial:pageHeader ]]
+[[> partial:contentHeader ]]
+<div style="height: 100%">
+    <h1>Map View</h1>
+    <div style='height: 60vw;'>
+    <semantic-map
+        query='
+        SELECT ?subject ?wkt WHERE {
+            ?subject crmdig:L54_is_same-as/wdt:P625 ?wkt .
+        }'
+        tuple-template='<b><semantic-link iri="{{subject.value}}"></semantic-link></b>'
+    ></semantic-map>
+    </div>
+</div>
+
+[[> partial:pageFooter ]]
+[[> partial:contentFooter ]]
