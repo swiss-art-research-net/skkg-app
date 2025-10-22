@@ -5,10 +5,16 @@
     <div style='height: 60vw;'>
     <semantic-map
         query='
-        SELECT ?subject ?wkt WHERE {
-            ?subject crmdig:L54_is_same-as/wdt:P625 ?wkt .
+        SELECT ?entity ?wkt WHERE {
+            {
+                ?entity wdt:P625 ?wkt .
+            } UNION {
+                ?entity geo:hasGeometry/geo:asWKT ?wktRaw .
+                BIND(REPLACE(STR(?wktRaw), "\\+", "") AS ?wktClean)
+                BIND(STRDT(?wktClean, geo:wktLiteral) AS ?wkt)
+            }
         }'
-        tuple-template='<b><semantic-link iri="{{subject.value}}"></semantic-link></b>'
+        tuple-template='<b><semantic-link iri="{{entity.value}}"></semantic-link></b>'
     ></semantic-map>
     </div>
 </div>
