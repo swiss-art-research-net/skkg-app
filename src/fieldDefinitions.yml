@@ -21,6 +21,25 @@ namespaces:
 
 fields:
 
+    - id: coordinates
+      label: Geographic coordinates (including external)
+      description: Geographic coordinates of the location
+      datatype: xsd:literal
+      queries:
+        - select: 'SELECT ?value WHERE {
+            {
+                $subject crm:P168_place_is_defined_by ?mp_coordinate .
+            } UNION
+            {
+                $subject wdt:P625 ?wikidata_coordinate .
+            } UNION {
+                $subject geo:hasGeometry/geo:asWKT ?gndWktRaw .
+                BIND(REPLACE(STR(?gndWktRaw), "\\+", "") AS ?gndWktClean)
+                BIND(STRDT(?gndWktClean, geo:wktLiteral) AS ?gnd_coordinate)
+            }
+            BIND(COALESCE(?mp_coordinate, ?wikidata_coordinate, ?gnd_coordinate) AS ?value)
+          }'
+
     - id: descriptive_note
       label: Descriptive note
       description: A note that describes the subject

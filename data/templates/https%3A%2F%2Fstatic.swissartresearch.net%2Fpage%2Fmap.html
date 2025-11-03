@@ -7,6 +7,8 @@
         query='
         SELECT ?entity ?wkt WHERE {
             {
+                ?entity crm:P168_place_is_defined_by ?wkt .
+            } UNION {
                 ?entity wdt:P625 ?wkt .
             } UNION {
                 ?entity geo:hasGeometry/geo:asWKT ?wktRaw .
