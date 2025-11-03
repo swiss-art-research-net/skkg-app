@@ -235,6 +235,15 @@ fields:
             )
           }'
 
+    - id: mp_coordinates
+      label: Geographic coordinates
+      description: Geographic coordinates of the location
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P168_place_is_defined_by ?value .
+          }'
+
     - id: mp_creditline
       label: Creditline
       datatype: xsd:string

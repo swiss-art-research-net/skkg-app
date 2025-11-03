@@ -1,5 +1,15 @@
 [
     {
+        "id" : "coordinates",
+
+            "label": "Geographic coordinates",
+            "description" : "Geographic coordinates of the location",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P168_place_is_defined_by ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/coordinates"
+    },
+
+    {
         "id" : "descriptive_note",
 
             "label": "Descriptive note",
