@@ -74,7 +74,7 @@
     <div class="skkg-component separator panel">
         <bs-row>
             <bs-col md="2">
-                <h3>[[item]]</h3>
+                <h3>[[i18n item]]</h3>
                 [[> resourceSummary type=item]]
             </bs-col>
             <bs-col md="10">
@@ -96,7 +96,7 @@
                 ?subject [[condition]] .
             [[/if]]
         }"
-        template="{{#each bindings}}Currently there are {{num.value}} [[type]] items. Here are some examples:{{/each}}"
+        template="{{#each bindings}}[[i18n "startDataSummary"]] {{num.value}} [[i18n type]] items. [[i18n "startDataExamples"]]:{{/each}}"
     ></semantic-query>
     [[#if browse]]
         <div class="bottom">
