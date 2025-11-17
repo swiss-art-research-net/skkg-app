@@ -4,12 +4,14 @@
         <bs-col md="10" md-offset="1">
             <h1>SKKG ResearchSpace</h1>
             <p class="skkg-component tagline">
-                The ResearchSpace instance for the SKKG Sammlung Digital project
+                [[i18n "startTagline"]]
             </p>
-            <p class="skkg-component summary">The instance provides access to the semantic data that has been generated
-                based on the collection data found in MuseumPlus.
-                You can use this instance to <semantic-link iri="page:browse">browse the data</semantic-link>
-                and to explore the <semantic-link iri="page:vocabularies">vocabularies</semantic-link>.</p>
+            <p class="skkg-component summary">
+                [[i18n "startDescription"]]
+            </p>
+            <p class="skkg-component summary">
+                [[i18n "startInstructions" escapeHTML=false]]
+            </p>
             <p class="skkg-component summary">
                 <semantic-query
                     query="SELECT DISTINCT ?type ?rounded_num WHERE {
@@ -27,9 +29,9 @@
                 >
                     <template id="template-summary">
                         
-                        <p>Currently, the instance contains about
+                        <p>[[i18n "startDataSummary"]]
                         {{#each bindings}}
-                            {{#if @last}} and {{/if}}{{rounded_num.value}} <mp-label iri="{{type.value}}"></mp-label> items{{#if @last}}.{{/if}}{{#unless @last}}, {{/unless}}
+                            {{#if @last}} [[i18n "and"]] {{/if}}{{rounded_num.value}} <mp-label iri="{{type.value}}"></mp-label> items{{#if @last}}.{{/if}}{{#unless @last}}, {{/unless}}
                             
                         {{/each}}
                         </p>
