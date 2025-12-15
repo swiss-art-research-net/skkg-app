@@ -5,7 +5,7 @@ container: http://www.metaphacts.com/ontologies/platform#fieldDefinitionContaine
 namespaces:
   aat: http://vocab.getty.edu/aat/
   crm: http://www.cidoc-crm.org/cidoc-crm/
-  crmaaa: https://takin.solutions/ontologies/crmaaa/
+  aaao: https://ontology.swissartresearch.net/aaao/
   crmdig: http://www.ics.forth.gr/isl/CRMdig/
   crminf: http://www.ics.forth.gr/isl/CRMinf/
   crmsci: http://www.cidoc-crm.org/extensions/crmsci/
@@ -188,6 +188,30 @@ fields:
         - select: 'SELECT ?value WHERE {
             $subject a skkg:Exhibition ;
               crm:P14_carried_out_by ?value .
+          }'
+    
+    - id: mp_bezug_pers_korp
+      label: Bezug (Person/Körperschaft)
+      datatype: xsd:anyURI
+      domain: skkg:Person
+      queries:
+        - select: 'SELECT ?value WHERE {
+            {
+              ?status a aaao:ZE55_Social_Relation_Status ;
+                aaao:ZP105_has_social_relation_subject $subject ;
+                aaao:ZP103_ascribes_social_relation_target ?target ;
+                aaao:ZP104_ascribes_social_relation ?type .
+              ?target skos:prefLabel ?targetLabel .
+              ?type skos:prefLabel ?typeLabel .
+            } UNION {
+              ?status a aaao:ZE55_Social_Relation_Status ;
+                aaao:ZP105_has_social_relation_subject ?target ;
+                aaao:ZP103_ascribes_social_relation_target $subject ;
+                aaao:ZP104_ascribes_social_relation/owl:inverseOf ?type .
+              ?target skos:prefLabel ?targetLabel .
+              ?type skos:prefLabel ?typeLabel .
+            }
+            BIND(CONCAT(?targetLabel, " (", ?typeLabel, ")") AS ?value)
           }'
 
     - id: mp_bildrechte
