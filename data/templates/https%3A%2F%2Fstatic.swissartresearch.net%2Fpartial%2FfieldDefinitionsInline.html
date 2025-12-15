@@ -74,6 +74,28 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_anz_teile"
     }
 [[/inline]]
+ [[#*inline "mp_art_besitz"]]
+    {
+        "id" : "mp_art_besitz",
+
+            "label": "Art Besitz",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:54159 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_art_besitz"
+    }
+[[/inline]]
+ [[#*inline "mp_art_pers_korp"]]
+    {
+        "id" : "mp_art_pers_korp",
+
+            "label": "Art (Person/Körperschaft)",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { ?subject crm:P9_consists_of/crm:P11_had_participant ?group . ?group a crm:E74_Group ; crm:P2_has_type ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_art_pers_korp"
+    }
+[[/inline]]
  [[#*inline "mp_ausst_ort"]]
     {
         "id" : "mp_ausst_ort",
@@ -184,6 +206,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_datum_mul"
     }
 [[/inline]]
+ [[#*inline "mp_datum_own"]]
+    {
+        "id" : "mp_datum_own",
+
+            "label": "Datum",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P4_has_time-span ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_datum_own"
+    }
+[[/inline]]
  [[#*inline "mp_edition_auflage"]]
     {
         "id" : "mp_edition_auflage",
@@ -214,6 +247,17 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P24i_changed_ownership_through ?acquisition . ?acquisition crm:P2_has_type ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_erw_art"
+    }
+[[/inline]]
+ [[#*inline "mp_erw_art_own"]]
+    {
+        "id" : "mp_erw_art_own",
+
+            "label": "Erw. Art.",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:54156 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_erw_art_own"
     }
 [[/inline]]
  [[#*inline "mp_erw_ref_nr"]]
@@ -474,6 +518,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_masse"
     }
 [[/inline]]
+ [[#*inline "mp_merkmale"]]
+    {
+        "id" : "mp_merkmale",
+
+            "label": "Merkmale",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { ?characteristics a crm:E73_Information_Object ; crm:P15i_influenced $subject . OPTIONAL { ?characteristics crm:P2_has_type ?type . ?type crm:P127_has_broader_term type:54164 ; skos:prefLabel ?type_label . FILTER(LANG(?type_label) = \"de\") } OPTIONAL { ?characteristics crm:P2_has_type ?characteristic . ?characteristic crm:P127_has_broader_term type:54163 ; skos:prefLabel ?characteristic_label . FILTER(LANG(?characteristic_label) = \"de\") } OPTIONAL { ?characteristics crm:P3_has_note ?note . } BIND(CONCAT(IF(BOUND(?type_label), CONCAT(\"Typ: \",?type_label, \" \"), \"\"), IF(BOUND(?characteristic_label), CONCAT(\"Merkmal: \", ?characteristic_label, \" \"), \"\"), IF(BOUND(?note), CONCAT(\" (\", ?note, \") \"), \"\")) AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_merkmale"
+    }
+[[/inline]]
  [[#*inline "mp_metadata_created"]]
     {
         "id" : "mp_metadata_created",
@@ -551,6 +606,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ort_literature"
     }
 [[/inline]]
+ [[#*inline "mp_ort_own"]]
+    {
+        "id" : "mp_ort_own",
+
+            "label": "Ort",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P7_took_place_at/crm:P1_is_identified_by ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_ort_own"
+    }
+[[/inline]]
  [[#*inline "mp_page_num"]]
     {
         "id" : "mp_page_num",
@@ -595,6 +661,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_obj"
     }
 [[/inline]]
+ [[#*inline "mp_pers_korp_own"]]
+    {
+        "id" : "mp_pers_korp_own",
+
+            "label": "Pers./Körp",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P11_had_participant/crm:P107_has_current_or_former_member ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_pers_korp_own"
+    }
+[[/inline]]
  [[#*inline "mp_redaktionsstatus"]]
     {
         "id" : "mp_redaktionsstatus",
@@ -603,6 +680,40 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT ?value WHERE { $subject crm:P70i_is_documented_in/crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:45152 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_redaktionsstatus"
+    }
+[[/inline]]
+ [[#*inline "mp_preis"]]
+    {
+        "id" : "mp_preis",
+
+            "label": "Preis",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of ?payment . ?payment a la:Payment ; la:paid_amount ?monetary_amount . ?monetary_amount crm:P90_has_value ?monetary_value ; crm:P180_has_currency/rdfs:label ?monetary_currency . OPTIONAL { ?conversion crmsci:O11_described ?monetary_amount ; crmsci:O10_assigned_dimension ?converted_monetary_amount . ?converted_monetary_amount crm:P90_has_value ?converted_monetary_value ; crm:P180_has_currency/rdfs:label ?converted_monetary_currency . FILTER(DATATYPE(?converted_monetardy_currency) = xsd:string) BIND(CONCAT(STR(?converted_monetary_currency), \" \", STR(?converted_monetary_value)) AS ?converted_value) } OPTIONAL { ?payment crm:P3_has_note ?note . } OPTIONAL { ?payment crm:P1_is_identified_by ?sort_id . ?sort_id crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . } BIND(CONCAT(IF(BOUND(?converted_value), CONCAT(\"(\", ?converted_value, \") \"), \"\"), IF(BOUND(?note), CONCAT(\" (\", ?note, \") \"), \"\"), IF(BOUND(?sort), CONCAT(\" (\", ?sort, \") \"), \"\"), STR(?monetary_currency), \" \", STR(?monetary_value)) AS ?value)
+}",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_preis"
+    }
+[[/inline]]
+ [[#*inline "mp_publizierbare_provenienz"]]
+    {
+        "id" : "mp_publizierbare_provenienz",
+
+            "label": "Publizierbare Provenienz",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { $subject a skkg:Provenance ; crm:P67i_is_referred_to_by ?statement . ?statement crm:P2_has_type aat:300418049 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_publizierbare_provenienz"
+    }
+[[/inline]]
+ [[#*inline "mp_quellen_literatur_own"]]
+    {
+        "id" : "mp_quellen_literatur_own",
+
+            "label": "Quellen Literatur",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { ?value a skkg:Literature ; crm:P165_incorporates/crm:P67_refers_to $subject . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_quellen_literatur_own"
     }
 [[/inline]]
  [[#*inline "mp_region_address"]]
@@ -807,6 +918,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_weitere_nummern"
     }
 [[/inline]]
+ [[#*inline "mp_weitere_quellen"]]
+    {
+        "id" : "mp_weitere_quellen",
+
+            "label": "Weitere Quellen",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+                "selectPattern" : "SELECT ?value WHERE { ?source a crm:E73_Information_Object ; crm:P67_refers_to $subject . $subject a skkg:Provenance . OPTIONAL { ?source crm:P3_has_note ?note . } OPTIONAL { ?source crm:P2_has_type ?type . ?type crm:P127_has_broader_term type:55154 ; skos:prefLabel ?type_label . FILTER(LANG(?type_label) = \"de\") } OPTIONAL { ?source crm:P2_has_type ?relevance . ?relevance crm:P127_has_broader_term type:55153 ; skos:prefLabel ?relevance_label . FILTER(LANG(?relevance_label) = \"de\") } OPTIONAL { ?source crm:P1_is_identified_by ?address . ?address crm:P2_has_type aat:300404630 ; crm:P190_has_symbolic_content ?url . } BIND(CONCAT(IF(BOUND(?type_label), CONCAT(\"Typ: \", ?type_label, \" \"), \"\"), IF(BOUND(?relevance_label), CONCAT(\"Relevanz: \", ?relevance_label, \" \"), \"\"), IF(BOUND(?note), CONCAT(\" (\", ?note, \") \"), \"\"), IF(BOUND(?url), CONCAT(\" (\", ?url, \")\"), \"\")) AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_weitere_quellen"
+    }
+[[/inline]]
  [[#*inline "mp_werkbezuege_exh"]]
     {
         "id" : "mp_werkbezuege_exh",
@@ -831,16 +953,28 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege_lit"
     }
 [[/inline]]
- [[#*inline "mp_werkbe_objectgroup"]]
+ [[#*inline "mp_werke_objectgroup"]]
     {
-        "id" : "mp_werkbe_objectgroup",
+        "id" : "mp_werke_objectgroup",
 
             "label": "Werke",
             "xsdDatatype" : "xsd:anyURI",
             "domain" : "skkg:ObjectGroup",
             "range" : "skkg:Object}",
                 "selectPattern" : "SELECT ?value WHERE { $subject la:has_member ?value . }",
-        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbe_objectgroup"
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werke_objectgroup"
+    }
+[[/inline]]
+ [[#*inline "mp_werke_own"]]
+    {
+        "id" : "mp_werke_own",
+
+            "label": "Werke",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Provenance",
+            "range" : "skkg:Object}",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P9_consists_of/crm:P16_used_specific_object ?value . OPTIONAL { ?value crm:P1_is_identified_by ?sortId . ?sortId crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . ?assignment crm:P141_assigned ?sortId ; crm:P16_used_specific_object $subject . } OPTIONAL { ?noteAssignment crm:P177_assigned_property_of_type crm:P3_has_note ; crm:P141_assigned ?note ; crm:P140_assigned_attribute_to ?value ; crm:P16_used_specific_object $subject . } } ORDER BY ?sort",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werke_own"
     }
 [[/inline]]
  [[#*inline "mp_zug_dat"]]
