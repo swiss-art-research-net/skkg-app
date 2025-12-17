@@ -34,7 +34,7 @@ fields:
                 $subject wdt:P625 ?wikidata_coordinate .
             } UNION {
                 $subject geo:hasGeometry/geo:asWKT ?gndWktRaw .
-                BIND(REPLACE(STR(?gndWktRaw), "\\+", "") AS ?gndWktClean)
+                BIND(REPLACE(STR(?gndWktRaw), "\\\\+", "") AS ?gndWktClean)
                 BIND(STRDT(?gndWktClean, geo:wktLiteral) AS ?gnd_coordinate)
             }
             BIND(COALESCE(?mp_coordinate, ?wikidata_coordinate, ?gnd_coordinate) AS ?value)
@@ -1113,6 +1113,20 @@ fields:
         - select: 'SELECT DISTINCT ?value WHERE {
             $subject crm:P2_has_type ?value .
             ?value crm:P127_has_broader_term type:20060 .
+          }'
+
+    - id: mp_url_doi_pid
+      label: URL/DOI/PID
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P1_is_identified_by ?identifier .
+            ?identifier crm:P2_has_type ?type ;
+              crm:P190_has_symbolic_content ?content .
+            ?type crm:P127_has_broader_term type:58154 ;
+              skos:prefLabel ?type_label .
+            FILTER(LANG(?type_label) = "de")
+            BIND(CONCAT(?content, " (", ?type_label, ")") AS ?value)
           }'
 
     - id: mp_weitere_namen_adress

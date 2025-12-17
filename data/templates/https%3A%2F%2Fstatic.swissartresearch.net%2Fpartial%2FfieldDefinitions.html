@@ -2,10 +2,10 @@
     {
         "id" : "coordinates",
 
-            "label": "Geographic coordinates",
+            "label": "Geographic coordinates (including external)",
             "description" : "Geographic coordinates of the location",
-            "xsdDatatype" : "xsd:string",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P168_place_is_defined_by ?value . }",
+            "xsdDatatype" : "xsd:literal",
+                "selectPattern" : "SELECT ?value WHERE { { $subject crm:P168_place_is_defined_by ?mp_coordinate . } UNION { $subject wdt:P625 ?wikidata_coordinate . } UNION { $subject geo:hasGeometry/geo:asWKT ?gndWktRaw . BIND(REPLACE(STR(?gndWktRaw), \"\\\\+\", \"\") AS ?gndWktClean) BIND(STRDT(?gndWktClean, geo:wktLiteral) AS ?gnd_coordinate) } BIND(COALESCE(?mp_coordinate, ?wikidata_coordinate, ?gnd_coordinate) AS ?value) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/coordinates"
     },
 
@@ -147,6 +147,16 @@
                 "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P104_is_subject_to ?right . FILTER NOT EXISTS { ?predecessor_right_status crm:P67_refers_to ?right . ?predecessor_right_status crm:P173i_ends_after_or_with_the_start_of ?original_right_status . } OPTIONAL { $subject crm:P104_is_subject_to ?original_right . ?right_status crm:P67_refers_to ?right . ?original_right_status crm:P67_refers_to ?original_right . ?original_right_status crm:P173i_ends_after_or_with_the_start_of ?right_status . OPTIONAL { ?original_right crm:P75i_is_possessed_by ?original_rights_holder . ?original_rights_holder crm:P1_is_identified_by/crm:P106_is_composed_of ?original_right_holder_name_entity . ?original_right_holder_name_entity crm:P2_has_type ?name_type ; crm:P190_has_symbolic_content ?original_right_holder_name . } } OPTIONAL { ?right crm:P2_has_type/skos:prefLabel ?right_type . FILTER(LANG(?right_type) = \"de\") } OPTIONAL { ?right crm:P75i_is_possessed_by ?rights_holder . ?rights_holder crm:P1_is_identified_by/crm:P106_is_composed_of ?right_holder_name_entity . ?right_holder_name_entity crm:P2_has_type ?name_type ; crm:P190_has_symbolic_content ?right_holder_name . VALUES (?name_type) { (aat:300404652) (aat:300404688) } FILTER NOT EXISTS { ?right_status crm:P67_refers_to ?right . ?right_status crm:P173i_ends_after_or_with_the_start_of ?successor_right_status . } } OPTIONAL { ?right_status crm:P67_refers_to ?right . ?right_status crm:P4_has_time-span/crm:P82b_end_of_the_end ?right_year . } OPTIONAL { ?right crm:P3_has_note ?right_note } OPTIONAL { ?subject crm:P94i_was_created_by ?creation . OPTIONAL { ?creation crm:P14_carried_out_by ?creator . ?creator crm:P1_is_identified_by/crm:P106_is_composed_of ?creator_name_entity . ?creator_name_entity crm:P2_has_type ?name_type ; crm:P190_has_symbolic_content ?creator_name . VALUES (?name_type) { (aat:300404652) (aat:300404688) } } OPTIONAL { ?creation crm:P9_consists_of ?photography . ?photography crm:P2_has_type aat:300054225 ; crm:P4_has_time-span/crm:P82_at_some_time_within ?photography_date . BIND(YEAR(?photography_date) as ?photography_year)
 } } BIND( CONCAT( ?right_type, \" \", IF(BOUND(?original_right_holder_name), CONCAT(?original_right_holder_name, \"/\"), \"\"), IF(BOUND(?right_year), CONCAT(xsd:string(?right_year), \", \"), \"\"), IF(BOUND(?right_holder_name), ?right_holder_name, \"\"), IF( BOUND(?creator_name) || BOUND(?photography_year), CONCAT(IF(BOUND(?original_right_holder_name) || BOUND(?right_year) || BOUND(?right_holder_name), \". Foto:\", \"Foto:\"), IF(BOUND(?creator_name), CONCAT(\" \", ?creator_name), \"\"), IF(BOUND(?photography_year), CONCAT(\" \", xsd:string(?photography_year)), \"\") ),\"\") ) AS ?value ) }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_bildrechte"
+    },
+
+    {
+        "id" : "mp_coordinates",
+
+            "label": "Geographic coordinates",
+            "description" : "Geographic coordinates of the location",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P168_place_is_defined_by ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_coordinates"
     },
 
     {
@@ -801,6 +811,15 @@
             "xsdDatatype" : "xsd:anyURI",
                 "selectPattern" : "SELECT DISTINCT ?value WHERE { $subject crm:P2_has_type ?value . ?value crm:P127_has_broader_term type:20060 . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_typ_verwendung"
+    },
+
+    {
+        "id" : "mp_url_doi_pid",
+
+            "label": "URL/DOI/PID",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P1_is_identified_by ?identifier . ?identifier crm:P2_has_type ?type ; crm:P190_has_symbolic_content ?content . ?type crm:P127_has_broader_term type:58154 ; skos:prefLabel ?type_label . FILTER(LANG(?type_label) = \"de\") BIND(CONCAT(?content, \" (\", ?type_label, \")\") AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_url_doi_pid"
     },
 
     {
