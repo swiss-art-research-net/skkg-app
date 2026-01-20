@@ -651,6 +651,16 @@
     },
 
     {
+        "id" : "mp_proveninenz_stationen",
+
+            "label": "Proveninenz Stationen",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Object",
+                "selectPattern" : "SELECT ?value WHERE { ?transaction crm:P16_used_specific_object ?subject . ?value a skkg:Provenance ; crm:P9_consists_of ?transaction . OPTIONAL { ?value crm:P1_is_identified_by ?identifier . ?identifier crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . } } ORDER BY ?sort",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_proveninenz_stationen"
+    },
+
+    {
         "id" : "mp_publizierbare_provenienz",
 
             "label": "Publizierbare Provenienz",
