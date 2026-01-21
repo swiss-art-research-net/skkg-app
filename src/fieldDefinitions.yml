@@ -956,6 +956,32 @@ fields:
                 crm:P190_has_symbolic_content ?sort .
             }
           } ORDER BY ?sort'
+    
+    - id: mp_provenienz_status
+      label: Provenienz Status
+      datatype: xsd:string
+      domain: skkg:Object
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P140i_was_attributed_by ?assignment .
+            ?assignment crm:P141_assigned ?provenance_status .
+            ?provenance_status crm:P127_has_broader_term type:54154 ;
+              skos:prefLabel ?provenance_status_label .
+            FILTER(LANG(?provenance_status_label) = "de")
+            OPTIONAL {
+              ?assignment crm:P67i_is_referred_to_by ?description .
+              ?description crm:P2_has_type aat:300435438 ;
+                crm:P190_has_symbolic_content ?provenance_status_description .
+            }
+            BIND(
+              IF(
+                BOUND(?provenance_status_description),
+                CONCAT(?provenance_status_label, ": ", ?provenance_status_description),
+                ?provenance_status_label
+              )
+              AS ?value
+            )
+          }'
 
     - id: mp_publizierbare_provenienz
       label: Publizierbare Provenienz
