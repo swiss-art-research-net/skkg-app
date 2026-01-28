@@ -844,6 +844,16 @@
     },
 
     {
+        "id" : "mp_vollst_angabe",
+
+            "label": "Vollst. Angabe",
+            "xsdDatatype" : "xsd:string",
+            "domain" : "skkg:Literature",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?citation . ?citation crm:P2_has_type aat:300026497 ; crm:P190_has_symbolic_content ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_vollst_angabe"
+    },
+
+    {
         "id" : "mp_url_doi_pid",
 
             "label": "URL/DOI/PID",

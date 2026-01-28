@@ -1181,6 +1181,17 @@ fields:
             ?value crm:P127_has_broader_term type:20060 .
           }'
 
+    - id: mp_vollst_angabe
+      label: Vollst. Angabe
+      datatype: xsd:string
+      domain: skkg:Literature
+      queries:
+        - select: 'SELECT ?value WHERE {
+            $subject crm:P67i_is_referred_to_by ?citation .
+            ?citation crm:P2_has_type aat:300026497 ;
+              crm:P190_has_symbolic_content ?value .
+          }'
+
     - id: mp_url_doi_pid
       label: URL/DOI/PID
       datatype: xsd:string
