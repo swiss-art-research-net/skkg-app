@@ -1309,17 +1309,19 @@ fields:
 
     - id: mp_werkbezuege_lit
       label: Werkbezüge
-      datatype: xsd:anyURI
+      datatype: xsd:string
       domain: skkg:Literature
       range: skkg:Object
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crm:P165_incorporates ?expression .
-            ?expression crm:P67_refers_to ?referenced_work .
-            ?referenced_work a skkg:Object ;
-              crm:P1_is_identified_by ?invNr.
-              skos:prefLabel ?value .
-          }'
+            ?expression rdfs:label ?value ;
+              crm:P67_refers_to ?referenced_work .
+            ?referenced_work a skkg:Object .
+            ?expression crm:P1_is_identified_by ?sortId .
+            ?sortId crm:P2_has_type type:sortlnu ;
+              crm:P190_has_symbolic_content ?sort .
+          } ORDER BY ?sort'
 
     - id: mp_werke_objectgroup
       label: Werke
