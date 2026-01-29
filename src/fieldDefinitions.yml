@@ -1315,9 +1315,10 @@ fields:
       queries:
         - select: 'SELECT ?value WHERE {
             $subject crm:P165_incorporates ?expression .
-            ?expression rdfs:label ?value ;
-              crm:P67_refers_to ?referenced_work .
-            ?referenced_work a skkg:Object .
+            ?expression crm:P67_refers_to ?referenced_work .
+            ?referenced_work a skkg:Object ;
+              crm:P1_is_identified_by ?invNr.
+              skos:prefLabel ?value .
           }'
 
     - id: mp_werke_objectgroup

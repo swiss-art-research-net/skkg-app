@@ -920,7 +920,7 @@
             "xsdDatatype" : "xsd:anyURI",
             "domain" : "skkg:Literature",
             "range" : "skkg:Object",
-                "selectPattern" : "SELECT ?value WHERE { $subject crm:P165_incorporates ?expression . ?expression rdfs:label ?value ; crm:P67_refers_to ?referenced_work . ?referenced_work a skkg:Object . }",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P165_incorporates ?expression . ?expression crm:P67_refers_to ?referenced_work . ?referenced_work a skkg:Object ; skos:prefLabel ?value . }",
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_werkbezuege_lit"
     },
 
