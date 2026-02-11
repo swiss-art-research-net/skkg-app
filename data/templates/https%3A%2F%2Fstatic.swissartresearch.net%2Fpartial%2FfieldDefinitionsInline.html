@@ -983,6 +983,17 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_weitere_nummern"
     }
 [[/inline]]
+ [[#*inline "mp_weitere_referenzen"]]
+    {
+        "id" : "mp_weitere_referenzen",
+
+            "label": "Weitere Referenzen",
+            "xsdDatatype" : "xsd:anyURI",
+            "domain" : "skkg:Person",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?value . ?value crm:P2_has_type ?type . ?type crm:P127_has_broader_term type:21101 . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_weitere_referenzen"
+    }
+[[/inline]]
  [[#*inline "mp_weitere_quellen"]]
     {
         "id" : "mp_weitere_quellen",
