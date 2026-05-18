@@ -506,6 +506,16 @@
         "iri" : "https://platform.swissartresearch.net/instances/fields/mp_language"
     }
 [[/inline]]
+ [[#*inline "mp_links"]]
+    {
+        "id" : "mp_links",
+
+            "label": "Links",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P67i_is_referred_to_by ?link . ?link crm:P2_has_type aat:300266024 ; crm:P1_is_identified_by ?url_id . ?url_id crm:P2_has_type aat:300404630 ; crm:P190_has_symbolic_content ?url . OPTIONAL { ?link crm:P3_has_note ?note . } OPTIONAL { ?link crm:P2_has_type ?type . ?type crm:P127_has_broader_term type:32095 ; skos:prefLabel ?type_label . } OPTIONAL { ?link crm:P1_is_identified_by ?sort_id . ?sort_id crm:P2_has_type type:sortlnu ; crm:P190_has_symbolic_content ?sort . } BIND(CONCAT( IF(BOUND(?type_label), CONCAT(?type_label, \": \"), \"\"),?url, IF(BOUND(?note), CONCAT(\" (\", ?note, \")\"), \"\")) AS ?value) }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/mp_links"
+    }
+[[/inline]]
  [[#*inline "mp_mat_technik"]]
     {
         "id" : "mp_mat_technik",
