@@ -674,7 +674,7 @@ fields:
                 crm:P190_has_symbolic_content ?sort .
             }
             BIND(CONCAT( IF(BOUND(?type_label), CONCAT(?type_label, ": "), ""),?url, IF(BOUND(?note), CONCAT(" (", ?note, ")"), "")) AS ?value)
-          }'
+          } ORDER BY ASC(?sort)'
 
     - id: mp_mat_technik
       label: Mat./Technik
