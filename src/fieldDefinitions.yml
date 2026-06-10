@@ -9,6 +9,7 @@ namespaces:
   crmdig: http://www.ics.forth.gr/isl/CRMdig/
   crminf: http://www.ics.forth.gr/isl/CRMinf/
   crmsci: http://www.cidoc-crm.org/extensions/crmsci/
+  dcterms: http://purl.org/dc/terms/
   frbroo: http://iflastandards.info/ns/fr/frbr/frbroo/
   la: https://linked.art/ns/terms/
   rdfs: http://www.w3.org/2000/01/rdf-schema#
@@ -57,6 +58,18 @@ fields:
       queries:
         - select: 'SELECT ?value WHERE {
               $subject crm:P127_has_broader_term ?value .
+            }'
+    
+    - id: iiif_manifest
+      label: IIIF Manifest
+      description: Link to the IIIF manifest of the subject
+      datatype: xsd:string
+      queries:
+        - select: 'SELECT ?value WHERE {
+              $subject crm:P129i_is_subject_of ?manifest .
+              ?manifest la:digitally_carried_by ?iiif .
+              ?iiif dcterms:conformsTo <http://iiif.io/api/presentation/> ;
+                la:access_point ?value .
             }'
 
     - id: mp_actor_type

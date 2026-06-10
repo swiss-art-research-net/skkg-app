@@ -30,6 +30,16 @@
     },
 
     {
+        "id" : "iiif_manifest",
+
+            "label": "IIIF Manifest",
+            "description" : "Link to the IIIF manifest of the subject",
+            "xsdDatatype" : "xsd:string",
+                "selectPattern" : "SELECT ?value WHERE { $subject crm:P129i_is_subject_of ?manifest . ?manifest la:digitally_carried_by ?iiif . ?iiif dcterms:conformsTo <http://iiif.io/api/presentation/> ; la:access_point ?value . }",
+        "iri" : "https://platform.swissartresearch.net/instances/fields/iiif_manifest"
+    },
+
+    {
         "id" : "mp_actor_type",
 
             "label": "Typ (Person/Körperschaft)",
