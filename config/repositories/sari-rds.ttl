@@ -10,18 +10,19 @@
 
 [] a repo:Repository ;
   repo:repositoryID "sari-rds" ;
-  rdfs:label "Repository to connect to SARI RDS service" ;
+  rdfs:label "Repository to connect to the SARI RDS service" ;
   repo:repositoryImpl [
     repo:repositoryType "openrdf:SailRepository" ;
     reposail:sailImpl [
       sail:sailType "researchspace:RESTSail" ;
-      ephedra:serviceURL "https://rds.swissartresearch.net/rest/reconciliation/aggregated-federated-lookup" ;
+      ephedra:serviceURL "https://reconcile.rds.swissartresearch.net/" ;
       ephedra:httpMethod "POST" ;
       ephedra:httpHeader [
         ephedra:name "Accept" ;
         ephedra:value "application/json"
       ] ;
       ephedra:inputFormat "application/json";
-      ephedra:implementsService :SariRDS 
+      ephedra:inputFormfield "queries";
+      ephedra:implementsService :ReconciliationAPI 
     ]  
   ] .
