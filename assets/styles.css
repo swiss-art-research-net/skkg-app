@@ -144,6 +144,10 @@
 #record-tabs .table.rs-table th:first-child {
   padding-left: 2rem;
 }
+table th,
+table td {
+  padding: 2px;
+}
 ul {
   margin-left: 0;
   padding-left: 10px;
