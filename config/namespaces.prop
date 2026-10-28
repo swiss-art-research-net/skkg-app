@@ -19,5 +19,6 @@ multimedia = https://data.skkg.ch/multimedia/
 address = https://data.skkg.ch/address/
 literature = https://data.skkg.ch/literature/
 provenance = https://data.skkg.ch/provenance/
+registrar = https://data.skkg.ch/registrar/
 sh = http://www.w3.org/ns/shacl#
 lt = http://terminology.lido-schema.org/
